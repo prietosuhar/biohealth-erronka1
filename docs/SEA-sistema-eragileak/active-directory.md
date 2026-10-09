@@ -91,6 +91,9 @@ biohealth.local
 ![Itxaron-denbora 300 s](../../irudiak/SEA/gpo-harrera-denbora.png)
 *Irudia: pantaila-babeslearen itxaron-denbora: 300 segundo.*
 
+![Pantaila-babesle zehatza](../../irudiak/SEA/gpo-harrera-scrnsave.png)
+*Irudia: «Aplicar un protector de pantalla específico» → `scrnsave.scr` (pantaila beltza). Windows 11-k ez du pantaila-babeslerik lehenetsita; hau gabe, beste arauak gaituta egon arren, pantaila ez litzateke blokeatuko.*
+
 ![USB debekatuta](../../irudiak/SEA/gpo-harrera-usb.png)
 *Irudia: biltegiratze aldagarri guztiei sarbidea ukatuta (USB memoriak, disko kanpokoak, CD/DVD…), pazienteen datuak ez ateratzeko.*
 
