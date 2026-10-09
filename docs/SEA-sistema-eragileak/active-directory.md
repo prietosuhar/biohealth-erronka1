@@ -47,7 +47,7 @@ biohealth.local
 
 **Zergatik egitura hau:** OU bat sail bakoitzeko GPOak sailka aplikatzeko; talde bat sail bakoitzeko baimenak (inprimagailuak, karpetak) taldeka emateko, ez erabiltzaileka.
 
-## GPOak 🔄
+## GPOak ✅
 
 ### Aukerak
 
@@ -97,7 +97,7 @@ biohealth.local
 ![USB debekatuta](../../irudiak/SEA/gpo-harrera-usb.png)
 *Irudia: biltegiratze aldagarri guztiei sarbidea ukatuta (USB memoriak, disko kanpokoak, CD/DVD…), pazienteen datuak ez ateratzeko.*
 
-### Probak (BEZ-WIN01)
+### Probak (BEZ-WIN01) ✅
 
 | Erabiltzailea | Proba | Espero dena | Emaitza |
 |---|---|---|---|
@@ -108,7 +108,7 @@ biohealth.local
 | `infor1` | `Win+R` → `cmd` | ✅ irekitzen da (iragazkia) | ✅ CMD irekita |
 | `infor1` | `gpresult /r` | Panel_Blokeatu iragazita | ✅ «Denegado (Seguridad)»; Itzali_ez bai aplikatuta |
 | `harrera1` | `gpresult /r` | GPO-Harrera + Panel_Blokeatu + Itzali_ez | ✅ hirurak aplikatuta |
-| `harrera1` | Pantaila-babeslearen balioak erregistroan | 1 · 1 · 300 · scrnsave.scr | ⏳ |
+| `harrera1` | Pantaila-babeslearen balioak erregistroan (`reg query`) | 1 · 1 · 300 · scrnsave.scr | ✅ lau balioak |
 | `harrera1` | USB bat konektatu | ❌ ukatuta | IsardVDIn ezin da probatu (USB fisikorik ez); konfigurazioaren argazkiarekin justifikatuta |
 
 ![mediku1: CMD debekatuta](../../irudiak/SEA/proba-mediku1-cmd.png)
@@ -129,6 +129,9 @@ biohealth.local
 ![harrera1: gpresult](../../irudiak/SEA/proba-harrera1-gpresult.png)
 *Irudia: `harrera1`-en `gpresult /r`: **GPO-Harrera**, Panel_Blokeatu eta Itzali_ez aplikatuta; erabiltzailea `harrera` taldekoa da. GPO-Harrera Harrera OUan bakarrik dagoenez, beste sailetako erabiltzaileei ez zaie aplikatzen (ikus mediku1). ✅*
 
+![harrera1: erregistroa](../../irudiak/SEA/proba-harrera1-erregistroa.png)
+*Irudia: `HKCU\Software\Policies\Microsoft\Windows\Control Panel\Desktop`: GPOak idatzitako balioak: `ScreenSaveActive = 1` (gaituta), `ScreenSaverIsSecure = 1` (pasahitza), `ScreenSaveTimeOut = 300` (5 min) eta `SCRNSAVE.EXE = scrnsave.scr`. Honek erakusten du GPO-Harrera-ren 1. araua bezeroan indarrean dagoela, 5 minutu itxaron gabe. ✅*
+
 ![mediku1: gpresult](../../irudiak/SEA/proba-mediku1-gpresult.png)
 *Irudia: `gpresult /r`: `CN=Mediku1,OU=Medikuntza,OU=Departamentuak` erabiltzaileari **Panel_Blokeatu** eta **Itzali_ez** aplikatu zaizkio, zerbitzariprintzipala.biohealth.local-etik. ✅*
 
@@ -146,7 +149,7 @@ biohealth.local
 - [x] BEZ-WIN01-en IPa zerbitzariaren tartean
 - [x] DNS = 192.168.10.1
 - [x] Domeinura batuta eta domeinuko erabiltzaile batekin (`mediku1`) saioa hasita
-- [ ] `gpresult /r` → GPOak aplikatuta
+- [x] `gpresult /r` → GPOak aplikatuta (mediku1, infor1, harrera1)
 
 ![BEZ-WIN01 domeinuan, mediku1 erabiltzailearekin](../../irudiak/SEA/bezeroa-domeinuan-cmd.png)
 *Irudia: Medikuntza saileko `mediku1` erabiltzaileak BEZ-WIN01-en saioa hasi du. `whoami` → `biohealth\mediku1`, `hostname` → `BEZ-WIN01` eta `systeminfo` → `Dominio: biohealth.local`. Honek erakusten du bezeroa domeinuan dagoela eta direktorio-zerbitzua erabiltzaileak zentralizatuki egiaztatzeko erabiltzen dela. ✅*
@@ -161,4 +164,5 @@ biohealth.local
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|
 | NetBIOS izena moztuta | 15 karaktereko muga | Onartu eta dokumentatu |
+| `reg query "HKCU\Software\Policies\Microsoft\Control Panel\Desktop"` → *no ha podido encontrar la clave* | Bidean `Windows\` falta zen | Bide zuzena: `HKCU\Software\Policies\Microsoft\Windows\Control Panel\Desktop` |
 | Ekipoa ezin itzali `mediku1`-en saiotik (behartu egin behar izan zen) | Itzali_ez GPOak erabiltzailearen saioan itzaltzeko aukerak kentzen ditu (nahita) | **Saioa itxi** eta saio-hasierako pantailako itzali botoia erabili (han ez dago erabiltzailearen GPOrik); edo administratzaile batekin |

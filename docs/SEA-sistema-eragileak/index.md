@@ -8,5 +8,5 @@ title: SEA – Sistema eragileak
 
 | Orria | Errubrikako irizpideak | Egoera |
 |---|---|---|
-| [Active Directory (OU, erabiltzaileak, taldeak, GPO, prozesuak)](active-directory.md) | IE1: direktorio-zerbitzua · IE2: prozesuak | 🔄 |
+| [Active Directory (OU, erabiltzaileak, taldeak, GPO, prozesuak)](active-directory.md) | IE1: direktorio-zerbitzua · IE2: prozesuak | ✅ OU, GPO, bezeroa · ⏳ zerbitzuak eta prozesuak |
 | [Inprimaketa (Windows ↔ Linux)](inprimaketa.md) | IE5: inprimaketa-zerbitzariak, portuak, baimenak, 4 proba gurutzatuak | ⏳ |
