@@ -48,6 +48,9 @@ ipconfig /all          :: IPa .102–.200 tartean, GW .254, DNS .10.1, sufixua b
 ```
 Zerbitzarian: *DHCP → Esparrua → Helbideen alokairuak* → bezeroa ageri da.
 
+![BEZ-WIN01 bezeroak DHCP bidez jasotako konfigurazioa](../../irudiak/SZI/dhcp-bezeroa-ip.png)
+*1. irudia: BEZ-WIN01 bezeroak Windows Server-eko DHCPtik jaso du konfigurazioa: IPa **192.168.10.102** (esparruaren lehena), DNS zerbitzaria **192.168.10.1** (domeinu-kontrolatzailea) eta DNS sufixua **biohealth.local** (015 aukera). ✅*
+
 ## Arazoak eta logak
 
 | Arazoa | Kausa | Konponbidea |
