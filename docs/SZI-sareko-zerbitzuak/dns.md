@@ -87,7 +87,10 @@ Eguneraketa dinamikoak: **seguruak soilik**.
 ![Kanpoko izenaren proba](../../irudiak/SZI/dns-proba-google.png)
 *Irudia: `google.com` ebazten da (A eta AAAA), beraz pfSense birbidaltzaileak funtzionatzen du. ✅*
 
-Egiteko: `nslookup -type=SRV _ldap._tcp.biohealth.local` (ADren SRV erregistroak).
+| ADren SRV erregistroa | `nslookup -type=SRV _ldap._tcp.biohealth.local` | ✅ LDAP 389 portua → zerbitzariprintzipala.biohealth.local (192.168.10.1) |
+
+![SRV erregistroaren proba](../../irudiak/SZI/dns-proba-srv.png)
+*Irudia: `_ldap._tcp` SRV erregistroak domeinuko LDAP zerbitzua (389/TCP) zerbitzariprintzipala-n dagoela adierazten du. Bezeroek erregistro hau erabiltzen dute domeinu-kontrolatzailea aurkitzeko (domeinura batzean eta saioa hastean). Lehen saiakerak huts egin zuen idazketa-akats batengatik (ikus Arazoak). ✅*
 
 ## Arazoak eta logak
 
