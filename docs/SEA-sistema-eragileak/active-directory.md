@@ -63,7 +63,7 @@ biohealth.local
 |---|---|---|---|---|
 | **Panel_Blokeatu** | Departamentuak (15 erabiltzaile) | 1) Kontrol-panela eta PC konfigurazioa debekatuta · 2) CMD debekatuta (scriptak bai) | `informatika` taldeari **Ukatu** «Aplicar directiva de grupo» | Erabiltzaile askorentzat ✅ |
 | **Itzali_ez** | Departamentuak | Itzali, berrabiarazi, eseki eta hibernatu komandoak kendu | — | Gehigarria: ekipoak piztuta eguneraketa eta babeskopietarako |
-| **GPO-Harrera** | Harrera (3 erabiltzaile) | 1) Pantaila-babeslea pasahitzarekin 300 s · 2) USB biltegiratzea debekatuta | — | Talde konkretu batentzat ⏳ |
+| **GPO-Harrera** | Harrera (3 erabiltzaile) | 1) Pantaila-babeslea pasahitzarekin 300 s · 2) USB biltegiratzea debekatuta | — | Talde konkretu batentzat ✅ |
 
 ### Panel_Blokeatu
 
@@ -81,7 +81,18 @@ biohealth.local
 ![Itzali_ez araua](../../irudiak/SEA/gpo-itzali-ez-araua.png)
 *Irudia: «Quitar y evitar el acceso a los comandos Apagar, Reiniciar, Suspender e Hibernar» → Habilitado.*
 
-### GPO-Harrera ⏳
+### GPO-Harrera
+
+`Departamentuak/Harrera` OUari lotuta (harrera1, harrera2, harrera3).
+
+![GPO-Harrera konfigurazioa](../../irudiak/SEA/gpo-harrera-konfigurazioa.png)
+*Irudia: GPO-Harrera-ren laburpena. **1. araua – pantaila-blokeoa:** pantaila-babeslea gaituta, pasahitzarekin babestuta eta 300 segundoren (5 min) ondoren aktibatzen da. **2. araua – USBa:** «Todas las clases de almacenamiento extraíble: denegar acceso a todo» → gaituta.*
+
+![Itxaron-denbora 300 s](../../irudiak/SEA/gpo-harrera-denbora.png)
+*Irudia: pantaila-babeslearen itxaron-denbora: 300 segundo.*
+
+![USB debekatuta](../../irudiak/SEA/gpo-harrera-usb.png)
+*Irudia: biltegiratze aldagarri guztiei sarbidea ukatuta (USB memoriak, disko kanpokoak, CD/DVD…), pazienteen datuak ez ateratzeko.*
 
 ### Probak ⏳
 
