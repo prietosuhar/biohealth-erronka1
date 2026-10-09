@@ -2,11 +2,11 @@
 title: DNS
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
-# 4. DNS
+# DNS
 
-## 4.1 Aukerak
+## Aukerak
 
 | Aukera | Alde onak | Alde txarrak |
 |---|---|---|
@@ -26,7 +26,7 @@ title: DNS
 
 **Erabakia: 9.9.9.9 eta 1.1.1.1.**
 
-## 4.2 Zonak
+## Zonak
 
 | Zona | Mota | Oharrak |
 |---|---|---|
@@ -36,7 +36,7 @@ title: DNS
 
 Eguneraketa dinamikoak: **seguruak soilik**.
 
-## 4.3 Erregistroak
+## Erregistroak
 
 | Izena | Mota | Balioa | PTR |
 |---|---|---|---|
@@ -51,14 +51,14 @@ Eguneraketa dinamikoak: **seguruak soilik**.
 
 `web` eta `glpi` CNAME dira: zerbitzari batek (www) izen bat baino gehiago erantzuten ditu Apache-ren VirtualHost-en bidez.
 
-## 4.4 Pausoak (DNS Kudeatzailea)
+## Pausoak (DNS Kudeatzailea)
 
 1. Zerbitzaria → *Propietateak* → *Birbidaltzaileak* → 9.9.9.9 eta 1.1.1.1
 2. *Alderantzizko bilaketa-zonak* → *Zona berria* → Nagusia, AD-n gordeta → domeinuko DNS guztiei → IPv4 → `192.168.10` (eta gero `192.168.20`) → eguneraketa dinamiko seguruak
 3. `biohealth.local` → *Host berria (A)* → «Sortu PTR erregistroa» markatuta
 4. *Alias berria (CNAME)* → `web` eta `glpi`
 
-## 4.5 Probak (PowerShell)
+## Probak (PowerShell)
 
 ```powershell
 Get-DnsServerForwarder
@@ -72,7 +72,7 @@ Resolve-DnsName ezdago.biohealth.local     # ❌ DNS name does not exist
 nslookup -type=SRV _ldap._tcp.biohealth.local   # ✅ ADren SRV erregistroak
 ```
 
-## 4.6 Arazoak eta logak
+## Arazoak eta logak
 
 *Gertaeren ikustailea → Aplikazioen eta zerbitzuen erregistroak → DNS Server*
 

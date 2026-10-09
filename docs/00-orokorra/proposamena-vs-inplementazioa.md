@@ -2,7 +2,7 @@
 title: Proposamena vs. inplementazioa
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
 # Proposamena vs. inplementazioa
 

@@ -11,6 +11,23 @@ Pazienteen osasun-datuak kudeatzen ditugu (DBEO 9. art., kategoria berezia), ber
 - **Ingurunea:** IsardVDI (makina birtualak)
 - **Taldea:** [Kide 1] · [Kide 2] · [Kide 3] · kantonsh
 
+## Dokumentazioa ikasgaika
+
+| Ikasgaia | Edukia | Egoera |
+|---|---|---|
+| [**Orokorra**](docs/00-orokorra/index.md) | Proposamena vs. inplementazioa · Plangintza | 🔄 |
+| [**SEG** – Segurtasuna](docs/SEG-segurtasuna/index.md) | Sarearen diseinua (WAN/LAN/DMZ) · pfSense (arauak, IDS, VPN) · Segurtasun-plana | 🔄 |
+| [**SEA** – Sistema eragileak](docs/SEA-sistema-eragileak/index.md) | Active Directory (OU, erabiltzaileak, GPO, prozesuak) · Inprimaketa | 🔄 |
+| [**SZI** – Sareko zerbitzuak](docs/SZI-sareko-zerbitzuak/index.md) | DNS · DHCP · Jitsi Meet (audioa eta bideoa) | ⏳ |
+| [**DBKSA** – Datu-baseak](docs/DBKSA-datu-baseak/index.md) | MariaDB + MongoDB | ⏳ |
+| [**WAE** – Web aplikazioak](docs/WAE-web-aplikazioak/index.md) | WordPress · GLPI | ⏳ |
+| [**SB** – Sistema banatuak](docs/SB-sistema-banatuak/index.md) | Birtualizazioa eta HA | ⏳ |
+| [**HACK** – Hacking etikoa](docs/HACK-hacking-etikoa/index.md) | Pentestinga | ⏳ |
+| [**IRAU** – Iraunkortasuna](docs/IRAU-iraunkortasuna/index.md) | Jasangarritasun-plana | ⏳ |
+| [**HW** – Hardwarea](docs/HW-hardwarea/index.md) | Hardwarea eta lizentziak | ⏳ |
+
+✅ eginda · 🔄 martxan · ⏳ egiteko
+
 ## Nola lan egiten dugu
 
 Zerbitzu bakoitza eskema berarekin dokumentatzen da:
@@ -23,26 +40,4 @@ Zerbitzu bakoitza eskema berarekin dokumentatzen da:
 6. **Arazoak eta logak**: aurkitutako erroreak eta nola konpondu diren
 7. **Plangintza**: GitHub-eko zeregina itxi
 
-## Dokumentazioa
-
-| # | Atala | Egoera |
-|---|---|---|
-| 0 | [Proposamena vs. inplementazioa](docs/00-proposamena-vs-inplementazioa.md) | 🔄 |
-| 1 | [Sarearen diseinua (WAN · LAN · DMZ)](docs/01-sarea.md) | 🔄 |
-| 2 | [Suebakia – pfSense (arauak, IDS, VPN)](docs/02-pfsense.md) | 🔄 |
-| 3 | [Active Directory (OU, erabiltzaileak, taldeak, GPO)](docs/03-active-directory.md) | 🔄 |
-| 4 | [DNS](docs/04-dns.md) | ⏳ |
-| 5 | [DHCP](docs/05-dhcp.md) | ⏳ |
-| 6 | [Inprimaketa (Windows ↔ Linux)](docs/06-inprimaketa.md) | ⏳ |
-| 7 | [Datu-baseak (MariaDB + MongoDB)](docs/07-datu-baseak.md) | ⏳ |
-| 8 | [WordPress](docs/08-wordpress.md) | ⏳ |
-| 9 | [GLPI](docs/09-glpi.md) | ⏳ |
-| 10 | [Bideokonferentzia eta audioa – Jitsi Meet](docs/10-jitsi.md) | ⏳ |
-| 11 | [Birtualizazioa eta erabilgarritasun handia](docs/11-birtualizazioa.md) | ⏳ |
-| 12 | [Segurtasun-plana (fisikoa, pasahitzak, kontingentzia)](docs/12-segurtasun-plana.md) | ⏳ |
-| 13 | [Hacking etikoa](docs/13-hacking.md) | ⏳ |
-| 14 | [Jasangarritasun-plana](docs/14-jasangarritasuna.md) | ⏳ |
-| 15 | [Hardwarea eta lizentziak](docs/15-hardwarea.md) | ⏳ |
-| — | [Plangintza eta jarraipena](docs/plangintza.md) | 🔄 |
-
-✅ eginda · 🔄 martxan · ⏳ egiteko
+Pantaila-argazkiak `irudiak/<IKASGAIA>/` karpetan doaz (adib. `irudiak/SZI/dns-zonak.png`).

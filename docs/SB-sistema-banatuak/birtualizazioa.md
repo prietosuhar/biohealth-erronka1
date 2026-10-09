@@ -2,14 +2,14 @@
 title: Birtualizazioa eta HA
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
-# 11. Birtualizazioa eta erabilgarritasun handia
+# Birtualizazioa eta erabilgarritasun handia
 
-## 11.1 Sistema banatu baten beharra ⏳
+## Sistema banatu baten beharra ⏳
 *(SPOF-ak: domeinu-kontrolatzailea, db01, www · helburua % 99,9)*
 
-## 11.2 Birtualizazio-tresna ⏳
+## Birtualizazio-tresna ⏳
 
 | Datua | Balioa |
 |---|---|
@@ -17,8 +17,8 @@ title: Birtualizazioa eta HA
 | Izena / IP / sareak | |
 | Birtualizatutako zerbitzuak | |
 
-## 11.3 HA arkitektura ⏳
+## HA arkitektura ⏳
 
-## 11.4 Inplementazioa ⏳
+## Inplementazioa ⏳
 - [ ] Zerbitzu bat makina birtual batean
 - [ ] Zerbitzu bat **kontenedore** batean (Docker / LXC)

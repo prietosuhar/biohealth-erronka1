@@ -2,11 +2,11 @@
 title: DHCP
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
-# 5. DHCP
+# DHCP
 
-## 5.1 Aukerak
+## Aukerak
 
 | Aukera | Alde onak | Alde txarrak |
 |---|---|---|
@@ -16,7 +16,7 @@ title: DHCP
 
 **Erabakia: Windows Server DHCP.** pfSense-ren DHCPa desgaituta dago bi zerbitzarik gatazkarik ez izateko.
 
-## 5.2 Esparrua
+## Esparrua
 
 | Parametroa | Balioa |
 |---|---|
@@ -30,7 +30,7 @@ title: DHCP
 
 **Tartetik kanpo (IP finkoak):** .1–.101 zerbitzari, inprimagailu eta sare-gailuentzat; .254 suebakia.
 
-## 5.3 Konfigurazio aurreratua
+## Konfigurazio aurreratua
 
 | Elementua | Balioa | Zergatik |
 |---|---|---|
@@ -39,7 +39,7 @@ title: DHCP
 | DNS dinamikoa | A eta PTR erregistroak eguneratu beti | Bezeroak izenez aurkitzeko |
 | *(aukerakoa)* Iragazkiak / failover | | |
 
-## 5.4 Probak
+## Probak
 
 ```cmd
 ipconfig /release
@@ -48,7 +48,7 @@ ipconfig /all          :: IPa .102–.200 tartean, GW .254, DNS .10.1, sufixua b
 ```
 Zerbitzarian: *DHCP → Esparrua → Helbideen alokairuak* → bezeroa ageri da.
 
-## 5.5 Arazoak eta logak
+## Arazoak eta logak
 
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|

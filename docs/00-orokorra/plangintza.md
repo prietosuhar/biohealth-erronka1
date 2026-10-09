@@ -2,7 +2,7 @@
 title: Plangintza eta jarraipena
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
 # Plangintza eta jarraipena
 

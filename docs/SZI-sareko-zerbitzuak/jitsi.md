@@ -2,11 +2,11 @@
 title: Jitsi Meet
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
-# 10. Bideokonferentzia eta audioa – Jitsi Meet
+# Bideokonferentzia eta audioa – Jitsi Meet
 
-## 10.1 Aukerak
+## Aukerak
 
 | Aukera | Alde onak | Alde txarrak |
 |---|---|---|
@@ -17,7 +17,7 @@ title: Jitsi Meet
 
 **Erabakia: Jitsi apt paketeekin**, `meet.biohealth.local` · 192.168.20.11 (DMZ).
 
-## 10.2 Osagaiak eta protokoloak
+## Osagaiak eta protokoloak
 
 | Osagaia | Funtzioa | Protokoloa / portua |
 |---|---|---|
@@ -29,10 +29,10 @@ title: Jitsi Meet
 
 Segurtasuna: web-a **TLS**, audio/bideoa **DTLS-SRTP**.
 
-## 10.3 Audioa (IE7) eta bideoa (IE8) ⏳
+## Audioa (IE7) eta bideoa (IE8) ⏳
 *(kodekak: Opus audioa, VP8/VP9/H.264 bideoa · kalitate-ezarpenak · banda-zabalera · audio-soileko gelak)*
 
-## 10.4 Instalazioa ⏳
+## Instalazioa ⏳
 
-## 10.5 Probak ⏳
+## Probak ⏳
 - [ ] 2+ ekipo deian (kamera, mikrofonoa, txata, pantaila partekatu)

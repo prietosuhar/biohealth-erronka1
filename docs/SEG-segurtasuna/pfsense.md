@@ -2,11 +2,11 @@
 title: Suebakia – pfSense
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
-# 2. Suebakia – pfSense
+# Suebakia – pfSense
 
-## 2.1 Aukerak
+## Aukerak
 
 | Aukera | Alde onak | Alde txarrak |
 |---|---|---|
@@ -17,7 +17,7 @@ title: Suebakia – pfSense
 
 **Erabakia: pfSense CE** – kostua 0 €, sare osoa babesten du eta IDS + VPN gehitu daitezke makina berean.
 
-## 2.2 Interfazeak
+## Interfazeak
 
 | Interfazea | Gailua | IP | Oharrak |
 |---|---|---|---|
@@ -30,7 +30,7 @@ Egindakoa (✅):
 2. LAN-eko DHCPa desgaituta
 3. Konektibitate-proba: `ping 8.8.8.8` OK
 
-## 2.3 Arauak
+## Arauak
 
 ### DMZ interfazea (goitik behera aplikatzen dira)
 
@@ -52,15 +52,15 @@ Egindakoa (✅):
 
 > IsardVDIn ezin da Internetetik benetako proba egin; NATa konfiguratu eta argazkia ateratzen da, muga hori azalduz.
 
-## 2.4 IDS – Suricata ⏳
+## IDS – Suricata ⏳
 
 *(aukerak · erabakia · instalazioa · proba: `nmap` eskaneatze bat detektatzen du)*
 
-## 2.5 VPN – urruneko sarbidea ⏳
+## VPN – urruneko sarbidea ⏳
 
 *(aukerak: OpenVPN / WireGuard / IPsec · erabakia · konfigurazioa · proba)*
 
-## 2.6 Probak
+## Probak
 
 | Proba | Nondik | Espero dena |
 |---|---|---|
@@ -69,7 +69,7 @@ Egindakoa (✅):
 | `https://meet.biohealth.local` | BEZ-WIN01 | ✅ |
 | *Status → System Logs → Firewall* | pfSense | Blokeatutako ping-a ageri da |
 
-## 2.7 Arazoak eta logak
+## Arazoak eta logak
 
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|

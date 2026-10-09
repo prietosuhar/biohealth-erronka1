@@ -2,11 +2,11 @@
 title: Sarearen diseinua
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
-# 1. Sarearen diseinua (WAN · LAN · DMZ)
+# Sarearen diseinua (WAN · LAN · DMZ)
 
-## 1.1 Aukerak
+## Aukerak
 
 | Aukera | Alde onak | Alde txarrak |
 |---|---|---|
@@ -14,13 +14,13 @@ title: Sarearen diseinua
 | **B. WAN + LAN + DMZ suebaki bakarrarekin (3 interfaze)** | Zerbitzu publikoak isolatuta; arauak ikusi eta probatu daitezke; enpresa txiki baten neurrikoa | Interfaze bat gehiago konfiguratu behar da |
 | C. DMZ bi suebakiren artean | Enpresa handien arkitektura | Gehiegizkoa 20 langilerentzat; bikoitza lana eta RAMa |
 
-## 1.2 Erabakia: **B**
+## Erabakia: **B**
 
 - Internetetik sarbidea behar duten zerbitzuak (**web** eta **bideokonferentzia**) DMZn daude.
 - Osasun-datuak dituzten zerbitzariak (**DC** eta **datu-basea**) LANean, inoiz ez zuzenean Internetera irekita.
-- DMZtik LANera trafikoa **ukatuta** dago, behar diren salbuespenak izan ezik (ikus [pfSense](02-pfsense.md)).
+- DMZtik LANera trafikoa **ukatuta** dago, behar diren salbuespenak izan ezik (ikus [pfSense](pfsense.md)).
 
-## 1.3 IP plana
+## IP plana
 
 | Zona | Sarea | Atebidea | IsardVDI sarea |
 |---|---|---|---|
@@ -38,7 +38,7 @@ title: Sarearen diseinua
 | www | 192.168.20.10 | DMZ | Ubuntu Server | Apache + WordPress, GLPI |
 | meet | 192.168.20.11 | DMZ | Ubuntu Server 24.04 | Jitsi Meet |
 
-## 1.4 Eskema
+## Eskema
 
 ```
             Internet (IsardVDI Default)
@@ -54,7 +54,7 @@ title: Sarearen diseinua
    └─ bezeroak .102–.200
 ```
 
-## 1.5 Ebidentziak
+## Ebidentziak
 
 - [ ] IsardVDI: makina bakoitzaren sareak (argazkia)
 - [ ] pfSense: *Interfaces* (WAN, LAN, DMZ)
