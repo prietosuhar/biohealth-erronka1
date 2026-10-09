@@ -48,12 +48,24 @@ biohealth.local
 | Erabiltzaile askorentzat | Departamentuak | *(adib. pasahitz-politika, pantaila-blokeoa 5 min)* | |
 | Talde konkretu batentzat | *(adib. Harrera)* | *(adib. Kontrol-panela eta CMD debekatuta)* | |
 
-## Bezeroa domeinuan ⏳
+## Bezeroa domeinuan 🔄
 
-- [ ] BEZ-WIN01-en IPa zerbitzariaren tartean (`ipconfig /all`)
-- [ ] DNS = 192.168.10.1
-- [ ] Domeinura batu eta domeinuko erabiltzaile batekin saioa hasi
+| Datua | Balioa |
+|---|---|
+| Ekipoa | BEZ-WIN01 · Windows 11 Pro |
+| IP | 192.168.10.102 (DHCP, zerbitzariaren tartean) — ikus [DHCP](../SZI-sareko-zerbitzuak/dhcp.md) |
+| DNS | 192.168.10.1 (domeinu-kontrolatzailea) |
+| Kontu lokala | `uni` (administratzaile lokala) |
+
+**Pausoak:** `sysdm.cpl` → *Aldatu* → Domeinua: `biohealth.local` → domeinuko administratzaile baten kredentzialak → berrabiarazi.
+
+- [x] BEZ-WIN01-en IPa zerbitzariaren tartean
+- [x] DNS = 192.168.10.1
+- [x] Domeinura batuta eta domeinuko erabiltzaile batekin (`mediku1`) saioa hasita
 - [ ] `gpresult /r` → GPOak aplikatuta
+
+![BEZ-WIN01 domeinuan, mediku1 erabiltzailearekin](../../irudiak/SEA/bezeroa-domeinuan-cmd.png)
+*Irudia: Medikuntza saileko `mediku1` erabiltzaileak BEZ-WIN01-en saioa hasi du. `whoami` → `biohealth\mediku1`, `hostname` → `BEZ-WIN01` eta `systeminfo` → `Dominio: biohealth.local`. Honek erakusten du bezeroa domeinuan dagoela eta direktorio-zerbitzua erabiltzaileak zentralizatuki egiaztatzeko erabiltzen dela. ✅*
 
 ## Zerbitzuen kudeaketa eta prozesuak ⏳
 
