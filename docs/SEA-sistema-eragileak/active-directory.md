@@ -97,14 +97,29 @@ biohealth.local
 ![USB debekatuta](../../irudiak/SEA/gpo-harrera-usb.png)
 *Irudia: biltegiratze aldagarri guztiei sarbidea ukatuta (USB memoriak, disko kanpokoak, CD/DVD…), pazienteen datuak ez ateratzeko.*
 
-### Probak ⏳
+### Probak (BEZ-WIN01)
 
-| Erabiltzailea | Proba | Espero dena |
-|---|---|---|
-| `mediku1` | CMD eta Kontrol-panela ireki | ❌ debekatuta |
-| `informatika1` | CMD ireki | ✅ irekitzen da (iragazkia) |
-| `harrera1` | 5 min itxaron · USB bat konektatu | ✅ pantaila blokeatzen da · ❌ USBa ukatuta |
-| edozein | `gpresult /r` (PowerShell-etik) | GPO aplikatuak zerrendan |
+| Erabiltzailea | Proba | Espero dena | Emaitza |
+|---|---|---|---|
+| `mediku1` | `Win+R` → `cmd` | ❌ debekatuta | ✅ «El administrador ha deshabilitado el símbolo del sistema» |
+| `mediku1` | `Win+R` → `control` | ❌ debekatuta | ✅ «Restricciones» leihoa |
+| `mediku1` | Hasiera → itzali botoia | Aukerarik ez | ✅ «No hay disponibles opciones de inicio/apagado» |
+| `mediku1` | `gpresult /r` (PowerShell) | Panel_Blokeatu + Itzali_ez | ✅ biak aplikatuta |
+| `informatika1` | `Win+R` → `cmd` | ✅ irekitzen da (iragazkia) | ⏳ |
+| `harrera1` | 5 min itxaron | ✅ pantaila blokeatu eta pasahitza eskatu | ⏳ |
+| `harrera1` | USB bat konektatu | ❌ ukatuta | IsardVDIn ezin da probatu (USB fisikorik ez); konfigurazioaren argazkiarekin justifikatuta |
+
+![mediku1: CMD debekatuta](../../irudiak/SEA/proba-mediku1-cmd.png)
+*Irudia: `mediku1`-ek CMD irekitzean: «El administrador ha deshabilitado el símbolo del sistema» → Panel_Blokeatu-ren 2. araua funtzionatzen du. ✅*
+
+![mediku1: Kontrol-panela debekatuta](../../irudiak/SEA/proba-mediku1-kontrol-panela.png)
+*Irudia: `control` exekutatzean «Restricciones» leihoa → Panel_Blokeatu-ren 1. araua funtzionatzen du. ✅*
+
+![mediku1: itzaltzeko aukerarik ez](../../irudiak/SEA/proba-mediku1-itzali.png)
+*Irudia: Hasierako itzali botoiak «En este momento no hay disponibles opciones de inicio/apagado» erakusten du → Itzali_ez funtzionatzen du. ✅*
+
+![mediku1: gpresult](../../irudiak/SEA/proba-mediku1-gpresult.png)
+*Irudia: `gpresult /r`: `CN=Mediku1,OU=Medikuntza,OU=Departamentuak` erabiltzaileari **Panel_Blokeatu** eta **Itzali_ez** aplikatu zaizkio, zerbitzariprintzipala.biohealth.local-etik. ✅*
 
 ## Bezeroa domeinuan 🔄
 
@@ -135,3 +150,4 @@ biohealth.local
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|
 | NetBIOS izena moztuta | 15 karaktereko muga | Onartu eta dokumentatu |
+| Ekipoa ezin itzali `mediku1`-en saiotik (behartu egin behar izan zen) | Itzali_ez GPOak erabiltzailearen saioan itzaltzeko aukerak kentzen ditu (nahita) | **Saioa itxi** eta saio-hasierako pantailako itzali botoia erabili (han ez dago erabiltzailearen GPOrik); edo administratzaile batekin |
