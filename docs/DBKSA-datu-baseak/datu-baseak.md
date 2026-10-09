@@ -2,16 +2,16 @@
 title: Datu-baseak
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
-# 7. Datu-baseak (MariaDB + MongoDB)
+# Datu-baseak (MariaDB + MongoDB)
 
-## 7.1 Aukerak eta erabakia ⏳
+## Aukerak eta erabakia ⏳
 *(MariaDB · MySQL · PostgreSQL · SQL Server · MongoDB → HW eskakizunak, kostua, datu-mota bakoitzerako egokitasuna)*
 
-## 7.2 Instalazioa ⏳
+## Instalazioa ⏳
 
-## 7.3 Ustiapen-ezaugarriak ⏳
+## Ustiapen-ezaugarriak ⏳
 
 | Parametroa | MariaDB | MongoDB |
 |---|---|---|
@@ -22,8 +22,8 @@ title: Datu-baseak
 | Konexio-parametroak | `max_connections`, `MAX_USER_CONNECTIONS` | |
 | Baliabideak (RAM, diskoa) | | |
 
-## 7.4 Erabiltzaileak eta baimenak ⏳
+## Erabiltzaileak eta baimenak ⏳
 *(rolak, ikuspegiak, debekatutakoaren probak — ERROR 1142)*
 
-## 7.5 Logak eta erroreak ⏳
+## Logak eta erroreak ⏳
 *(errore-mezuen eta log-fitxategien interpretazioa)*

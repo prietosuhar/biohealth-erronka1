@@ -2,13 +2,13 @@
 title: Inprimaketa
 ---
 
-[← Hasiera](../index.md)
+[← Hasiera](../../index.md) · [Modulua](index.md)
 
-# 6. Inprimaketa (Windows ↔ Linux)
+# Inprimaketa (Windows ↔ Linux)
 
-## 6.1 Aukerak eta erabakia ⏳
+## Aukerak eta erabakia ⏳
 
-## 6.2 Portuak eta protokoloak
+## Portuak eta protokoloak
 
 | Sistema | Protokoloa | Portua |
 |---|---|---|
@@ -18,13 +18,13 @@ title: Inprimaketa
 | Sare-inprimagailua | RAW / JetDirect | 9100/TCP |
 | Sare-inprimagailua | LPD | 515/TCP |
 
-## 6.3 Inprimagailuak, kokapena eta baimenak ⏳
+## Inprimagailuak, kokapena eta baimenak ⏳
 
 | Inprimagailua | Kokapena | Zerbitzaria | Baimenak (taldea) |
 |---|---|---|---|
 | | | | |
 
-## 6.4 Probak (errubrika)
+## Probak (errubrika)
 
 - [ ] Windows Server: inprimagailua instalatu eta bertatik proba
 - [ ] Windows Server: partekatu domeinuko erabiltzaile batzuekin
