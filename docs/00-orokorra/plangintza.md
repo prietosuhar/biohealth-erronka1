@@ -24,7 +24,7 @@ Plangintza GitHub-eko **Issues / Projects** taulan egiten da (zeregin bat pauso 
 |---|---|---|---|
 | 2026-10-0x | kantonsh | pfSense (WAN/LAN), Windows Server 2019, AD DS + DNS + DHCP rolak, `biohealth.local` basoa | DNS zonak |
 | 2026-10-08 | kantonsh | BEZ-WIN01 sortuta (DHCP) | Domeinura batu |
-| 2026-10-09 | kantonsh | Errubrika aztertuta; GitHub biltegia eta Pages sortuta | DNS, DHCP |
+| 2026-10-09 | kantonsh | Errubrika aztertuta; GitHub biltegia eta Pages sortuta; BEZ-WIN01 domeinuan (mediku1); DNS LAN amaituta (birbidaltzailea, zonak, erregistroak, probak) | OUak/GPOak, DMZ |
 
 ## Aldaketak plangintzan
 
