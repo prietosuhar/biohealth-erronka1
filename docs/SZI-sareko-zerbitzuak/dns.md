@@ -49,9 +49,12 @@ Eguneraketa dinamikoak: **seguruak soilik**.
 | db01 | A | 192.168.10.3 | ✅ | ✅ |
 | BEZ-WIN01 | A (dinamikoa, DHCP) | 192.168.10.102 | ✅ (dinamikoa) | ✅ |
 | www | A | 192.168.10.4 → **192.168.20.10** | ✅ | 🔄 orain LAN-ean; DMZ sortzean aldatuko da |
-| meet | A | 192.168.20.11 | — | ⏳ |
-| web | CNAME | www.biohealth.local | — | ⏳ |
-| glpi | CNAME | www.biohealth.local | — | ⏳ |
+| meet | A | 192.168.20.11 | — | ⏳ Jitsi makina sortzean |
+| web | CNAME | www.biohealth.local | — | ✅ |
+| glpi | CNAME | www.biohealth.local | — | ✅ |
+
+![Zona zuzena biohealth.local](../../irudiak/SZI/dns-zona-zuzena.png)
+*Irudia: `biohealth.local` zona zuzena. ADk automatikoki sortutako karpetak (`_msdcs`, `_sites`, `_tcp`, `_udp`, `DomainDnsZones`, `ForestDnsZones`: domeinu-kontrolatzailea aurkitzeko SRV erregistroak), SOA eta NS erregistroak, ostatuen A erregistroak (zerbitzaria, pfsense, db01, www eta BEZ-WIN01 — azken hau DHCPk dinamikoki sortua, data-zigiluarekin) eta `web` eta `glpi` CNAME aliasak. ✅*
 
 ![Alderantzizko zona 192.168.10](../../irudiak/SZI/dns-alderantzizko-zona-10.png)
 *Irudia: `10.168.192.in-addr.arpa` alderantzizko zona, SOA eta NS erregistroekin eta ostatuen PTR erregistroekin: zerbitzaria (.1), db01 (.3), www (.4), BEZ-WIN01 (.102, DHCPk dinamikoki sortua — ez da «static») eta pfSense (.254). ✅*
