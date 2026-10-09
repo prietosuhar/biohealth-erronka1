@@ -107,7 +107,8 @@ biohealth.local
 | `mediku1` | `gpresult /r` (PowerShell) | Panel_Blokeatu + Itzali_ez | ✅ biak aplikatuta |
 | `infor1` | `Win+R` → `cmd` | ✅ irekitzen da (iragazkia) | ✅ CMD irekita |
 | `infor1` | `gpresult /r` | Panel_Blokeatu iragazita | ✅ «Denegado (Seguridad)»; Itzali_ez bai aplikatuta |
-| `harrera1` | 5 min itxaron | ✅ pantaila blokeatu eta pasahitza eskatu | ⏳ |
+| `harrera1` | `gpresult /r` | GPO-Harrera + Panel_Blokeatu + Itzali_ez | ✅ hirurak aplikatuta |
+| `harrera1` | Pantaila-babeslearen balioak erregistroan | 1 · 1 · 300 · scrnsave.scr | ⏳ |
 | `harrera1` | USB bat konektatu | ❌ ukatuta | IsardVDIn ezin da probatu (USB fisikorik ez); konfigurazioaren argazkiarekin justifikatuta |
 
 ![mediku1: CMD debekatuta](../../irudiak/SEA/proba-mediku1-cmd.png)
@@ -124,6 +125,9 @@ biohealth.local
 
 ![Informatika: gpresult](../../irudiak/SEA/proba-informatika-gpresult.png)
 *Irudia: `infor1` (`OU=Informatika`) erabiltzailearen `gpresult /r`: **Itzali_ez** aplikatuta, eta **Panel_Blokeatu** «Filtrar: Denegado (Seguridad)» → Windows-ek berak erakusten du segurtasun-iragazkiak GPOa blokeatu duela. ✅*
+
+![harrera1: gpresult](../../irudiak/SEA/proba-harrera1-gpresult.png)
+*Irudia: `harrera1`-en `gpresult /r`: **GPO-Harrera**, Panel_Blokeatu eta Itzali_ez aplikatuta; erabiltzailea `harrera` taldekoa da. GPO-Harrera Harrera OUan bakarrik dagoenez, beste sailetako erabiltzaileei ez zaie aplikatzen (ikus mediku1). ✅*
 
 ![mediku1: gpresult](../../irudiak/SEA/proba-mediku1-gpresult.png)
 *Irudia: `gpresult /r`: `CN=Mediku1,OU=Medikuntza,OU=Departamentuak` erabiltzaileari **Panel_Blokeatu** eta **Itzali_ez** aplikatu zaizkio, zerbitzariprintzipala.biohealth.local-etik. ✅*
