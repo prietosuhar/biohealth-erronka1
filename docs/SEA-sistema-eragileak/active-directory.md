@@ -35,7 +35,7 @@ biohealth.local
     ├── Administrariak   → admin1, admin2, admin3        · taldea: administrariak
     ├── Erizaintza       → erizain1, erizain2, erizain3  · taldea: erizaintza
     ├── Harrera          → harrera1, harrera2, harrera3  · taldea: harrera
-    ├── Informatika      → informatika1–3                · taldea: informatika
+    ├── Informatika      → infor1, infor2, infor3        · taldea: informatika
     └── Medikuntza       → mediku1, mediku2, mediku3     · taldea: medikuntza
 ```
 
@@ -105,7 +105,8 @@ biohealth.local
 | `mediku1` | `Win+R` → `control` | ❌ debekatuta | ✅ «Restricciones» leihoa |
 | `mediku1` | Hasiera → itzali botoia | Aukerarik ez | ✅ «No hay disponibles opciones de inicio/apagado» |
 | `mediku1` | `gpresult /r` (PowerShell) | Panel_Blokeatu + Itzali_ez | ✅ biak aplikatuta |
-| Informatikako erabiltzailea (`infor1`) | `Win+R` → `cmd` | ✅ irekitzen da (iragazkia) | ✅ CMD irekita |
+| `infor1` | `Win+R` → `cmd` | ✅ irekitzen da (iragazkia) | ✅ CMD irekita |
+| `infor1` | `gpresult /r` | Panel_Blokeatu iragazita | ✅ «Denegado (Seguridad)»; Itzali_ez bai aplikatuta |
 | `harrera1` | 5 min itxaron | ✅ pantaila blokeatu eta pasahitza eskatu | ⏳ |
 | `harrera1` | USB bat konektatu | ❌ ukatuta | IsardVDIn ezin da probatu (USB fisikorik ez); konfigurazioaren argazkiarekin justifikatuta |
 
@@ -119,7 +120,10 @@ biohealth.local
 *Irudia: Hasierako itzali botoiak «En este momento no hay disponibles opciones de inicio/apagado» erakusten du → Itzali_ez funtzionatzen du. ✅*
 
 ![Informatika: CMD irekitzen da](../../irudiak/SEA/proba-informatika-cmd.png)
-*Irudia: Informatikako erabiltzaileak (`C:\Users\infor1`) CMD ireki dezake: segurtasun-iragazkiak (`informatika` taldeari «Aplicar directiva de grupo» ukatuta) Panel_Blokeatu ez aplikatzea eragiten du. ✅*
+![Informatika: gpresult](../../irudiak/SEA/proba-informatika-gpresult.png)
+*Irudia: `infor1` (`OU=Informatika`) erabiltzailearen `gpresult /r`: **Itzali_ez** aplikatuta, eta **Panel_Blokeatu** «Filtrar: Denegado (Seguridad)» → Windows-ek berak erakusten du segurtasun-iragazkiak GPOa blokeatu duela. ✅*
+
+*Aurreko irudia: Informatikako erabiltzaileak (`C:\Users\infor1`) CMD ireki dezake: segurtasun-iragazkiak (`informatika` taldeari «Aplicar directiva de grupo» ukatuta) Panel_Blokeatu ez aplikatzea eragiten du. ✅*
 
 ![mediku1: gpresult](../../irudiak/SEA/proba-mediku1-gpresult.png)
 *Irudia: `gpresult /r`: `CN=Mediku1,OU=Medikuntza,OU=Departamentuak` erabiltzaileari **Panel_Blokeatu** eta **Itzali_ez** aplikatu zaizkio, zerbitzariprintzipala.biohealth.local-etik. ✅*
