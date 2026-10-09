@@ -17,6 +17,7 @@ Proposamena 2026/09/30ean aurkeztu genuen. Inplementatzean aldaketa batzuk egin 
 | NetBIOS izena | — | **ZERBITZARIPRINT** | NetBIOS izenek 15 karaktere gehienez; Windowsek automatikoki moztu zuen |
 | DMZ atebidea | 192.168.20.1 | **192.168.20.254** | LAN-eko irizpide bera (atebidea = .254) |
 | db01 | Windows 11 Pro · .10.30 | Ubuntu Server 22.04 · **192.168.10.3** | *(taldearekin berretsi)* |
+| DNS birbidaltzaileak | 9.9.9.9 + 1.1.1.1 | **pfSense (192.168.10.254)** | Kanpoko DNS trafiko guztia suebakitik pasatzeko eta han kontrolatzeko; pfSense-k Quad9-ra birbidal dezake |
 | www | DMZ · 192.168.20.10 | **DMZ · 192.168.20.10** | Taldearen dokumentuan LAN-ean zegoen (.10.4); errubrikak LAN/WAN/DMZ diseinua eskatzen du eta Internetera irekitako zerbitzariak DMZn egon behar dute |
 | meet (Jitsi) | DMZ · 192.168.20.11 | **DMZ · 192.168.20.11** | Proposamenarekin bat |
 | Proxmox / Nextcloud (LXC) | Bai | *(erabakitzeko)* | Errubrikak (SB IE3) zerbitzu bat kontenedore batean eskatzen du |
