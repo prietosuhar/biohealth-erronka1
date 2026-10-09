@@ -1,0 +1,16 @@
+# Pasahitzak eta sekretuak EZ dira igotzen
+*.env
+.env*
+*secret*
+*pasahitz*
+*.kdbx
+*.pem
+*.key
+*.ovpn
+*.conf.local
+
+# Sistema-fitxategiak
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
