@@ -47,12 +47,50 @@ biohealth.local
 
 **Zergatik egitura hau:** OU bat sail bakoitzeko GPOak sailka aplikatzeko; talde bat sail bakoitzeko baimenak (inprimagailuak, karpetak) taldeka emateko, ez erabiltzaileka.
 
-## GPOak ⏳
+## GPOak 🔄
 
-| GPO | Non lotuta | 2 arau gutxienez | Zergatik |
+### Aukerak
+
+| Aukera | Erabiltzaile askorentzat | Talde konkretu batentzat | Balorazioa |
 |---|---|---|---|
-| Erabiltzaile askorentzat | Departamentuak | *(adib. pasahitz-politika, pantaila-blokeoa 5 min)* | |
-| Talde konkretu batentzat | *(adib. Harrera)* | *(adib. Kontrol-panela eta CMD debekatuta)* | |
+| A. Taldearen hasierako GPOak bakarrik | Panel_Blokeatu + Itzali_ez (arau 1 bakoitza) | — | Errubrikak 2 arau eta talde konkretu baterako GPO bat eskatzen ditu |
+| **B. Lehendik daudenak osatu + Harrerarentzat bat** | **Panel_Blokeatu**: Kontrol-panela + CMD, Informatika kanpoan | **GPO-Harrera**: pantaila-blokeoa 5 min + USB debekatuta | ✅ Ez da ezer berriz egiten; arau bakoitzak arrazoi erreala du |
+| C. GPO berri guztiak | — | — | Taldearen lana bikoiztu |
+
+**Erabakia: B.** Langileek ezin dute sistemaren konfigurazioa aldatu (Kontrol-panela, CMD); Informatika kanpoan dago, ekipoak mantentzen dituelako. Harrera publikoarekin dagoen postua da (pazienteak aurrean): pantaila bakarrik blokeatu behar da eta datuak ezin dira USB batean atera.
+
+| GPO | Lotuta | Arauak | Iragazkia | Errubrika |
+|---|---|---|---|---|
+| **Panel_Blokeatu** | Departamentuak (15 erabiltzaile) | 1) Kontrol-panela eta PC konfigurazioa debekatuta · 2) CMD debekatuta (scriptak bai) | `informatika` taldeari **Ukatu** «Aplicar directiva de grupo» | Erabiltzaile askorentzat ✅ |
+| **Itzali_ez** | Departamentuak | Itzali, berrabiarazi, eseki eta hibernatu komandoak kendu | — | Gehigarria: ekipoak piztuta eguneraketa eta babeskopietarako |
+| **GPO-Harrera** | Harrera (3 erabiltzaile) | 1) Pantaila-babeslea pasahitzarekin 300 s · 2) USB biltegiratzea debekatuta | — | Talde konkretu batentzat ⏳ |
+
+### Panel_Blokeatu
+
+![Panel_Blokeatu hasieran](../../irudiak/SEA/gpo-panel-blokeatu-araua-hasiera.png)
+*Irudia: hasieran arau bakarra zuen: «Prohibir el acceso a Configuración de PC y a Panel de control».*
+
+![CMD debekatu](../../irudiak/SEA/gpo-panel-blokeatu-cmd.png)
+*Irudia: bigarren araua gehituta: «Impedir el acceso al símbolo del sistema» → Habilitada. Scripten prozesamendua **ez** da desaktibatzen, saio-hasierako scriptek funtziona dezaten.*
+
+![Informatika kanpoan](../../irudiak/SEA/gpo-panel-blokeatu-informatika-ukatu.png)
+*Irudia: segurtasun-iragazkia: `informatika` taldeari «Aplicar directiva de grupo» baimena **ukatuta**; GPOa ez zaie aplikatzen Informatikako langileei.*
+
+### Itzali_ez
+
+![Itzali_ez araua](../../irudiak/SEA/gpo-itzali-ez-araua.png)
+*Irudia: «Quitar y evitar el acceso a los comandos Apagar, Reiniciar, Suspender e Hibernar» → Habilitado.*
+
+### GPO-Harrera ⏳
+
+### Probak ⏳
+
+| Erabiltzailea | Proba | Espero dena |
+|---|---|---|
+| `mediku1` | CMD eta Kontrol-panela ireki | ❌ debekatuta |
+| `informatika1` | CMD ireki | ✅ irekitzen da (iragazkia) |
+| `harrera1` | 5 min itxaron · USB bat konektatu | ✅ pantaila blokeatzen da · ❌ USBa ukatuta |
+| edozein | `gpresult /r` (PowerShell-etik) | GPO aplikatuak zerrendan |
 
 ## Bezeroa domeinuan 🔄
 
