@@ -35,23 +35,28 @@ Proposamenean 9.9.9.9 / 1.1.1.1 genituen; inplementatzean pfSense aukeratu dugu,
 | Zona | Mota | Oharrak |
 |---|---|---|
 | `biohealth.local` | Zuzena, nagusia, AD-n integratua | Domeinua sortzean automatikoki |
-| `10.168.192.in-addr.arpa` | Alderantzizkoa, AD-n integratua | LAN |
-| `20.168.192.in-addr.arpa` | Alderantzizkoa, AD-n integratua | DMZ |
+| `10.168.192.in-addr.arpa` | Alderantzizkoa, AD-n integratua | LAN ✅ |
+| `20.168.192.in-addr.arpa` | Alderantzizkoa, AD-n integratua | DMZ ⏳ (DMZ sortzean) |
 
 Eguneraketa dinamikoak: **seguruak soilik**.
 
 ## Erregistroak
 
-| Izena | Mota | Balioa | PTR |
-|---|---|---|---|
-| zerbitzariprintzipala | A | 192.168.10.1 | ✅ |
-| pfsense | A | 192.168.10.254 | ✅ |
-| db01 | A | 192.168.10.3 | ✅ |
-| www | A | 192.168.20.10 | ✅ |
-| meet | A | 192.168.20.11 | ✅ |
-| web | CNAME | www.biohealth.local | — |
-| glpi | CNAME | www.biohealth.local | — |
-| BEZ-WIN01 | A (dinamikoa) | DHCP | ✅ (DHCPk) |
+| Izena | Mota | Balioa | PTR | Egoera |
+|---|---|---|---|---|
+| zerbitzariprintzipala | A | 192.168.10.1 | ✅ | ✅ |
+| pfsense | A | 192.168.10.254 | ✅ | ✅ |
+| db01 | A | 192.168.10.3 | ✅ | ✅ |
+| BEZ-WIN01 | A (dinamikoa, DHCP) | 192.168.10.102 | ✅ (dinamikoa) | ✅ |
+| www | A | 192.168.10.4 → **192.168.20.10** | ✅ | 🔄 orain LAN-ean; DMZ sortzean aldatuko da |
+| meet | A | 192.168.20.11 | — | ⏳ |
+| web | CNAME | www.biohealth.local | — | ⏳ |
+| glpi | CNAME | www.biohealth.local | — | ⏳ |
+
+![Alderantzizko zona 192.168.10](../../irudiak/SZI/dns-alderantzizko-zona-10.png)
+*Irudia: `10.168.192.in-addr.arpa` alderantzizko zona, SOA eta NS erregistroekin eta ostatuen PTR erregistroekin: zerbitzaria (.1), db01 (.3), www (.4), BEZ-WIN01 (.102, DHCPk dinamikoki sortua — ez da «static») eta pfSense (.254). ✅*
+
+> **www-ren IPa:** gaur egun LAN-ean dago (192.168.10.4), taldearen hasierako diseinuaren arabera. DMZ sortzean 192.168.20.10-era eramango da: A erregistroa aldatu, .10.4-ren PTRa ezabatu eta `20.168.192.in-addr.arpa` zonan PTR berria sortu.
 
 `web` eta `glpi` CNAME dira: zerbitzari batek (www) izen bat baino gehiago erantzuten ditu Apache-ren VirtualHost-en bidez.
 
