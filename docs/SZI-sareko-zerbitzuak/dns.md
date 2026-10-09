@@ -20,11 +20,15 @@ title: DNS
 
 | Aukera | Alde onak | Alde txarrak |
 |---|---|---|
-| pfSense-ra birbidali | Irteera-puntu bakarra | Proposamenean baztertua |
-| **9.9.9.9 + 1.1.1.1 birbidaltzaileak** | Fidagarriak; Quad9-k malware domeinuak blokeatzen ditu (osasun-datuak) | Kanpoko zerbitzuen menpe |
+| **pfSense-ra birbidali (192.168.10.254)** | Irteera-puntu bakarra; suebakian DNS irteera pfSense-ri bakarrik baimendu behar zaio; pfSense-n domeinuak erregistratu eta blokeatu daitezke (pfBlockerNG) | pfSense erortzen bada ez dago kanpoko ebazpenik (baina Internetik ere ez) |
+| 9.9.9.9 + 1.1.1.1 birbidaltzaileak | Fidagarriak; Quad9-k malware domeinuak blokeatzen ditu | DCa zuzenean Internetera irteten da 53 portutik → suebakian arau gehiago |
 | Erro-iradokizunak soilik | Inoren menpe ez | Motelagoa |
 
-**Erabakia: 9.9.9.9 eta 1.1.1.1.**
+**Erabakia: pfSense (192.168.10.254) birbidaltzaile gisa** + «Erabili erro-iradokizunak» babeskopia gisa.
+Proposamenean 9.9.9.9 / 1.1.1.1 genituen; inplementatzean pfSense aukeratu dugu, kanpoko DNS trafiko guztia suebakitik kontrolatuta igaro dadin (ikus [proposamena vs. inplementazioa](../00-orokorra/proposamena-vs-inplementazioa.md)). Quad9-ren malware-iragazkia mantentzeko, pfSense-k 9.9.9.9-ra birbidal dezake.
+
+![DNS birbidaltzailea: pfSense](../../irudiak/SZI/dns-birbidaltzailea.png)
+*Irudia: ZERBITZARIPRINT DNS zerbitzariaren birbidaltzailea 192.168.10.254 (pfsense.biohealth.local) da; erro-iradokizunak babeskopia gisa gaituta. ✅*
 
 ## Zonak
 
@@ -53,7 +57,7 @@ Eguneraketa dinamikoak: **seguruak soilik**.
 
 ## Pausoak (DNS Kudeatzailea)
 
-1. Zerbitzaria → *Propietateak* → *Birbidaltzaileak* → 9.9.9.9 eta 1.1.1.1
+1. Zerbitzaria → *Propietateak* → *Birbidaltzaileak* → 192.168.10.254 (pfSense) ✅
 2. *Alderantzizko bilaketa-zonak* → *Zona berria* → Nagusia, AD-n gordeta → domeinuko DNS guztiei → IPv4 → `192.168.10` (eta gero `192.168.20`) → eguneraketa dinamiko seguruak
 3. `biohealth.local` → *Host berria (A)* → «Sortu PTR erregistroa» markatuta
 4. *Alias berria (CNAME)* → `web` eta `glpi`
