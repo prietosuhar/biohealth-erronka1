@@ -39,6 +39,12 @@ biohealth.local
     └── Medikuntza       → mediku1, mediku2, mediku3     · taldea: medikuntza
 ```
 
+![OU egitura: Departamentuak](../../irudiak/SEA/ad-ou-departamentuak.png)
+*Irudia: `Departamentuak` OUaren barruan sail bakoitzeko OU bat: Administrariak, Erizaintza, Harrera, Informatika eta Medikuntza. ✅*
+
+![Administrariak OUaren edukia](../../irudiak/SEA/ad-ou-administrariak.png)
+*Irudia: `Administrariak` OUa: Admin1, Admin2 eta Admin3 erabiltzaileak eta `administrariak` segurtasun-taldea. Gainerako OUek egitura bera dute (3 erabiltzaile + taldea). ✅*
+
 **Zergatik egitura hau:** OU bat sail bakoitzeko GPOak sailka aplikatzeko; talde bat sail bakoitzeko baimenak (inprimagailuak, karpetak) taldeka emateko, ez erabiltzaileka.
 
 ## GPOak ⏳

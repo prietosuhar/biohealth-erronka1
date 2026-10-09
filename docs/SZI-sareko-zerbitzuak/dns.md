@@ -82,7 +82,12 @@ Eguneraketa dinamikoak: **seguruak soilik**.
 ![DNS probak PowerShell-en](../../irudiak/SZI/dns-probak-powershell.png)
 *Irudia: DNS zerbitzariaren probak. Erregistro-mota bakoitza (A, PTR, CNAME) behar bezala ebazten da eta existitzen ez den izenak errorea ematen du: zerbitzariak bere zonetako datuekin bakarrik erantzuten du. ✅*
 
-Egiteko: `Resolve-DnsName google.com` (pfSense birbidaltzailearen proba) eta `nslookup -type=SRV _ldap._tcp.biohealth.local` (ADren SRV erregistroak).
+| Kanpoko izena (birbidaltzailea) | `Resolve-DnsName google.com` | ✅ A eta AAAA → pfSense-ren bidez ebatzita |
+
+![Kanpoko izenaren proba](../../irudiak/SZI/dns-proba-google.png)
+*Irudia: `google.com` ebazten da (A eta AAAA), beraz pfSense birbidaltzaileak funtzionatzen du. ✅*
+
+Egiteko: `nslookup -type=SRV _ldap._tcp.biohealth.local` (ADren SRV erregistroak).
 
 ## Arazoak eta logak
 
@@ -90,6 +95,7 @@ Egiteko: `Resolve-DnsName google.com` (pfSense birbidaltzailearen proba) eta `ns
 
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|
+| `nslookup ... _ldap._tcpbiohealth.local` → *Non-existent domain* | Idazketa-akatsa: `_tcp` eta `biohealth` artean puntua falta | `_ldap._tcp.biohealth.local` zuzen idatzi |
 | `"Resolve-DnsName" no se reconoce como un comando interno o externo` | Komandoa CMD-n (Símbolo del sistema) exekutatu zen; `Resolve-DnsName` PowerShell-eko cmdlet bat da | Leiho berean `powershell` idatzi (edo PowerShell ireki) eta berriro exekutatu. CMD-n baliokidea `nslookup` da |
 
 ![Errorea CMD-n](../../irudiak/SZI/dns-errorea-cmd.png)
