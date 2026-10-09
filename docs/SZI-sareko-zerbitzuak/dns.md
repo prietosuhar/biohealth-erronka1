@@ -4,7 +4,7 @@ title: DNS
 
 [← Hasiera](../../index.md) · [Modulua](index.md)
 
-# DNS
+# DNS ✅ (LAN)
 
 ## Aukerak
 
@@ -72,17 +72,17 @@ Eguneraketa dinamikoak: **seguruak soilik**.
 
 ## Probak (PowerShell)
 
-```powershell
-Get-DnsServerForwarder
-Get-DnsServerZone
-Get-DnsServerResourceRecord -ZoneName "biohealth.local"
-Resolve-DnsName www.biohealth.local        # ✅ 192.168.20.10
-Resolve-DnsName 192.168.20.10              # ✅ PTR → www
-Resolve-DnsName glpi.biohealth.local       # ✅ CNAME → www
-Resolve-DnsName google.com                 # ✅ birbidaltzaileak
-Resolve-DnsName ezdago.biohealth.local     # ❌ DNS name does not exist
-nslookup -type=SRV _ldap._tcp.biohealth.local   # ✅ ADren SRV erregistroak
-```
+| Proba | Komandoa | Emaitza |
+|---|---|---|
+| A erregistroa | `Resolve-DnsName db01.biohealth.local` | ✅ A → 192.168.10.3 |
+| PTR (alderantzizkoa) | `Resolve-DnsName 192.168.10.254` | ✅ PTR → pfsense.biohealth.local |
+| CNAME (aliasa) | `Resolve-DnsName glpi.biohealth.local` | ✅ CNAME → www.biohealth.local → A 192.168.10.4 |
+| Existitzen ez den izena | `Resolve-DnsName ezdago.biohealth.local` | ❌ «El nombre DNS no existe» (`DNS_ERROR_RCODE_NAME_ERROR`) — espero zena |
+
+![DNS probak PowerShell-en](../../irudiak/SZI/dns-probak-powershell.png)
+*Irudia: DNS zerbitzariaren probak. Erregistro-mota bakoitza (A, PTR, CNAME) behar bezala ebazten da eta existitzen ez den izenak errorea ematen du: zerbitzariak bere zonetako datuekin bakarrik erantzuten du. ✅*
+
+Egiteko: `Resolve-DnsName google.com` (pfSense birbidaltzailearen proba) eta `nslookup -type=SRV _ldap._tcp.biohealth.local` (ADren SRV erregistroak).
 
 ## Arazoak eta logak
 
@@ -90,4 +90,7 @@ nslookup -type=SRV _ldap._tcp.biohealth.local   # ✅ ADren SRV erregistroak
 
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|
-| | | |
+| `"Resolve-DnsName" no se reconoce como un comando interno o externo` | Komandoa CMD-n (Símbolo del sistema) exekutatu zen; `Resolve-DnsName` PowerShell-eko cmdlet bat da | Leiho berean `powershell` idatzi (edo PowerShell ireki) eta berriro exekutatu. CMD-n baliokidea `nslookup` da |
+
+![Errorea CMD-n](../../irudiak/SZI/dns-errorea-cmd.png)
+*Irudia: `Resolve-DnsName` CMD-n exekutatzean ateratako errorea.*
