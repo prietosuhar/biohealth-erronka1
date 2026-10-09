@@ -120,10 +120,10 @@ biohealth.local
 *Irudia: Hasierako itzali botoiak «En este momento no hay disponibles opciones de inicio/apagado» erakusten du → Itzali_ez funtzionatzen du. ✅*
 
 ![Informatika: CMD irekitzen da](../../irudiak/SEA/proba-informatika-cmd.png)
+*Irudia: Informatikako erabiltzaileak (`C:\Users\infor1`) CMD ireki dezake: segurtasun-iragazkiak (`informatika` taldeari «Aplicar directiva de grupo» ukatuta) Panel_Blokeatu ez aplikatzea eragiten du. ✅*
+
 ![Informatika: gpresult](../../irudiak/SEA/proba-informatika-gpresult.png)
 *Irudia: `infor1` (`OU=Informatika`) erabiltzailearen `gpresult /r`: **Itzali_ez** aplikatuta, eta **Panel_Blokeatu** «Filtrar: Denegado (Seguridad)» → Windows-ek berak erakusten du segurtasun-iragazkiak GPOa blokeatu duela. ✅*
-
-*Aurreko irudia: Informatikako erabiltzaileak (`C:\Users\infor1`) CMD ireki dezake: segurtasun-iragazkiak (`informatika` taldeari «Aplicar directiva de grupo» ukatuta) Panel_Blokeatu ez aplikatzea eragiten du. ✅*
 
 ![mediku1: gpresult](../../irudiak/SEA/proba-mediku1-gpresult.png)
 *Irudia: `gpresult /r`: `CN=Mediku1,OU=Medikuntza,OU=Departamentuak` erabiltzaileari **Panel_Blokeatu** eta **Itzali_ez** aplikatu zaizkio, zerbitzariprintzipala.biohealth.local-etik. ✅*
