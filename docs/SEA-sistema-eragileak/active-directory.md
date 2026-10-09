@@ -105,7 +105,7 @@ biohealth.local
 | `mediku1` | `Win+R` → `control` | ❌ debekatuta | ✅ «Restricciones» leihoa |
 | `mediku1` | Hasiera → itzali botoia | Aukerarik ez | ✅ «No hay disponibles opciones de inicio/apagado» |
 | `mediku1` | `gpresult /r` (PowerShell) | Panel_Blokeatu + Itzali_ez | ✅ biak aplikatuta |
-| `informatika1` | `Win+R` → `cmd` | ✅ irekitzen da (iragazkia) | ⏳ |
+| Informatikako erabiltzailea (`infor1`) | `Win+R` → `cmd` | ✅ irekitzen da (iragazkia) | ✅ CMD irekita |
 | `harrera1` | 5 min itxaron | ✅ pantaila blokeatu eta pasahitza eskatu | ⏳ |
 | `harrera1` | USB bat konektatu | ❌ ukatuta | IsardVDIn ezin da probatu (USB fisikorik ez); konfigurazioaren argazkiarekin justifikatuta |
 
@@ -117,6 +117,9 @@ biohealth.local
 
 ![mediku1: itzaltzeko aukerarik ez](../../irudiak/SEA/proba-mediku1-itzali.png)
 *Irudia: Hasierako itzali botoiak «En este momento no hay disponibles opciones de inicio/apagado» erakusten du → Itzali_ez funtzionatzen du. ✅*
+
+![Informatika: CMD irekitzen da](../../irudiak/SEA/proba-informatika-cmd.png)
+*Irudia: Informatikako erabiltzaileak (`C:\Users\infor1`) CMD ireki dezake: segurtasun-iragazkiak (`informatika` taldeari «Aplicar directiva de grupo» ukatuta) Panel_Blokeatu ez aplikatzea eragiten du. ✅*
 
 ![mediku1: gpresult](../../irudiak/SEA/proba-mediku1-gpresult.png)
 *Irudia: `gpresult /r`: `CN=Mediku1,OU=Medikuntza,OU=Departamentuak` erabiltzaileari **Panel_Blokeatu** eta **Itzali_ez** aplikatu zaizkio, zerbitzariprintzipala.biohealth.local-etik. ✅*
