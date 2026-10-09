@@ -75,7 +75,8 @@ Pentesting-aren egiaztapen teknikoa egiteko, osasun-ingurunea simulatzen duen pr
 |  - Active Directory / Domain Controller (IP: 10.0.2.10)|
 |  - Laborategiko Datu-Basea (LIMS) (IP: 10.0.2.50)      |
 +-------------------------------------------------------+
-```[cite: 13]
+```
+[cite: 13]
 
 ### Laborategiko Ahulgune Nagusiak:
 - **Pazienteen APIa:** API gakoen kudeaketa okerra eta baimen-kontrol gabezia IDOR erasoak simulatzeko[cite: 14].
