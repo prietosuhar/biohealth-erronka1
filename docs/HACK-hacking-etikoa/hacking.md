@@ -92,7 +92,8 @@ Kali Linux-etik Metasploitable makinako (`192.168.1.20`) ataka eta zerbitzu irek
 
 ```bash
 sudo nmap -sV 192.168.1.20
-```[cite: 14]
+```
+[cite: 14]
 
 - **`-sV`:** Escanea los puertos abiertos y detecta la versión exacta de cada servicio (HTTP, FTP, SSH, SMB, etc.)[cite: 15].
 - **`192.168.1.20`:** La dirección IP de tu máquina Metasploitable[cite: 15].
@@ -104,7 +105,8 @@ En unos segundos verás una tabla con columnas como `PORT`, `STATE`, `SERVICE` y
 #### Alternatiba (Metasploitable Kontsoletik Zuzenean):
 ```bash
 sudo netstat -tlpn
-```[cite: 15]
+```
+[cite: 15]
 Muestra todos los puertos en escucha (`LISTEN`) y el nombre del proceso/servicio asignado a cada uno[cite: 15].
 
 ---
@@ -123,7 +125,8 @@ Para ver la lista de procesos en ejecución (*procesuen zerrenda*), depende de e
 - **Monitor dinámico en tiempo real:**
   ```bash
   top
-  ```[cite: 17]
+  ```
+  [cite: 17]
   *(Muestra los procesos actualizándose al momento. Presiona la tecla `q` para salir)*[cite: 17].
 
 - **Filtrar un proceso específico (ejemplo: buscar Apache):**
@@ -134,7 +137,8 @@ Para ver la lista de procesos en ejecución (*procesuen zerrenda*), depende de e
 #### 2. Ver los procesos remotos de Metasploitable desde Kali Linux
 ```bash
 sudo nmap -sS -sV --script=banner 192.168.1.20
-```[cite: 17]
+```
+[cite: 17]
 
 > **Oharra:** Para ver la lista exacta de procesos en tiempo real con comandos como `ps aux`, necesitarías primero ganar acceso a la máquina mediante un exploit o una sesión de SSH/Telnet[cite: 17].
 
@@ -178,8 +182,10 @@ Puedes usar `searchsploit` en tu consola de Kali para encontrar los módulos de 
 
 ```bash
 searchsploit vsftpd 2.3.4
-```[cite: 20]
+```
+[cite: 20]
 
 ```bash
 searchsploit samba 3.0.20
-```[cite: 20]
+```
+[cite: 20]
