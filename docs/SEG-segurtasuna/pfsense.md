@@ -69,14 +69,18 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 | 1 | ✅ Pass | TCP | WWW | DB01 | 3306 | | WordPress-ek eta GLPIk datu-basea behar dute (salbuespena 3. arauaren aurretik) |
 | 2 | ✅ Pass | TCP/UDP | DMZ subnets | DC | 53 (DNS) | | DMZko zerbitzariek domeinuko izenak ebatzi |
 | 3 | ❌ Block | Any | DMZ subnets | LAN subnets | — | ☑ | DMZko zerbitzari bat erasotzen badute, ezin da LANera iritsi (pazienteen datuak) |
-| 4 | ❌ Block | Any | DMZ subnets | This Firewall | — | ☑ | DMZtik pfSense-ren kudeaketa-webera (192.168.20.254:443) sarbidea ukatu; bestela 5. arauak baimenduko luke |
-| 5 | ✅ Pass | TCP | DMZ subnets | any | WEB_PORTAK | | Eguneraketak (`apt`) eta kanpoko webguneak; LAN eta pfSense aurreko arauek blokeatu dituzte → Internet bakarrik |
+| 4 | ✅ Pass | UDP | DMZ subnets | This Firewall | 123 (NTP) | | DMZko zerbitzariek ordua pfSense-tik hartzen dute (logetan NTP blokeoak aurkitu ondoren gehitua; ikus «Suebakiaren logak») |
+| 5 | ❌ Block | Any | DMZ subnets | This Firewall | — | ☑ | DMZtik pfSense-ren kudeaketa-webera (192.168.20.254:443) sarbidea ukatu; bestela 6. arauak baimenduko luke |
+| 6 | ✅ Pass | TCP | DMZ subnets | any | WEB_PORTAK | | Eguneraketak (`apt`) eta kanpoko webguneak; LAN eta pfSense aurreko arauek blokeatu dituzte → Internet bakarrik |
 | — | ❌ (inplizitua) | | | | | | Baimendu ez den guztia ukatuta (pfSense-ren lehenetsitako portaera) |
 
-**Aldaketak proposamenarekiko:** LDAPS araua (meet → DC 636) ez da sortu, Jitsi-k oraindik ez duelako ADrekin autentifikatzen (sortuko da hori konfiguratzen bada); 4. araua gehitu da, diseinua berrikustean pfSense-ren kudeaketa DMZtik irekita geratzen zela ikusi zelako.
+**Aldaketak proposamenarekiko:** LDAPS araua (meet → DC 636) ez da sortu, Jitsi-k oraindik ez duelako ADrekin autentifikatzen (sortuko da hori konfiguratzen bada); 5. araua (pfSense blokeoa) gehitu da, diseinua berrikustean pfSense-ren kudeaketa DMZtik irekita geratzen zela ikusi zelako.
 
 ![DMZ arauak](../../irudiak/SEG/pfsense-dmz-arauak.png)
-*Irudia: DMZ interfazearen 5 arauak, ordena zuzenean eta aplikatuta. Block arauek (✖) log-a gaituta dute (☰ ikonoa).*
+*Irudia: DMZ interfazearen lehen 5 arauak. Block arauek (✖) log-a gaituta dute (☰ ikonoa).*
+
+![DMZ arauak NTPrekin](../../irudiak/SEG/pfsense-dmz-arauak-ntp.png)
+*Irudia: azken bertsioa (6 arau): NTP araua pfSense-ren blokeoaren **gainean** kokatu da, bestela blokeoak lehenago bat egingo luke. States zutabean ikusten da arauek trafikoa jasotzen dutela (DNS 6 KiB, eguneraketak 71 MiB, blokeoak 252 B / 180 B).*
 
 ### WAN (NAT – port forward)
 
@@ -101,17 +105,17 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 | Araua | Proba | Espero dena | Emaitza |
 |---|---|---|---|
 | 2 – DNS | `nslookup db01.biohealth.local 192.168.10.1` | ✅ ebazten da | ✅ `Address: 192.168.10.3` |
-| 5 – web irteera | `sudo apt update` | ✅ deskargatzen du | ✅ 21,1 MB es.archive.ubuntu.com-etik |
+| 6 – web irteera | `sudo apt update` | ✅ deskargatzen du | ✅ 21,1 MB es.archive.ubuntu.com-etik |
 | 3 – DMZ → LAN | `ping -c 3 192.168.10.1` | ❌ blokeatuta | ✅ `100% packet loss` |
-| 4 – DMZ → pfSense | `curl -k -m 5 https://192.168.20.254` | ❌ blokeatuta | ✅ `Connection timed out` |
+| 5 – DMZ → pfSense | `curl -k -m 5 https://192.168.20.254` | ❌ blokeatuta | ✅ `Connection timed out` |
 | inplizitua | `ping -c 3 8.8.8.8` (ICMP Internetera) | ❌ baimendu gabe | ✅ `100% packet loss` |
 | 1 – www → db01:3306 | `nc -zv 192.168.10.3 3306` | ✅ | ⏳ db01-en MariaDB martxan dagoenean |
 
 ![DNS eta apt](../../irudiak/SEG/proba-dmz-dns-apt.png)
-*Irudia: DMZtik domeinuko izenak ebazten dira DCaren bidez (2. araua) eta `apt update`-ek Internetetik deskargatzen du 80 portutik (5. araua). ✅*
+*Irudia: DMZtik domeinuko izenak ebazten dira DCaren bidez (2. araua) eta `apt update`-ek Internetetik deskargatzen du 80 portutik (6. araua). ✅*
 
 ![Blokeoak](../../irudiak/SEG/proba-dmz-blokeoak.png)
-*Irudia: DMZtik LANera (DC, 192.168.10.1) ping-ak huts egiten du (3. araua), pfSense-ren kudeaketa-webera ezin da sartu (4. araua) eta baimendu gabeko trafikoa (ICMP Internetera) ukatuta dago (arau inplizitua). ✅*
+*Irudia: DMZtik LANera (DC, 192.168.10.1) ping-ak huts egiten du (3. araua), pfSense-ren kudeaketa-webera ezin da sartu (5. araua) eta baimendu gabeko trafikoa (ICMP Internetera) ukatuta dago (arau inplizitua). ✅*
 
 ### Suebakiaren logak
 
@@ -123,7 +127,7 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 ![Logak 2](../../irudiak/SEG/pfsense-log-dmz-2.png)
 *Irudia: `curl` pfSense-ra (TCP SYN → 192.168.20.254:443) **«DMZ-tik pfSense kudeaketa ukatu»** arauak blokeatuta; ping-a 8.8.8.8-ra **Default deny rule**-ak blokeatuta. Log-ek erakusten dute zein arauk blokeatu duen paketea. ✅*
 
-**Logetan aurkitutakoa:** www-k etengabe **UDP 123 (NTP)** bidaltzen du Interneteko denbora-zerbitzarietara (185.125.190.x = ntp.ubuntu.com) eta *Default deny*-k blokeatzen ditu → zerbitzariak ezin du ordua sinkronizatu. Ordu okerrak HTTPS ziurtagiriak eta logen datak hondatzen ditu; ikus 6. araua.
+**Logetan aurkitutakoa:** www-k etengabe **UDP 123 (NTP)** bidaltzen du Interneteko denbora-zerbitzarietara (185.125.190.x = ntp.ubuntu.com) eta *Default deny*-k blokeatzen ditu → zerbitzariak ezin du ordua sinkronizatu. Ordu okerrak HTTPS ziurtagiriak eta logen datak hondatzen ditu; konponbidea: 4. araua (NTP → pfSense) eta www-n `NTP=192.168.20.254` (`/etc/systemd/timesyncd.conf`).
 
 ## Arazoak eta logak
 
