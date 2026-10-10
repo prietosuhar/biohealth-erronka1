@@ -154,10 +154,55 @@ biohealth.local
 ![BEZ-WIN01 domeinuan, mediku1 erabiltzailearekin](../../irudiak/SEA/bezeroa-domeinuan-cmd.png)
 *Irudia: Medikuntza saileko `mediku1` erabiltzaileak BEZ-WIN01-en saioa hasi du. `whoami` → `biohealth\mediku1`, `hostname` → `BEZ-WIN01` eta `systeminfo` → `Dominio: biohealth.local`. Honek erakusten du bezeroa domeinuan dagoela eta direktorio-zerbitzua erabiltzaileak zentralizatuki egiaztatzeko erabiltzen dela. ✅*
 
-## Zerbitzuen kudeaketa eta prozesuak ⏳
+## Zerbitzuen kudeaketa eta prozesuak 🔄
 
-- [ ] AD zerbitzuak (`NTDS`, `DNS`, `Netlogon`, `KDC`) gelditu / abiarazi / berrabiarazi eta egoera egiaztatu (`services.msc` eta `Get-Service`)
-- [ ] Prozesuak: Task Manager / Process Explorer (grafikoa) eta `Get-Process`, `Stop-Process`, `tasklist`, `taskkill` (komandoak)
+### AD zerbitzuak ✅
+
+| Zerbitzua (`Name`) | Izena | Funtzioa |
+|---|---|---|
+| `NTDS` | Servicios de dominio de Active Directory | Direktorioaren datu-basea (erabiltzaileak, taldeak, OUak, GPOak) |
+| `Kdc` | Centro de distribución de claves Kerberos | Autentifikazioa (saio-hasiera, txartelak) |
+| `Netlogon` | Net Logon | Erabiltzaileak eta ekipoak egiaztatu, SRV erregistroak erregistratu |
+| `DNS` | Servidor DNS | Izenak ebatzi; ADren zonak gordetzen ditu |
+| `DFSR` | Replicación DFS | SYSVOL karpeta (GPOak, scriptak) erreplikatu |
+| `IsmServ` | Mensajería entre sitios | Gune desberdinen arteko erreplikazioa |
+
+#### Modu grafikoa (`services.msc`)
+
+![NTDS gelditu: mendekotasunak](../../irudiak/SEA/zerbitzuak-ntds-gelditu-mendekotasunak.png)
+*Irudia: «Servicios de dominio de Active Directory» gelditzean, Windows-ek ohartarazten du mendeko zerbitzuak ere geldituko direla: Kerberos (KDC), Mensajería entre sitios, Servidor DNS eta Replicación DFS.*
+
+![NTDS berriro martxan](../../irudiak/SEA/zerbitzuak-ntds-martxan.png)
+*Irudia: zerbitzua berriro abiarazita: «En ejecución»; DNS zerbitzaria «Iniciando» egoeran.*
+
+#### Komandoak (PowerShell)
+
+```powershell
+Get-Service NTDS, Kdc, IsmServ, DNS, DFSR, Netlogon | Format-Table Name, DisplayName, Status
+Stop-Service NTDS -Force
+Start-Service NTDS, Kdc, IsmServ, DNS, DFSR
+Restart-Service NTDS -Force
+```
+
+![Mendeko zerbitzuak geldituta](../../irudiak/SEA/zerbitzuak-mendekotasunak-geldituta.png)
+*Irudia (arazoa): NTDS berriro abiarazi ondoren `IsmServ` eta `Kdc` **Stopped** geratu ziren.*
+
+![Zerbitzu guztiak martxan](../../irudiak/SEA/zerbitzuak-denak-martxan.png)
+*Irudia (konponbidea): `Start-Service Kdc, IsmServ` → sei zerbitzuak **Running**.*
+
+![Gelditu eta efektua](../../irudiak/SEA/zerbitzuak-ps-gelditu.png)
+*Irudia: `Stop-Service NTDS -Force` → egoera **Stopped**. Ondoren `Get-ADUser mediku1` huts egiten du: «No se pudo encontrar ningún servidor… Servicios web de Active Directory» (`ADServerDownException`) → AD gabe direktorioa ezin da kontsultatu. ❌ (espero zena)*
+
+![Abiarazi](../../irudiak/SEA/zerbitzuak-ps-abiarazi.png)
+*Irudia: `Start-Service NTDS, Kdc, IsmServ, DNS, DFSR` → DNS zerbitzariak segundo batzuk behar ditu («Esperando a que se inicie…»); azkenean lau zerbitzuak **Running**. (Lehen `Format-Table`-ak zutabea hutsik erakusten du `Statu` gaizki idatzi zelako.)*
+
+![Berrabiarazi](../../irudiak/SEA/zerbitzuak-ps-berrabiarazi.png)
+*Irudia: `Restart-Service NTDS -Force` → NTDS, Kdc eta IsmServ **Running**. ✅*
+
+### Prozesuak ⏳
+
+- [ ] Grafikoa: Task Manager (Xehetasunak: PID, lehentasuna, amaitu) eta Resource Monitor
+- [ ] Komandoak: `Get-Process`, `Stop-Process`, `tasklist`, `taskkill`
 
 ## Arazoak eta logak
 
@@ -165,4 +210,5 @@ biohealth.local
 |---|---|---|
 | NetBIOS izena moztuta | 15 karaktereko muga | Onartu eta dokumentatu |
 | `reg query "HKCU\Software\Policies\Microsoft\Control Panel\Desktop"` → *no ha podido encontrar la clave* | Bidean `Windows\` falta zen | Bide zuzena: `HKCU\Software\Policies\Microsoft\Windows\Control Panel\Desktop` |
+| NTDS berriro abiaraztean, `Kdc` eta `IsmServ` **Stopped** geratu ziren → domeinuko saio-hasierak huts egingo luke | NTDS gelditzean mendeko zerbitzuak ere gelditzen dira, baina NTDS abiaraztean **ez dira automatikoki abiarazten** | `Start-Service Kdc, IsmServ` eta `Get-Service`-rekin egiaztatu; aurrerantzean `Start-Service NTDS, Kdc, IsmServ, DNS, DFSR` batera |
 | Ekipoa ezin itzali `mediku1`-en saiotik (behartu egin behar izan zen) | Itzali_ez GPOak erabiltzailearen saioan itzaltzeko aukerak kentzen ditu (nahita) | **Saioa itxi** eta saio-hasierako pantailako itzali botoia erabili (han ez dago erabiltzailearen GPOrik); edo administratzaile batekin |
