@@ -202,10 +202,25 @@ Restart-Service NTDS -Force
 ![Berrabiarazi](../../irudiak/SEA/zerbitzuak-ps-berrabiarazi.png)
 *Irudia: `Restart-Service NTDS -Force` → NTDS, Kdc eta IsmServ **Running**. ✅*
 
-### Prozesuak ⏳
+### Prozesuak 🔄
 
-- [ ] Grafikoa: Task Manager (Xehetasunak: PID, lehentasuna, amaitu) eta Resource Monitor
-- [ ] Komandoak: `Get-Process`, `Stop-Process`, `tasklist`, `taskkill`
+Adibide gisa **Bloc de notas** (`notepad.exe`) erabili da, amaitzeak sistemari eragiten ez diolako.
+
+#### Modu grafikoa
+
+![Task Manager: Xehetasunak](../../irudiak/SEA/prozesuak-taskmgr-xehetasunak.png)
+*Irudia: Administrador de tareas → **Detalles**: prozesu bakoitzaren izena, **PID**a (notepad.exe = 3412), egoera, erabiltzailea, CPU eta memoria. ADren prozesuak ere ikusten dira: `lsass.exe` (AD DS eta Kerberos honen barruan exekutatzen dira), `dns.exe`, `ismserv.exe`, `dfsrs.exe`, `Microsoft.ActiveDirectory.WebServices`.*
+
+![Lehentasuna aldatu](../../irudiak/SEA/prozesuak-taskmgr-lehentasuna.png)
+*Irudia: notepad.exe → *Establecer prioridad* → **Alta**. Lehentasunak zehazten du prozesadorearen denbora zenbat ematen zaion prozesuari (Baja → Tiempo real).*
+
+![Prozesua amaitu](../../irudiak/SEA/prozesuak-taskmgr-amaitu.png)
+*Irudia: *Finalizar tarea* → Windows-ek berrespena eskatzen du, gorde gabeko datuak gal daitezkeelako eta sistema-prozesu bat bada sistema ezegonkor geratu daitekeelako. (PID 4708: Bloc de notas berriro ireki zen, PIDa exekuzio bakoitzean aldatzen da.)*
+
+![Resource Monitor](../../irudiak/SEA/prozesuak-resmon.png)
+*Irudia: Monitor de recursos (`resmon`) → **CPU**: prozesuak (PID, hari-kopurua, CPU erabilera), zerbitzuak eta CPU bakoitzaren grafikoak denbora errealean.*
+
+#### Komandoak ⏳
 
 ## Arazoak eta logak
 
