@@ -9,7 +9,7 @@ Pazienteen osasun-datuak kudeatzen ditugu (DBEO 9. art., kategoria berezia), ber
 
 - **Domeinua:** `biohealth.local` (NetBIOS: `BIOHEALTH`)
 - **Ingurunea:** IsardVDI (makina birtualak)
-- **Taldea:** [Kide 1] · [Kide 2] · [Kide 3] · kantonsh
+- **Taldea:** Gaizka · Alex · Garazi · Suhar
 
 ## Dokumentazioa ikasgaika
 
