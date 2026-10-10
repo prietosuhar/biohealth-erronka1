@@ -145,6 +145,36 @@ FLUSH PRIVILEGES;
 ![wp_user baimenak](../../irudiak/DBKSA/mariadb-grants-wp-user.png)
 *Irudia: `SHOW GRANTS FOR 'wp_user'@'192.168.20.10'`: `USAGE` (konektatzeko baimena bakarrik, ezer gehiago ez) eta `ALL PRIVILEGES` `wordpress` datu-basean soilik. Pasahitzaren hash-a ezkutatuta. ✅*
 
+### Diagnostikoa: 2002 errorea pausoz pauso
+
+| # | Proba | Emaitza | Ondorioa |
+|---|---|---|---|
+| 1 | db01: `ss -tlnp \| grep 3306` | `192.168.10.3:3306` LISTEN | MariaDB ondo ✅ |
+| 2 | db01: `ip r` | default via 192.168.10.254; VPN txartela 10.x-rako bakarrik | Itzulerako bidea ondo ✅ |
+| 3 | www: `curl http://es.archive.ubuntu.com` | `HTTP/1.1 200 OK` | pfSense-k DMZ bideratzen du ✅ |
+| 4 | www: `nc -zv -w 5 192.168.10.3 3306` | `timed out` | 3306 bakarrik blokeatuta ❌ |
+| 5 | db01: `sudo ufw status` | `active`, 22 bakarrik | **Kausa aurkituta** |
+
+![2002 errorea](../../irudiak/DBKSA/proba-www-errorea-2002.png)
+*Irudia: www-tik konektatzean `ERROR 2002 … (115)`.*
+
+![ss](../../irudiak/DBKSA/diag-db01-ss.png)
+*Irudia: MariaDB 192.168.10.3:3306-en entzuten.*
+
+![ip r](../../irudiak/DBKSA/diag-db01-ip-r.png)
+*Irudia: db01-en bideak: lehenetsitakoa pfSense-ra.*
+
+![curl eta nc](../../irudiak/DBKSA/diag-www-curl-nc.png)
+*Irudia: www-k Internetera irteten du, baina 3306 portuak timeout ematen du.*
+
+![ufw](../../irudiak/DBKSA/diag-db01-ufw.png)
+*Irudia: db01-en ufw aktibo, 22 portua bakarrik.*
+
+![ufw 3306](../../irudiak/DBKSA/db01-ufw-3306.png)
+*Irudia: konponbidea: 3306/tcp baimendua **192.168.20.10-etik bakarrik**. ✅*
+
+**Defentsa sakonean** — datu-basera iristeko 4 geruza: (1) pfSense 1. araua, (2) db01-en ufw, (3) `bind-address`, (4) MariaDBko erabiltzailea `@'192.168.20.10'`.
+
 ## Probak ⏳
 
 ## Logak eta erroreak 🔄
@@ -154,6 +184,7 @@ FLUSH PRIVILEGES;
 | Errorea | Esanahia | Kausa | Konponbidea |
 |---|---|---|---|
 | (errorerik gabe) erabiltzaileen pasahitza gidako adibidea zen (`TU_CONTRASEÑA`) | Komandoa adibidearen testua aldatu gabe kopiatu zen; `SHOW GRANTS`-eko hash-a egiaztatuz aurkitu zen | `ALTER USER '...'@'192.168.20.10' IDENTIFIED BY '********';` bi erabiltzaileentzat. Bash-en `!` duten pasahitzak `"..."` barruan *event not found* ematen du → `sudo mysql` barruan exekutatu |
+| `ERROR 2002 (HY000): Can't connect to MySQL server on '192.168.10.3' (115)` (www-tik) | TCP konexioa ezin izan da ezarri; **(115)** = itxaroten geratu da erantzunik gabe (*timeout*). Ez da pasahitza (hori 1045 izango litzateke) ezta MariaDB itzalita ere (hori (111) *refused* izango litzateke) | db01-k **ufw** suebakia aktibo zuen (IsardVDI txantiloitik), 22 portua bakarrik baimenduta | `sudo ufw allow from 192.168.20.10 to any port 3306 proto tcp comment 'www -> MariaDB'` |
 | `ERROR 1064 (42000) ... near ':' at line 1` | SQL sintaxi-errorea; MariaDBk zehazten du non: `':'` ikurraren ondoan | `SHOW DATABASES:` — aginduaren amaieran `;` ordez `:` idatzi zen | `SHOW DATABASES;` → ondo (ikus goiko irudia) |
 
 ![1064 errorea](../../irudiak/DBKSA/mariadb-errorea-1064.png)
