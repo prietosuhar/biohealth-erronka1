@@ -175,7 +175,16 @@ FLUSH PRIVILEGES;
 
 **Defentsa sakonean** — datu-basera iristeko 4 geruza: (1) pfSense 1. araua, (2) db01-en ufw, (3) `bind-address`, (4) MariaDBko erabiltzailea `@'192.168.20.10'`.
 
-## Probak ⏳
+## Probak (www-tik) ✅
+
+| Proba | Espero dena | Emaitza |
+|---|---|---|
+| `nc -zv -w 5 192.168.10.3 3306` | ✅ portua irekita | ✅ `succeeded` |
+| `mysql -h 192.168.10.3 -u wp_user -p -e "SHOW DATABASES;"` | ✅ `wordpress` bakarrik | ✅ `information_schema` + `wordpress` (ez glpi, ez mysql) |
+| `mysql -h 192.168.10.3 -u wp_user -p -e "USE glpi;"` | ❌ ukatuta | ✅ `ERROR 1044 (42000): Access denied for user 'wp_user'@'192.168.20.10' to database 'glpi'` |
+
+![www-tik probak](../../irudiak/DBKSA/proba-www-wp-user.png)
+*Irudia: www-tik (DMZ) db01-era (LAN) konexioa: pfSense-ren 1. araua eta db01-en ufw-a gainditzen ditu; `wp_user`-ek bere datu-basea bakarrik ikusten du eta `glpi`-ra sartzean 1044 errorea → gutxieneko pribilegioa funtzionatzen du. ✅*
 
 ## Logak eta erroreak 🔄
 
@@ -184,6 +193,7 @@ FLUSH PRIVILEGES;
 | Errorea | Esanahia | Kausa | Konponbidea |
 |---|---|---|---|
 | (errorerik gabe) erabiltzaileen pasahitza gidako adibidea zen (`TU_CONTRASEÑA`) | Komandoa adibidearen testua aldatu gabe kopiatu zen; `SHOW GRANTS`-eko hash-a egiaztatuz aurkitu zen | `ALTER USER '...'@'192.168.20.10' IDENTIFIED BY '********';` bi erabiltzaileentzat. Bash-en `!` duten pasahitzak `"..."` barruan *event not found* ematen du → `sudo mysql` barruan exekutatu |
+| `ERROR 1044 (42000): Access denied for user 'wp_user'@'192.168.20.10' to database 'glpi'` | Baimen-errorea: erabiltzailea autentifikatuta dago, baina ez du datu-base horretarako baimenik | Nahita egindako proba: `wp_user`-ek `wordpress.*`-n bakarrik ditu baimenak | — (espero zen portaera) |
 | `ERROR 2002 (HY000): Can't connect to MySQL server on '192.168.10.3' (115)` (www-tik) | TCP konexioa ezin izan da ezarri; **(115)** = itxaroten geratu da erantzunik gabe (*timeout*). Ez da pasahitza (hori 1045 izango litzateke) ezta MariaDB itzalita ere (hori (111) *refused* izango litzateke) | db01-k **ufw** suebakia aktibo zuen (IsardVDI txantiloitik), 22 portua bakarrik baimenduta | `sudo ufw allow from 192.168.20.10 to any port 3306 proto tcp comment 'www -> MariaDB'` |
 | `ERROR 1064 (42000) ... near ':' at line 1` | SQL sintaxi-errorea; MariaDBk zehazten du non: `':'` ikurraren ondoan | `SHOW DATABASES:` — aginduaren amaieran `;` ordez `:` idatzi zen | `SHOW DATABASES;` → ondo (ikus goiko irudia) |
 
