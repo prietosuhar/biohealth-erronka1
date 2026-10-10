@@ -88,13 +88,30 @@ sudo ss -tlnp | grep 3306
 ![SHOW DATABASES](../../irudiak/DBKSA/mariadb-show-databases.png)
 *Irudia: `sudo mysql` (unix_socket) bidez root gisa sartuta: sistemaren datu-baseak bakarrik (`information_schema`, `mysql`, `performance_schema`); `test` jada ez dago. ✅*
 
+### Sarera ireki (`bind-address`)
+
+Lehenetsita MariaDBk `127.0.0.1`-en bakarrik entzuten du; www-k konektatu ahal izateko LANeko IPan entzun behar du:
+
+```bash
+sudo sed -i 's/^bind-address.*/bind-address            = 192.168.10.3/' /etc/mysql/mariadb.conf.d/50-server.cnf
+sudo systemctl restart mariadb
+sudo ss -tlnp | grep 3306
+```
+
+**Zergatik `192.168.10.3` eta ez `0.0.0.0`:** LANeko txartelean bakarrik entzuteko. Gainera, suebakiak (1. araua) www-ri bakarrik uzten dio 3306 portura iristen, eta MariaDBko erabiltzaileak `@'192.168.20.10'` bezala sortzen dira → hiru babes-geruza.
+
+![bind-address](../../irudiak/DBKSA/mariadb-bind-address.png)
+*Irudia: MariaDB orain `192.168.10.3:3306`-en entzuten. ✅*
+
+> Oharra: IsardVDIko kontsola nabigatzailean dago; nano-n `Ctrl+W` (bilatu) sakatzean nabigatzaileak fitxa ixten du. Horregatik `sed` erabili da (edo nano-n `F6`).
+
 ## Ustiapen-ezaugarriak ⏳
 
 | Parametroa | Balioa |
 |---|---|
 | Portua | 3306/TCP |
 | Konfigurazio-fitxategia | `/etc/mysql/mariadb.conf.d/50-server.cnf` |
-| `bind-address` | |
+| `bind-address` | `192.168.10.3` |
 | Pizte / itzaltzea / egoera | `systemctl start / stop / restart / status mariadb` |
 | Konexio-parametroak | `max_connections`, `MAX_USER_CONNECTIONS` |
 | Logak | `/var/log/mysql/error.log` · `journalctl -u mariadb` |
