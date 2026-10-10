@@ -8,4 +8,4 @@ title: DBKSA – Datu-baseak
 
 | Orria | Errubrikako irizpideak | Egoera |
 |---|---|---|
-| [Datu-baseak (MariaDB + MongoDB)](datu-baseak.md) | IE1: DBKSren aukeraketa eta instalazioa · IE2: ustiapen-ezaugarriak · IE3: erabiltzaileak eta baimenak | ⏳ |
+| [Datu-baseak (MariaDB)](datu-baseak.md) | IE1: DBKSren aukeraketa eta instalazioa · IE2: ustiapen-ezaugarriak · IE3: erabiltzaileak eta baimenak | ⏳ |
