@@ -54,6 +54,34 @@ title: Sarearen diseinua
    └─ bezeroak .102–.200
 ```
 
+## DMZko zerbitzariaren sare-konfigurazioa (www)
+
+Ubuntu Server 20.04 (IsardVDI txantiloia) · txartela `enp1s0` · sarea Pertsonala2 · `/etc/netplan/00-installer-config.yaml`:
+
+```yaml
+network:
+  version: 2
+  ethernets:
+    enp1s0:
+      dhcp4: false
+      addresses:
+        - 192.168.20.10/24
+      gateway4: 192.168.20.254
+      nameservers:
+        addresses: [192.168.10.1]
+        search: [biohealth.local]
+```
+
+`sudo netplan apply` · `sudo hostnamectl set-hostname www`
+
+![www netplan](../../irudiak/SEG/www-netplan.png)
+*Irudia: www-ren netplan fitxategia: IP finkoa 192.168.20.10/24, atebidea pfSense-ren DMZ interfazea (.254) eta DNS domeinu-kontrolatzailea.*
+
+![www ip a eta ip r](../../irudiak/SEG/www-ip-a-ip-r.png)
+*Irudia: `enp1s0` UP 192.168.20.10/24 helbidearekin eta lehenetsitako bidea `via 192.168.20.254`. ✅*
+
+> Txantiloiak klaseko konfigurazioa zekarren (`ens1`, 192.168.71.51, `uni.lan`); osorik ordezkatu da. Lehen saiakeran `enp1s0` ondoren `:` falta zen.
+
 ## Ebidentziak
 
 - [ ] IsardVDI: makina bakoitzaren sareak (argazkia)
