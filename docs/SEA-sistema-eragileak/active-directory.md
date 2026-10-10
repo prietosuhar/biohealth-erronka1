@@ -196,6 +196,9 @@ Restart-Service NTDS -Force
 ![Abiarazi](../../irudiak/SEA/zerbitzuak-ps-abiarazi.png)
 *Irudia: `Start-Service NTDS, Kdc, IsmServ, DNS, DFSR` → DNS zerbitzariak segundo batzuk behar ditu («Esperando a que se inicie…»); azkenean lau zerbitzuak **Running**. (Lehen `Format-Table`-ak zutabea hutsik erakusten du `Statu` gaizki idatzi zelako.)*
 
+![Get-ADUser berriro](../../irudiak/SEA/zerbitzuak-ps-getaduser-ok.png)
+*Irudia: AD berriro martxan dagoenean `Get-ADUser mediku1`-ek erabiltzailearen datuak itzultzen ditu (DN: `CN=Mediku1,OU=Medikuntza,OU=Departamentuak,DC=biohealth,DC=local`, UPN: `Mediku1@biohealth.local`). ✅*
+
 ![Berrabiarazi](../../irudiak/SEA/zerbitzuak-ps-berrabiarazi.png)
 *Irudia: `Restart-Service NTDS -Force` → NTDS, Kdc eta IsmServ **Running**. ✅*
 
