@@ -113,6 +113,18 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 ![Blokeoak](../../irudiak/SEG/proba-dmz-blokeoak.png)
 *Irudia: DMZtik LANera (DC, 192.168.10.1) ping-ak huts egiten du (3. araua), pfSense-ren kudeaketa-webera ezin da sartu (4. araua) eta baimendu gabeko trafikoa (ICMP Internetera) ukatuta dago (arau inplizitua). ✅*
 
+### Suebakiaren logak
+
+*Status → System Logs → Firewall* → iragazkia: Source IP `192.168.20.10`
+
+![Logak 1](../../irudiak/SEG/pfsense-log-dmz-1.png)
+*Irudia: www-ren ping-ak DCra **«DMZ LAN ukatu»** arauak blokeatuta (ICMP → 192.168.10.1).*
+
+![Logak 2](../../irudiak/SEG/pfsense-log-dmz-2.png)
+*Irudia: `curl` pfSense-ra (TCP SYN → 192.168.20.254:443) **«DMZ-tik pfSense kudeaketa ukatu»** arauak blokeatuta; ping-a 8.8.8.8-ra **Default deny rule**-ak blokeatuta. Log-ek erakusten dute zein arauk blokeatu duen paketea. ✅*
+
+**Logetan aurkitutakoa:** www-k etengabe **UDP 123 (NTP)** bidaltzen du Interneteko denbora-zerbitzarietara (185.125.190.x = ntp.ubuntu.com) eta *Default deny*-k blokeatzen ditu → zerbitzariak ezin du ordua sinkronizatu. Ordu okerrak HTTPS ziurtagiriak eta logen datak hondatzen ditu; ikus 6. araua.
+
 ## Arazoak eta logak
 
 | Arazoa | Kausa | Konponbidea |
