@@ -85,6 +85,9 @@ sudo ss -tlnp | grep 3306
 ![mysql_secure_installation](../../irudiak/DBKSA/mariadb-secure-installation.png)
 *Irudia: `mysql_secure_installation` osatuta: erabiltzaile anonimoak eta `test` datu-basea ezabatuta, root urrunetik debekatuta. ✅*
 
+![SHOW DATABASES](../../irudiak/DBKSA/mariadb-show-databases.png)
+*Irudia: `sudo mysql` (unix_socket) bidez root gisa sartuta: sistemaren datu-baseak bakarrik (`information_schema`, `mysql`, `performance_schema`); `test` jada ez dago. ✅*
+
 ## Ustiapen-ezaugarriak ⏳
 
 | Parametroa | Balioa |
@@ -112,7 +115,7 @@ sudo ss -tlnp | grep 3306
 
 | Errorea | Esanahia | Kausa | Konponbidea |
 |---|---|---|---|
-| `ERROR 1064 (42000) ... near ':' at line 1` | SQL sintaxi-errorea; MariaDBk zehazten du non: `':'` ikurraren ondoan | `SHOW DATABASES:` — aginduaren amaieran `;` ordez `:` idatzi zen | `SHOW DATABASES;` |
+| `ERROR 1064 (42000) ... near ':' at line 1` | SQL sintaxi-errorea; MariaDBk zehazten du non: `':'` ikurraren ondoan | `SHOW DATABASES:` — aginduaren amaieran `;` ordez `:` idatzi zen | `SHOW DATABASES;` → ondo (ikus goiko irudia) |
 
 ![1064 errorea](../../irudiak/DBKSA/mariadb-errorea-1064.png)
 *Irudia: `SELECT VERSION()` ondo exekutatu da (10.3.39-MariaDB-0ubuntu0.20.04.2), baina bigarren aginduak 1064 errorea eman du sintaxi-akats batengatik. Mezuak errore-kodea, SQLSTATE (42000) eta kokapena (`near ':'`) ematen ditu.*
