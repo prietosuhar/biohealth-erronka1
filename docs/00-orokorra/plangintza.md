@@ -28,6 +28,7 @@ Plangintza GitHub-eko **Issues / Projects** taulan egiten da (zeregin bat pauso 
 | 2026-10-09 | kantonsh | GPOak: Panel_Blokeatu osatuta (CMD + informatika iragazkia), GPO-Harrera sortuta; probak mediku1, infor1 eta harrera1-ekin | AD zerbitzuak eta prozesuak, DMZ |
 | 2026-10-10 | kantonsh | AD zerbitzuak (gelditu/abiarazi/berrabiarazi, GUI + PowerShell) eta prozesuak (Task Manager, resmon, PowerShell, CMD) | DMZ, db01 |
 | 2026-10-10 | kantonsh | DMZ (OPT1, aliasak, 6 arau, logak, NTP), www DMZn (netplan), DNS DMZ (20.168.192 zona, www, meet) | db01, WordPress |
+| 2026-10-10 | kantonsh | db01 (LAN): netplan, MariaDB 10.3 instalatu eta segurtatu, bind-address, wordpress/glpi datu-baseak eta erabiltzaileak, ufw 3306, www-tiko probak; 3 errore interpretatuta (1064, 2002, 1044) | MariaDB ustiapena, WordPress |
 
 ## Aldaketak plangintzan
 
