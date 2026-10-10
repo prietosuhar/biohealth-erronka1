@@ -137,7 +137,7 @@ FLUSH PRIVILEGES;
 - **Gutxieneko pribilegioa:** aplikazio bakoitzak bere erabiltzailea eta bere datu-basea; WordPress erasotzen badute ezin dute GLPIren daturik irakurri.
 - **`@'192.168.20.10'`:** erabiltzaileak www-tik bakarrik konekta daitezke; beste edozein IPtatik MariaDBk ukatzen du, pasahitza jakin arren.
 - **`utf8mb4`:** karaktere guztiak (azentuak, ñ, emojiak) gordetzeko.
-- Pasahitzak ez dira biltegian gordetzen.
+- Pasahitzak ez dira biltegian gordetzen. Laborategian pasahitz bera erabili da hainbat zerbitzutan (domeinua, pfSense, MariaDB) ez ahazteko; **enpresa erreal batean** zerbitzu bakoitzak berea izango luke, pasahitz-kudeatzaile batean (adib. KeePass) gordeta.
 
 ![Datu-baseak eta erabiltzaileak](../../irudiak/DBKSA/mariadb-dbak-erabiltzaileak.png)
 *Irudia: `wordpress` eta `glpi` datu-baseak sortuta; erabiltzaileak: `glpi_user@192.168.20.10`, `wp_user@192.168.20.10` eta `root@localhost` (anonimorik ez). ✅*
@@ -153,6 +153,7 @@ FLUSH PRIVILEGES;
 
 | Errorea | Esanahia | Kausa | Konponbidea |
 |---|---|---|---|
+| (errorerik gabe) erabiltzaileen pasahitza gidako adibidea zen (`TU_CONTRASEÑA`) | Komandoa adibidearen testua aldatu gabe kopiatu zen; `SHOW GRANTS`-eko hash-a egiaztatuz aurkitu zen | `ALTER USER '...'@'192.168.20.10' IDENTIFIED BY '********';` bi erabiltzaileentzat. Bash-en `!` duten pasahitzak `"..."` barruan *event not found* ematen du → `sudo mysql` barruan exekutatu |
 | `ERROR 1064 (42000) ... near ':' at line 1` | SQL sintaxi-errorea; MariaDBk zehazten du non: `':'` ikurraren ondoan | `SHOW DATABASES:` — aginduaren amaieran `;` ordez `:` idatzi zen | `SHOW DATABASES;` → ondo (ikus goiko irudia) |
 
 ![1064 errorea](../../irudiak/DBKSA/mariadb-errorea-1064.png)
