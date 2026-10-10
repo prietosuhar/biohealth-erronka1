@@ -96,14 +96,22 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 
 *(aukerak: OpenVPN / WireGuard / IPsec · erabakia · konfigurazioa · proba)*
 
-## Probak
+## Probak (www-tik, 192.168.20.10)
 
-| Proba | Nondik | Espero dena |
-|---|---|---|
-| `nc -zv 192.168.10.3 3306` | www | ✅ (1. araua) |
-| `ping 192.168.10.1` | www | ❌ (4. araua) |
-| `https://meet.biohealth.local` | BEZ-WIN01 | ✅ |
-| *Status → System Logs → Firewall* | pfSense | Blokeatutako ping-a ageri da |
+| Araua | Proba | Espero dena | Emaitza |
+|---|---|---|---|
+| 2 – DNS | `nslookup db01.biohealth.local 192.168.10.1` | ✅ ebazten da | ✅ `Address: 192.168.10.3` |
+| 5 – web irteera | `sudo apt update` | ✅ deskargatzen du | ✅ 21,1 MB es.archive.ubuntu.com-etik |
+| 3 – DMZ → LAN | `ping -c 3 192.168.10.1` | ❌ blokeatuta | ✅ `100% packet loss` |
+| 4 – DMZ → pfSense | `curl -k -m 5 https://192.168.20.254` | ❌ blokeatuta | ✅ `Connection timed out` |
+| inplizitua | `ping -c 3 8.8.8.8` (ICMP Internetera) | ❌ baimendu gabe | ✅ `100% packet loss` |
+| 1 – www → db01:3306 | `nc -zv 192.168.10.3 3306` | ✅ | ⏳ db01-en MariaDB martxan dagoenean |
+
+![DNS eta apt](../../irudiak/SEG/proba-dmz-dns-apt.png)
+*Irudia: DMZtik domeinuko izenak ebazten dira DCaren bidez (2. araua) eta `apt update`-ek Internetetik deskargatzen du 80 portutik (5. araua). ✅*
+
+![Blokeoak](../../irudiak/SEG/proba-dmz-blokeoak.png)
+*Irudia: DMZtik LANera (DC, 192.168.10.1) ping-ak huts egiten du (3. araua), pfSense-ren kudeaketa-webera ezin da sartu (4. araua) eta baimendu gabeko trafikoa (ICMP Internetera) ukatuta dago (arau inplizitua). ✅*
 
 ## Arazoak eta logak
 
