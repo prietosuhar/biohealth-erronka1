@@ -109,7 +109,7 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 | 3 – DMZ → LAN | `ping -c 3 192.168.10.1` | ❌ blokeatuta | ✅ `100% packet loss` |
 | 5 – DMZ → pfSense | `curl -k -m 5 https://192.168.20.254` | ❌ blokeatuta | ✅ `Connection timed out` |
 | inplizitua | `ping -c 3 8.8.8.8` (ICMP Internetera) | ❌ baimendu gabe | ✅ `100% packet loss` |
-| 1 – www → db01:3306 | `nc -zv 192.168.10.3 3306` | ✅ | ⏳ db01-en MariaDB martxan dagoenean |
+| 1 – www → db01:3306 | `nc -zv 192.168.10.3 3306` | ✅ | ✅ `succeeded` (db01-en ufw-an ere 3306 www-ri ireki ondoren; ikus [DBKSA](../DBKSA-datu-baseak/datu-baseak.md)) |
 
 ![DNS eta apt](../../irudiak/SEG/proba-dmz-dns-apt.png)
 *Irudia: DMZtik domeinuko izenak ebazten dira DCaren bidez (2. araua) eta `apt update`-ek Internetetik deskargatzen du 80 portutik (6. araua). ✅*
