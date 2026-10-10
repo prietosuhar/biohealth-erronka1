@@ -117,12 +117,30 @@ sudo ss -tlnp | grep 3306
 | Logak | `/var/log/mysql/error.log` · `journalctl -u mariadb` |
 | Baliabideak (RAM, diskoa) | |
 
-## Datu-baseak eta erabiltzaileak ⏳
+## Datu-baseak eta erabiltzaileak ✅
 
 | Datu-basea | Erabiltzailea | Nondik | Baimenak | Zergatik |
 |---|---|---|---|---|
 | `wordpress` | `wp_user` | `192.168.20.10` (www) | `wordpress.*`-n ALL | Gutxieneko pribilegioa: bere datu-basea bakarrik, eta www-tik bakarrik |
 | `glpi` | `glpi_user` | `192.168.20.10` (www) | `glpi.*`-n ALL | Berdin |
+
+```sql
+CREATE DATABASE wordpress CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE glpi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'wp_user'@'192.168.20.10' IDENTIFIED BY '********';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wp_user'@'192.168.20.10';
+CREATE USER 'glpi_user'@'192.168.20.10' IDENTIFIED BY '********';
+GRANT ALL PRIVILEGES ON glpi.* TO 'glpi_user'@'192.168.20.10';
+FLUSH PRIVILEGES;
+```
+
+- **Gutxieneko pribilegioa:** aplikazio bakoitzak bere erabiltzailea eta bere datu-basea; WordPress erasotzen badute ezin dute GLPIren daturik irakurri.
+- **`@'192.168.20.10'`:** erabiltzaileak www-tik bakarrik konekta daitezke; beste edozein IPtatik MariaDBk ukatzen du, pasahitza jakin arren.
+- **`utf8mb4`:** karaktere guztiak (azentuak, ñ, emojiak) gordetzeko.
+- Pasahitzak ez dira biltegian gordetzen.
+
+![wp_user baimenak](../../irudiak/DBKSA/mariadb-grants-wp-user.png)
+*Irudia: `SHOW GRANTS FOR 'wp_user'@'192.168.20.10'`: `USAGE` (konektatzeko baimena bakarrik, ezer gehiago ez) eta `ALL PRIVILEGES` `wordpress` datu-basean soilik. Pasahitzaren hash-a ezkutatuta. ✅*
 
 ## Probak ⏳
 
