@@ -75,6 +75,9 @@ DMZ sortu ondoren:
 ![10 zona garbia](../../irudiak/SZI/dns-alderantzizko-10-garbia.png)
 *Irudia: 10.168.192 zonan jada ez dago 192.168.10.4-ren PTRrik; LANeko ostatuak bakarrik.*
 
+![20 zona](../../irudiak/SZI/dns-alderantzizko-zona-20.png)
+*Irudia: `20.168.192.in-addr.arpa` zona: 192.168.20.10 → www eta 192.168.20.11 → meet PTRak. ✅*
+
 ![Zona zuzena DMZrekin](../../irudiak/SZI/dns-zona-zuzena-dmz.png)
 *Irudia: biohealth.local: www → 192.168.20.10 eta meet → 192.168.20.11 (DMZ); web eta glpi CNAMEak www-ra. ✅*
 
