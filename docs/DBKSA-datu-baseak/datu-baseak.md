@@ -72,6 +72,19 @@ sudo ss -tlnp | grep 3306
 ![MariaDB instalatuta](../../irudiak/DBKSA/mariadb-instalatuta.png)
 *Irudia: **MariaDB 10.3.39** instalatuta eta `active (running)`, abiaraztean automatikoki gaituta (`enabled`). Hasieran `127.0.0.1:3306`-en bakarrik entzuten du (lokalean), segurtasunagatik lehenetsita. ✅*
 
+### Instalazioa segurtatu (`mysql_secure_installation`)
+
+| Galdera | Erantzuna | Zergatik |
+|---|---|---|
+| Set root password? | **n** | Ubuntu-n MariaDBko `root`-ek *unix_socket* autentifikazioa erabiltzen du: sistemako `sudo` behar da, ez pasahitz bat → ezin da sare bidez asmatu |
+| Remove anonymous users? | Y | Erabiltzailerik gabe inor ez sartzeko |
+| Disallow root login remotely? | Y | `root` makina beretik bakarrik |
+| Remove test database? | Y | Edonork atzi zezakeen proba-datu-basea |
+| Reload privilege tables? | Y | Aldaketak berehala aplikatu |
+
+![mysql_secure_installation](../../irudiak/DBKSA/mariadb-secure-installation.png)
+*Irudia: `mysql_secure_installation` osatuta: erabiltzaile anonimoak eta `test` datu-basea ezabatuta, root urrunetik debekatuta. ✅*
+
 ## Ustiapen-ezaugarriak ⏳
 
 | Parametroa | Balioa |
@@ -93,4 +106,13 @@ sudo ss -tlnp | grep 3306
 
 ## Probak ⏳
 
-## Logak eta erroreak ⏳
+## Logak eta erroreak 🔄
+
+### Errore-mezuen interpretazioa
+
+| Errorea | Esanahia | Kausa | Konponbidea |
+|---|---|---|---|
+| `ERROR 1064 (42000) ... near ':' at line 1` | SQL sintaxi-errorea; MariaDBk zehazten du non: `':'` ikurraren ondoan | `SHOW DATABASES:` — aginduaren amaieran `;` ordez `:` idatzi zen | `SHOW DATABASES;` |
+
+![1064 errorea](../../irudiak/DBKSA/mariadb-errorea-1064.png)
+*Irudia: `SELECT VERSION()` ondo exekutatu da (10.3.39-MariaDB-0ubuntu0.20.04.2), baina bigarren aginduak 1064 errorea eman du sintaxi-akats batengatik. Mezuak errore-kodea, SQLSTATE (42000) eta kokapena (`near ':'`) ematen ditu.*
