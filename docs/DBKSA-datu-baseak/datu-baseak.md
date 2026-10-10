@@ -59,7 +59,18 @@ network:
 | `gateway4: 192.168.10.3/24` idatzi zen | Atebidean makinaren IP propioa eta maskara | Atebidea = pfSense (`192.168.10.254`), maskararik gabe |
 | `netplan apply` → *Invalid YAML: inconsistent indentation* (6. lerroa) | `addresses:`-ek `dhcp4:`-ek baino zuriune gehiago zituen | Maila bereko lerroak (dhcp4, addresses, gateway4, nameservers) 6 zuriunetan lerrokatu (`nano -l` lerro-zenbakiekin) |
 
-## Instalazioa ⏳
+## Instalazioa 🔄
+
+```bash
+sudo apt update
+sudo apt install -y mariadb-server
+systemctl status mariadb --no-pager
+mysql --version
+sudo ss -tlnp | grep 3306
+```
+
+![MariaDB instalatuta](../../irudiak/DBKSA/mariadb-instalatuta.png)
+*Irudia: **MariaDB 10.3.39** instalatuta eta `active (running)`, abiaraztean automatikoki gaituta (`enabled`). Hasieran `127.0.0.1:3306`-en bakarrik entzuten du (lokalean), segurtasunagatik lehenetsita. ✅*
 
 ## Ustiapen-ezaugarriak ⏳
 
