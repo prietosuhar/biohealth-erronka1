@@ -36,7 +36,7 @@ Proposamenean 9.9.9.9 / 1.1.1.1 genituen; inplementatzean pfSense aukeratu dugu,
 |---|---|---|
 | `biohealth.local` | Zuzena, nagusia, AD-n integratua | Domeinua sortzean automatikoki |
 | `10.168.192.in-addr.arpa` | Alderantzizkoa, AD-n integratua | LAN ✅ |
-| `20.168.192.in-addr.arpa` | Alderantzizkoa, AD-n integratua | DMZ ⏳ (DMZ sortzean) |
+| `20.168.192.in-addr.arpa` | Alderantzizkoa, AD-n integratua | DMZ ✅ |
 
 Eguneraketa dinamikoak: **seguruak soilik**.
 
@@ -48,8 +48,8 @@ Eguneraketa dinamikoak: **seguruak soilik**.
 | pfsense | A | 192.168.10.254 | ✅ | ✅ |
 | db01 | A | 192.168.10.3 | ✅ | ✅ |
 | BEZ-WIN01 | A (dinamikoa, DHCP) | 192.168.10.102 | ✅ (dinamikoa) | ✅ |
-| www | A | 192.168.10.4 → **192.168.20.10** | ✅ | 🔄 orain LAN-ean; DMZ sortzean aldatuko da |
-| meet | A | 192.168.20.11 | — | ⏳ Jitsi makina sortzean |
+| www | A | **192.168.20.10** (lehen 192.168.10.4) | ✅ | ✅ DMZra eramanda |
+| meet | A | 192.168.20.11 | ✅ | ✅ |
 | web | CNAME | www.biohealth.local | — | ✅ |
 | glpi | CNAME | www.biohealth.local | — | ✅ |
 
@@ -59,7 +59,24 @@ Eguneraketa dinamikoak: **seguruak soilik**.
 ![Alderantzizko zona 192.168.10](../../irudiak/SZI/dns-alderantzizko-zona-10.png)
 *Irudia: `10.168.192.in-addr.arpa` alderantzizko zona, SOA eta NS erregistroekin eta ostatuen PTR erregistroekin: zerbitzaria (.1), db01 (.3), www (.4), BEZ-WIN01 (.102, DHCPk dinamikoki sortua — ez da «static») eta pfSense (.254). ✅*
 
-> **www-ren IPa:** gaur egun LAN-ean dago (192.168.10.4), taldearen hasierako diseinuaren arabera. DMZ sortzean 192.168.20.10-era eramango da: A erregistroa aldatu, .10.4-ren PTRa ezabatu eta `20.168.192.in-addr.arpa` zonan PTR berria sortu.
+### DMZko erregistroak (2026-10-10)
+
+DMZ sortu ondoren:
+1. `20.168.192.in-addr.arpa` alderantzizko zona sortu (nagusia, ADn integratua, eguneraketa seguruak soilik).
+2. `www` A erregistroa 192.168.10.4 → **192.168.20.10**, «Actualizar registro del puntero (PTR) asociado» markatuta → Windows-ek .10.4-ren PTR zaharra automatikoki ezabatu du.
+3. `meet` → 192.168.20.11, PTRarekin.
+
+![Alderantzizko zonak](../../irudiak/SZI/dns-alderantzizko-zonak-10-20.png)
+*Irudia: bi alderantzizko zonak: 10.168.192 (LAN) eta 20.168.192 (DMZ).*
+
+![www IP aldaketa](../../irudiak/SZI/dns-www-ip-aldatu.png)
+*Irudia: www-ren IPa 192.168.20.10-era aldatzen, PTRa eguneratzeko aukerarekin.*
+
+![10 zona garbia](../../irudiak/SZI/dns-alderantzizko-10-garbia.png)
+*Irudia: 10.168.192 zonan jada ez dago 192.168.10.4-ren PTRrik; LANeko ostatuak bakarrik.*
+
+![Zona zuzena DMZrekin](../../irudiak/SZI/dns-zona-zuzena-dmz.png)
+*Irudia: biohealth.local: www → 192.168.20.10 eta meet → 192.168.20.11 (DMZ); web eta glpi CNAMEak www-ra. ✅*
 
 `web` eta `glpi` CNAME dira: zerbitzari batek (www) izen bat baino gehiago erantzuten ditu Apache-ren VirtualHost-en bidez.
 
