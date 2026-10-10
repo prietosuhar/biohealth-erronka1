@@ -26,6 +26,7 @@ Plangintza GitHub-eko **Issues / Projects** taulan egiten da (zeregin bat pauso 
 | 2026-10-08 | kantonsh | BEZ-WIN01 sortuta (DHCP) | Domeinura batu |
 | 2026-10-09 | kantonsh | Errubrika aztertuta; GitHub biltegia eta Pages sortuta; BEZ-WIN01 domeinuan (mediku1); DNS LAN amaituta (birbidaltzailea, zonak, erregistroak, probak) | OUak/GPOak, DMZ |
 | 2026-10-09 | kantonsh | GPOak: Panel_Blokeatu osatuta (CMD + informatika iragazkia), GPO-Harrera sortuta; probak mediku1, infor1 eta harrera1-ekin | AD zerbitzuak eta prozesuak, DMZ |
+| 2026-10-10 | kantonsh | AD zerbitzuak (gelditu/abiarazi/berrabiarazi, GUI + PowerShell) eta prozesuak (Task Manager, resmon, PowerShell, CMD) | DMZ, db01 |
 
 ## Aldaketak plangintzan
 

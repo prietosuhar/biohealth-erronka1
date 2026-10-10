@@ -154,7 +154,7 @@ biohealth.local
 ![BEZ-WIN01 domeinuan, mediku1 erabiltzailearekin](../../irudiak/SEA/bezeroa-domeinuan-cmd.png)
 *Irudia: Medikuntza saileko `mediku1` erabiltzaileak BEZ-WIN01-en saioa hasi du. `whoami` → `biohealth\mediku1`, `hostname` → `BEZ-WIN01` eta `systeminfo` → `Dominio: biohealth.local`. Honek erakusten du bezeroa domeinuan dagoela eta direktorio-zerbitzua erabiltzaileak zentralizatuki egiaztatzeko erabiltzen dela. ✅*
 
-## Zerbitzuen kudeaketa eta prozesuak 🔄
+## Zerbitzuen kudeaketa eta prozesuak ✅
 
 ### AD zerbitzuak ✅
 
@@ -202,7 +202,7 @@ Restart-Service NTDS -Force
 ![Berrabiarazi](../../irudiak/SEA/zerbitzuak-ps-berrabiarazi.png)
 *Irudia: `Restart-Service NTDS -Force` → NTDS, Kdc eta IsmServ **Running**. ✅*
 
-### Prozesuak 🔄
+### Prozesuak ✅
 
 Adibide gisa **Bloc de notas** (`notepad.exe`) erabili da, amaitzeak sistemari eragiten ez diolako.
 
@@ -220,7 +220,24 @@ Adibide gisa **Bloc de notas** (`notepad.exe`) erabili da, amaitzeak sistemari e
 ![Resource Monitor](../../irudiak/SEA/prozesuak-resmon.png)
 *Irudia: Monitor de recursos (`resmon`) → **CPU**: prozesuak (PID, hari-kopurua, CPU erabilera), zerbitzuak eta CPU bakoitzaren grafikoak denbora errealean.*
 
-#### Komandoak ⏳
+#### Komandoak
+
+| Ekintza | PowerShell | CMD |
+|---|---|---|
+| Prozesua abiarazi | `Start-Process notepad` | `start notepad` |
+| Zerrendatu / bilatu | `Get-Process notepad` | `tasklist /FI "IMAGENAME eq notepad.exe"` |
+| Lehentasuna aldatu | `(Get-Process notepad).PriorityClass = "High"` | `wmic process where name="notepad.exe" CALL setpriority 128` |
+| CPU gehien erabiltzen dutenak | `Get-Process \| Sort-Object CPU -Descending \| Select-Object -First 5` | — |
+| Amaitu | `Stop-Process -Name notepad` | `taskkill /IM notepad.exe /F` |
+
+![PowerShell: abiarazi eta lehentasuna](../../irudiak/SEA/prozesuak-ps-lehentasuna.png)
+*Irudia: `Start-Process notepad` → `Get-Process`-ek PID 5832 erakusten du; lehentasuna **High**-era aldatu eta egiaztatu da. ✅*
+
+![PowerShell: top 5 eta amaitu](../../irudiak/SEA/prozesuak-ps-top-stop.png)
+*Irudia: CPU gehien erabiltzen duten 5 prozesuak (perfmon, MsMpEng – Defender, svchost…). `Stop-Process -Name notepad` ondoren `Get-Process`-ek errorea ematen du: prozesua ez da existitzen. ✅*
+
+![CMD: tasklist eta taskkill](../../irudiak/SEA/prozesuak-cmd-tasklist-taskkill.png)
+*Irudia: komando klasikoak: `tasklist`-ek notepad.exe aurkitzen du (PID 2556); `taskkill /IM notepad.exe /F` → «Correcto: se terminó el proceso». Lehen saiakerak huts egin zuen izena gaizki idatzi zelako (`notepd.exe`). ✅*
 
 ## Arazoak eta logak
 
