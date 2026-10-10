@@ -139,6 +139,9 @@ FLUSH PRIVILEGES;
 - **`utf8mb4`:** karaktere guztiak (azentuak, ñ, emojiak) gordetzeko.
 - Pasahitzak ez dira biltegian gordetzen.
 
+![Datu-baseak eta erabiltzaileak](../../irudiak/DBKSA/mariadb-dbak-erabiltzaileak.png)
+*Irudia: `wordpress` eta `glpi` datu-baseak sortuta; erabiltzaileak: `glpi_user@192.168.20.10`, `wp_user@192.168.20.10` eta `root@localhost` (anonimorik ez). ✅*
+
 ![wp_user baimenak](../../irudiak/DBKSA/mariadb-grants-wp-user.png)
 *Irudia: `SHOW GRANTS FOR 'wp_user'@'192.168.20.10'`: `USAGE` (konektatzeko baimena bakarrik, ezer gehiago ez) eta `ALL PRIVILEGES` `wordpress` datu-basean soilik. Pasahitzaren hash-a ezkutatuta. ✅*
 
