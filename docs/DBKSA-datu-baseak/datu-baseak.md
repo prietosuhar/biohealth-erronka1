@@ -30,6 +30,35 @@ title: Datu-baseak
 | Sarea | Pertsonala1 (LAN) · 192.168.10.3/24 · atebidea 192.168.10.254 · DNS 192.168.10.1 |
 | Baliabideak | 2 vCPU · 2 GB RAM |
 
+### Sare-konfigurazioa
+
+`/etc/netplan/00-installer-config.yaml` (www-ren berdina, LANeko IPekin):
+
+```yaml
+network:
+  version: 2
+  ethernets:
+    enp1s0:
+      dhcp4: false
+      addresses:
+        - 192.168.10.3/24
+      gateway4: 192.168.10.254
+      nameservers:
+        addresses: [192.168.10.1]
+        search: [biohealth.local]
+```
+
+![db01 netplan](../../irudiak/DBKSA/db01-netplan.png)
+*Irudia: db01-en netplan fitxategia (koska zuzenekin).*
+
+![db01 sarea](../../irudiak/DBKSA/db01-sarea.png)
+*Irudia: `enp1s0` UP 192.168.10.3/24, lehenetsitako bidea pfSense-ra (192.168.10.254) eta DCra ping-a OK (0% packet loss). ✅*
+
+| Arazoa | Kausa | Konponbidea |
+|---|---|---|
+| `gateway4: 192.168.10.3/24` idatzi zen | Atebidean makinaren IP propioa eta maskara | Atebidea = pfSense (`192.168.10.254`), maskararik gabe |
+| `netplan apply` → *Invalid YAML: inconsistent indentation* (6. lerroa) | `addresses:`-ek `dhcp4:`-ek baino zuriune gehiago zituen | Maila bereko lerroak (dhcp4, addresses, gateway4, nameservers) 6 zuriunetan lerrokatu (`nano -l` lerro-zenbakiekin) |
+
 ## Instalazioa ⏳
 
 ## Ustiapen-ezaugarriak ⏳
