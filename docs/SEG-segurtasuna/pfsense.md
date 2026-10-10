@@ -129,12 +129,19 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 
 **Logetan aurkitutakoa:** www-k etengabe **UDP 123 (NTP)** bidaltzen du Interneteko denbora-zerbitzarietara (185.125.190.x = ntp.ubuntu.com) eta *Default deny*-k blokeatzen ditu → zerbitzariak ezin du ordua sinkronizatu. Ordu okerrak HTTPS ziurtagiriak eta logen datak hondatzen ditu; konponbidea: 4. araua (NTP → pfSense) eta www-n `NTP=192.168.20.254` (`/etc/systemd/timesyncd.conf`).
 
+![timesyncd.conf](../../irudiak/SEG/www-timesyncd-conf.png)
+*Irudia: www-n `/etc/systemd/timesyncd.conf` → `NTP=192.168.20.254`.*
+
+![NTP sinkronizazioa](../../irudiak/SEG/www-ntp-journal.png)
+*Irudia: `journalctl -u systemd-timesyncd`: lehenik ntp.ubuntu.com-erako saiakerak (*Timed out*, suebakiak blokeatuta); gero pfSense-ra, eta arauen ordena gorde eta aplikatu ondoren: **«Initial synchronization to time server 192.168.20.254:123»**. ✅*
+
 ## Arazoak eta logak
 
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|
 | OPT1 ez zen kontsolako menuan agertzen IsardVDIn txartela gehitu ondoren | pfSense-k ez ditu txartel berriak automatikoki esleitzen | *1) Assign Interfaces* → vtnet2 = OPT1 |
 | Kontsolan `3` sakatu zen *2) Set interface IP*-ren ordez | 3. aukera *Reset webConfigurator password* da | `n` erantzun (aldaketarik ez); `2` sakatu eta gero interfazearen zenbakia `3` |
+| NTP arauaren ondoren www-k ez zuen ordua sinkronizatzen (*Packet count: 0*, *Timed out*) | Araua arrastatuz mugitu zen, baina ordena berria ez zen gorde (**Save**) ez aplikatu (**Apply Changes**); NTP araua blokeoaren azpian zegoen | Zerrendaren azpiko **Save** botoia eta gero **Apply Changes**; minutu batera sinkronizatu zen |
 | 2. arauak jatorrian `! DMZ subnets` zuen | *Invert match* nahi gabe markatuta → «DMZ ez dena» | Araua editatu, *Invert match* desmarkatu. Ikasgaia: arau bakoitza sortu ondoren zerrendan berrikusi |
 
 ![Invert match errorea](../../irudiak/SEG/pfsense-arau2-invert-errorea.png)
