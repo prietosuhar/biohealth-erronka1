@@ -4,7 +4,7 @@ title: DNS
 
 [← Hasiera](../../index.md) · [Modulua](index.md)
 
-# DNS ✅ (LAN)
+# DNS ✅
 
 ## Aukerak
 
@@ -112,12 +112,27 @@ DMZ sortu ondoren:
 ![SRV erregistroaren proba](../../irudiak/SZI/dns-proba-srv.png)
 *Irudia: `_ldap._tcp` SRV erregistroak domeinuko LDAP zerbitzua (389/TCP) zerbitzariprintzipala-n dagoela adierazten du. Bezeroek erregistro hau erabiltzen dute domeinu-kontrolatzailea aurkitzeko (domeinura batzean eta saioa hastean). Lehen saiakerak huts egin zuen idazketa-akats batengatik (ikus Arazoak). ✅*
 
+### DMZko probak (www-tik)
+
+| Proba | Emaitza |
+|---|---|
+| `nslookup 192.168.20.11` | ✅ → meet.biohealth.local (PTR) |
+| `nslookup glpi.biohealth.local` | ✅ CNAME → www.biohealth.local → 192.168.20.10 |
+| `nslookup www.biohealth.local` | ❌ lehenengoan 192.168.10.4 (cachea) → `flush-caches` ondoren ✅ 192.168.20.10 |
+
+![Probak eta cachea](../../irudiak/SZI/dns-proba-www-cache.png)
+*Irudia: meet-en PTRa eta glpi-ren CNAMEa zuzen; www-k oraindik IP zaharra itzultzen du, Ubuntu-ren cache lokaletik (`Server: 127.0.0.53`).*
+
+![Cachea garbitu ondoren](../../irudiak/SZI/dns-proba-www-flush.png)
+*Irudia: `sudo systemd-resolve --flush-caches` ondoren www → 192.168.20.10. ✅*
+
 ## Arazoak eta logak
 
 *Gertaeren ikustailea → Aplikazioen eta zerbitzuen erregistroak → DNS Server*
 
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|
+| www-ren IPa aldatu ondoren, www-tik `nslookup www.biohealth.local` → IP zaharra (192.168.10.4) | Ubuntu-k (systemd-resolved, 127.0.0.53) DNS erantzunak cachean gordetzen ditu TTLa amaitu arte (3600 s); aurreko proban kontsultatua zegoen | `sudo systemd-resolve --flush-caches` (Windows-en: `ipconfig /flushdns`). Ikasgaia: IP bat aldatu aurretik TTLa jaitsi edo bezeroen cachea garbitu |
 | `nslookup ... _ldap._tcpbiohealth.local` → *Non-existent domain* | Idazketa-akatsa: `_tcp` eta `biohealth` artean puntua falta | `_ldap._tcp.biohealth.local` zuzen idatzi |
 | `"Resolve-DnsName" no se reconoce como un comando interno o externo` | Komandoa CMD-n (Símbolo del sistema) exekutatu zen; `Resolve-DnsName` PowerShell-eko cmdlet bat da | Leiho berean `powershell` idatzi (edo PowerShell ireki) eta berriro exekutatu. CMD-n baliokidea `nslookup` da |
 
