@@ -26,7 +26,7 @@ title: Sarearen diseinua
 |---|---|---|---|
 | WAN | DHCP (IsardVDI) | — | Default |
 | LAN | 192.168.10.0/24 | 192.168.10.254 | Pertsonala1 |
-| DMZ | 192.168.20.0/24 | 192.168.20.254 | *(Pertsonala2 – zehaztu)* |
+| DMZ | 192.168.20.0/24 | 192.168.20.254 | Pertsonala2 |
 
 | Host-izena | IP | Zona | Sistema | Zerbitzuak |
 |---|---|---|---|---|

@@ -23,7 +23,7 @@ title: Suebakia – pfSense
 |---|---|---|---|
 | WAN | vtnet0 | DHCP (IsardVDI Default) | Internetera irteera |
 | LAN | vtnet1 | 192.168.10.254/24 | pfSense-ren DHCPa **desgaituta** (Windows Server-ek ematen du) |
-| DMZ (OPT1) | vtnet2 | 192.168.20.254/24 | DHCPrik gabe: DMZko zerbitzariek IP finkoa dute ✅ |
+| DMZ (OPT1) | vtnet2 (Pertsonala2) | 192.168.20.254/24 | DHCPrik gabe: DMZko zerbitzariek IP finkoa dute ✅ |
 
 Egindakoa:
 1. WAN = Default (DHCP), LAN = Pertsonala1 192.168.10.254/24 ✅
