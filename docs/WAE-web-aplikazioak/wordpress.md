@@ -53,7 +53,22 @@ Instalazio-scripta: [`scripts/www-wordpress-instalazioa.sh`](https://github.com/
 | Komando-blokea SSH-n itsatsi ondoren lehen lerroa (apt) bakarrik exekutatu zen; `wordpress.conf` ez zegoen | `apt`-ek instalazioan zehar sarrera estandarra irakurri zuen eta itsatsitako gainerako lerroak «jan» zituen | Komandoak script batean jarri, GitHub-era igo eta www-n `wget` + `bash` bidez exekutatu |
 | Txatetik kopiatutako `ServerAlias` lerroa Markdown esteka bihurtu zen (`[...](https://...)`) | Txat-aplikazioak domeinu-izenak esteka gisa kopiatzen ditu | Scripta GitHub-etik zuzenean deskargatuta, testua ez da aldatzen |
 
-## Web-instalatzailea ⏳
+## Web-instalatzailea ✅
+
+BEZ-WIN01-eko Edge-tik (LAN → DMZ, 80 portua) `www.biohealth.local` helbidera sartuta:
+
+| Urratsa | Balioa |
+|---|---|
+| Hizkuntza | Español |
+| Datu-basea | `wordpress` · erabiltzailea `wp_user` · zerbitzaria `192.168.10.3` · aurrizkia `wp_` |
+| Gunearen izenburua | BioHealth |
+| Administratzailea | `bioadmin` (ez `admin`: erasoetan probatzen den lehen izena) · pasahitz sendoa |
+| Bilatzaileak | «Disuadir a los motores de búsqueda» markatuta (barneko laborategia) |
+
+| Arazoa | Kausa | Konponbidea |
+|---|---|---|
+| «Error al establecer una conexión con la base de datos» | Instalatzailean datu-basearen datuak (pasahitza) gaizki idatzita | «Inténtalo de nuevo» eta datuak berriro, kontuz; `mysql -h 192.168.10.3 -u wp_user -p` komandoarekin egiaztatu daiteke |
+
 
 ## Erabiltzaileak eta pribilegioak ⏳ (gutxienez bi)
 
