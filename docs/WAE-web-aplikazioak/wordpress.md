@@ -33,6 +33,7 @@ title: WordPress
 |---|---|
 | Zerbitzaria | `www` · Ubuntu Server 20.04 · DMZ · 192.168.20.10 |
 | Web zerbitzaria | Apache 2.4.41 (`mpm_prefork`, `mod_rewrite`) |
+| WordPress | 7.1.3 |
 | PHP | 7.4.3 (`php-mysql`, `curl`, `gd`, `mbstring`, `xml`, `zip`, `intl`) |
 | VirtualHost | `/etc/apache2/sites-available/wordpress.conf` · `ServerName web.biohealth.local` · `ServerAlias` www.biohealth.local |
 | DocumentRoot | `/var/www/wordpress` (jabea `www-data`) |
@@ -69,6 +70,8 @@ BEZ-WIN01-eko Edge-tik (LAN → DMZ, 80 portua) `www.biohealth.local` helbidera 
 |---|---|---|
 | «Error al establecer una conexión con la base de datos» | Instalatzailean datu-basearen datuak (pasahitza) gaizki idatzita | «Inténtalo de nuevo» eta datuak berriro, kontuz; `mysql -h 192.168.10.3 -u wp_user -p` komandoarekin egiaztatu daiteke |
 
+![WordPress escritorio](../../irudiak/WAE/wp-escritorio.png)
+*Irudia: `bioadmin` erabiltzailearekin administrazio-panelean (Escritorio) sartuta, BEZ-WIN01-etik `www.biohealth.local/wp-admin` helbidean. WordPress 7.1.3. ✅*
 
 ## Erabiltzaileak eta pribilegioak ⏳ (gutxienez bi)
 
