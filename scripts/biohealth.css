@@ -19,3 +19,7 @@ a.button, button, .wp-block-button__link {
   background-color: var(--bh-nagusia);
   border-radius: 8px;
 }
+/* Portadako izenburua: hitzak ez moztu */
+.entry-content h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem) !important;
+}
