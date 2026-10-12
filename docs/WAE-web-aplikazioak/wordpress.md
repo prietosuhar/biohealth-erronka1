@@ -4,7 +4,7 @@ title: WordPress
 
 [← Hasiera](../../index.md) · [Modulua](index.md)
 
-# WordPress – web korporatiboa
+# WordPress – web korporatiboa ✅
 
 ## Aukerak eta erabakia
 
@@ -234,3 +234,26 @@ Scriptak: [`www-https.sh`](https://github.com/prietosuhar/biohealth-erronka1/blo
 | `https://biohealth.local` → `ERR_CONNECTION_TIMED_OUT` | `www.` gabe idatzita: `biohealth.local` AD domeinuaren izena da eta **domeinu-kontroladoreari** (Windows Server) erantzuten dio, ez web-zerbitzariari | Beti `www.biohealth.local` erabili |
 | Goiburuan «biohealth.local» eta loginean «← Ir a» (hutsik) | Logoa aldatzean *Título del sitio* hutsik geratu zen | *Ajustes → Generales → Título del sitio* = `BioHealth` |
 | (Prebentzioa) WordPress-en URL okerra gordez gero, panelera ezin sartu | URLa `wp_options` taulan dago (`siteurl`, `home`) | Datu-basetik zuzendu daiteke: `mysql -h 192.168.10.3 -u wp_user -p wordpress -e "UPDATE wp_options SET option_value='https://www.biohealth.local' WHERE option_name IN ('siteurl','home');"` |
+
+## Segurtasuna (hardening) ✅
+
+| Neurria | Nola | Zergatik |
+|---|---|---|
+| Admin izena ≠ `admin` | `bioadmin` | Indar gordinezko erasoek `admin` probatzen dute lehenik |
+| Pribilegio txikiena | Langileak **Editor** rolarekin | Ezin dituzte pluginak/txantiloiak instalatu |
+| HTTPS + 80→443 | Ikus goiko atala | Pasahitzak eta cookieak zifratuta |
+| **Fitxategi-editorea desgaituta** | `wp-config.php`: `define('DISALLOW_FILE_EDIT', true);` | Norbaitek admin saioa lapurtzen badu, ezin du PHP koderik txertatu panel bidez (*Editor de archivos de temas/plugins*) |
+| Datu-basea beste zerbitzari batean | db01 (LAN), `wp_user` bakarrik `wordpress` DBan, `@192.168.20.10`-tik | www erasotuta ere, DBra sarbidea mugatua |
+| Bilatzaileak blokeatuta | Instalazioan | Barneko laborategia |
+
+Komandoa (www, SSH):
+```bash
+sudo sed -i "/require_once ABSPATH/i define('DISALLOW_FILE_EDIT', true);" /var/www/wordpress/wp-config.php
+```
+Lerroa `require_once ABSPATH` **aurretik** joan behar da: WordPress-ek konstanteak irakurtzen ditu sistema kargatu aurretik.
+
+![DISALLOW_FILE_EDIT](../../irudiak/WAE/wp-disallow-file-edit.png)
+*Irudia: `wp-config.php`-n 102. lerroan konstantea, 103.aren (`require_once ABSPATH`) aurretik. ✅*
+
+![Editorea desgaituta](../../irudiak/WAE/wp-editor-desgaituta.png)
+*Irudia: Apariencia menuan ez da agertzen «Editor de archivos de temas» (lehen bai, ikus [Astra aktiboa](../../irudiak/WAE/wp-astra-aktiboa.png)). ✅*
