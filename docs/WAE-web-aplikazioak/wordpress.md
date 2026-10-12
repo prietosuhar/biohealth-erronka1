@@ -40,7 +40,7 @@ title: WordPress
 | Logak | `/var/log/apache2/wordpress_error.log` · `wordpress_access.log` |
 | Datu-basea | `wordpress` @ db01 (192.168.10.3:3306) · erabiltzailea `wp_user` · aurrizkia `wp_` |
 | ufw (www) | 22, 80/tcp, 443/tcp |
-| HTTPS | ⏳ |
+| HTTPS | ✅ 443 · ziurtagiri autosinatua · `wordpress-ssl.conf` · 80 → 443 birbideratuta |
 
 Instalazio-scripta: [`scripts/www-wordpress-instalazioa.sh`](https://github.com/prietosuhar/biohealth-erronka1/blob/main/scripts/www-wordpress-instalazioa.sh) — www-k GitHub-etik deskargatu eta exekutatu zuen (`wget` + `bash`).
 
@@ -183,3 +183,54 @@ Non: *Personalizar → Identidad del sitio → Ajustes del título y el logotipo
 | Ikonoa (gurutzea bakarrik) logo gisa igo zen, oso handia eta testurik gabe | Fitxategi okerra aukeratuta | *Cambiar logotipo* → `biohealth-logo-zuria.png` |
 | Ezin da CSSa ordenagailutik BEZ-WIN01-era itsatsi | IsardVDI-ko makinak ez du ostalariaren arbela partekatzen | CSSa GitHub-era igo; BEZ-WIN01-eko Edge-n `raw.githubusercontent.com/...` ireki, Ctrl+A / Ctrl+C eta makinaren barruan itsatsi |
 | Argitaratzean Astraren adibide-edukia agertu zen (menua, «Your Idea Matters») | WordPress-en *starter content*: gune berri batean Personalizadorean lehen aldiz argitaratzean, txantiloiaren adibide-orriak sortzen dira | BioHealth-en edukiarekin ordezkatu |
+
+## HTTPS ✅
+
+**Zergatik:** BioHealth-en webgunean langileek saioa hasten dute (`wp-admin`), eta etorkizunean pazienteen formularioak egongo dira. HTTP hutsean pasahitzak eta cookieak testu argian bidaiatzen dute sarean (edozeinek harrapa ditzake Wireshark-ekin). DBEOk (32. art.) datuak transmititzean zifratzea eskatzen du.
+
+### Aukerak
+
+| Aukera | Kostua | Alde onak | Alde txarrak |
+|---|---|---|---|
+| **Ziurtagiri autosinatua (OpenSSL)** | 0 € | Berehalakoa, Internetik gabe; trafikoa zifratuta | Nabigatzaileak «No seguro» abisua ematen du (ez du CA ezagun batek sinatu) |
+| Barneko CA (Windows Server AD CS) | 0 € (lizentzia barne) | Domeinuko ekipoek automatikoki fidatzen dute (GPO bidez) | Rol berri bat instalatu eta kudeatu behar da |
+| Let's Encrypt | 0 € | CA publikoa, abisurik gabe | Domeinu publikoa eta Internetetik irisgarria behar ditu; `.local` ez da onartzen |
+
+**Erabakia:** laborategian **ziurtagiri autosinatua**: zifratzea berehala lortzen da kosturik gabe. **Produkzioan:** AD CS barneko CA (langileentzat) edo Let's Encrypt (domeinu publikoa izanez gero).
+
+### Inplementazioa
+
+Scriptak: [`www-https.sh`](https://github.com/prietosuhar/biohealth-erronka1/blob/main/scripts/www-https.sh) · [`www-https-birbideratu.sh`](https://github.com/prietosuhar/biohealth-erronka1/blob/main/scripts/www-https-birbideratu.sh)
+
+| Urratsa | Komandoa / fitxategia |
+|---|---|
+| 1. Ziurtagiria | `openssl req -x509 -nodes -days 365 -newkey rsa:2048` · CN `www.biohealth.local` · SAN: `www`, `web`, `glpi` |
+| 2. Gako pribatua babestu | `/etc/ssl/private/biohealth.key` · `chmod 600` (root bakarrik) |
+| 3. VirtualHost 443 | `/etc/apache2/sites-available/wordpress-ssl.conf` · `SSLEngine on` |
+| 4. Moduluak eta gunea | `a2enmod ssl headers` · `a2ensite wordpress-ssl` |
+| 5. WordPress-en URLak | *Ajustes → Generales* → `https://www.biohealth.local` (biak) |
+| 6. HTTP → HTTPS | `wordpress.conf` (80): `Redirect permanent / https://www.biohealth.local/` |
+
+**Ordena garrantzitsua da:** lehenik WordPress-en URLak https-ra aldatu (5) eta gero Apache-ren birbideratzea (6). Alderantziz eginez gero, WordPress-ek http-ra bidaltzen du eta Apache-k https-ra → **birbideratze-begizta**.
+
+![HTTPS scripta](../../irudiak/WAE/https-scripta.png)
+*Irudia: `Syntax OK`, Apache 80 eta **443** portuetan entzuten, ziurtagiriaren datuak (1 urte, 3 izen SAN-en). ✅*
+
+![WordPress URLak](../../irudiak/WAE/wp-ajustes-https.png)
+*Irudia: Ajustes → Generales: izenburua, deskribapena, gunearen ikonoa eta bi URLak `https://www.`-rekin.*
+
+### Probak
+
+![Birbideraketa curl](../../irudiak/WAE/https-birbideraketa-curl.png)
+*Irudia: `r.sh` exekutatuta → `Syntax OK`; `curl -sI http://localhost` → **301 Moved Permanently**: Apache-k HTTP eskaera guztiak HTTPS-ra bidaltzen ditu (orriak, irudiak, fitxategiak), ez WordPress-ek bakarrik. ✅*
+
+![HTTPS nabigatzailean](../../irudiak/WAE/https-birbideratuta.png)
+*Irudia: BEZ-WIN01-en `http://www.biohealth.local` idatzita → automatikoki `https://`-ra. Fitxan ikonoa eta «BioHealth – Kontsulta medikoak…» izenburua. «No seguro» abisua espero zena da (ziurtagiri autosinatua): trafikoa **zifratuta** dago, baina nabigatzaileak ezin du sinatzailea egiaztatu. ✅*
+
+### Arazoak
+
+| Arazoa | Kausa | Konponbidea |
+|---|---|---|
+| `https://biohealth.local` → `ERR_CONNECTION_TIMED_OUT` | `www.` gabe idatzita: `biohealth.local` AD domeinuaren izena da eta **domeinu-kontroladoreari** (Windows Server) erantzuten dio, ez web-zerbitzariari | Beti `www.biohealth.local` erabili |
+| Goiburuan «biohealth.local» eta loginean «← Ir a» (hutsik) | Logoa aldatzean *Título del sitio* hutsik geratu zen | *Ajustes → Generales → Título del sitio* = `BioHealth` |
+| (Prebentzioa) WordPress-en URL okerra gordez gero, panelera ezin sartu | URLa `wp_options` taulan dago (`siteurl`, `home`) | Datu-basetik zuzendu daiteke: `mysql -h 192.168.10.3 -u wp_user -p wordpress -e "UPDATE wp_options SET option_value='https://www.biohealth.local' WHERE option_name IN ('siteurl','home');"` |
