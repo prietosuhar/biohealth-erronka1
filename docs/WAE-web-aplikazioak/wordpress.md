@@ -131,5 +131,34 @@ Hiru txantiloi probatu dira, *Apariencia → Temas → Vista previa en vivo* era
 
 - Twenty Twenty-Five baztertuta: bloke-editorea indartsua da baina konplexuagoa; Neve baztertuta: Astraren antzekoa, aukera eta komunitate txikiagoarekin.
 
-## Diseinua eta CSS aldaketak ⏳
-*(Gehigarrizko CSSa · aldatutako kodea · zergatik)*
+## Diseinua eta CSS aldaketak ✅
+
+**Helburua:** webgunea BioHealth-en irudi korporatibora egokitzea. Osasun-sektorean ohikoak diren kolore **berde-urdinxkak** aukeratu dira (lasaitasuna, garbitasuna, konfiantza), Astraren lehenetsitako more/urdinaren ordez.
+
+**Non:** *Apariencia → Personalizar → CSS adicional*. CSSa datu-basean gordetzen da (`wp_posts`, `custom_css` mota), eta ez da txantiloiaren fitxategietan idazten: **Astra eguneratzean ez da galtzen**, eta ez da *child theme* bat behar.
+
+Kodea: [`scripts/biohealth.css`](https://github.com/prietosuhar/biohealth-erronka1/blob/main/scripts/biohealth.css)
+
+| Hautatzailea | Aldaketa | Zergatik |
+|---|---|---|
+| `:root` | `--bh-nagusia: #0f766e` · `--bh-argia: #ccfbf1` | CSS aldagaiak: kolorea leku bakarrean aldatuta, gune osoan aldatzen da |
+| `.site-header`, `.main-header-bar` | Atzeko planoa berde-urdina | Goiburua, markaren elementu ikusgarriena |
+| `.site-title a`, `.main-header-menu a` | Testu zuria | Kontrastea (irisgarritasuna, WCAG) |
+| `body` | Atzeko plano berde argia | Kolore korporatiboa orrialde osoan |
+| `h1`, `h2`, `.entry-title a` | Izenburuak kolore nagusiarekin | Koherentzia |
+| Botoiak | Kolore nagusia + `border-radius: 8px` | Itxura modernoa eta koherentea |
+
+`!important` goiburuan bakarrik erabiltzen da, Astrak bere estiloak inline gehitzen dituelako.
+
+![CSS Personalizadorean](../../irudiak/WAE/wp-css-pertsonalizatzailea.png)
+*Irudia: CSS adicional atalean kodea itsatsita; aurrebistan goiburua dagoeneko berde-urdina da.*
+
+![Ondoren](../../irudiak/WAE/wp-css-ondoren.png)
+*Irudia: argitaratu ondoren, `www.biohealth.local`: goiburua kolore korporatiboarekin (lehen morea). ✅*
+
+### Arazoak
+
+| Arazoa | Kausa | Konponbidea |
+|---|---|---|
+| Ezin da CSSa ordenagailutik BEZ-WIN01-era itsatsi | IsardVDI-ko makinak ez du ostalariaren arbela partekatzen | CSSa GitHub-era igo; BEZ-WIN01-eko Edge-n `raw.githubusercontent.com/...` ireki, Ctrl+A / Ctrl+C eta makinaren barruan itsatsi |
+| Argitaratzean Astraren adibide-edukia agertu zen (menua, «Your Idea Matters») | WordPress-en *starter content*: gune berri batean Personalizadorean lehen aldiz argitaratzean, txantiloiaren adibide-orriak sortzen dira | BioHealth-en edukiarekin ordezkatu |
