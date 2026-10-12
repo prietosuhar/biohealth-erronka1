@@ -1,0 +1,21 @@
+/* BioHealth - kolore korporatiboak */
+:root {
+  --bh-nagusia: #0f766e;
+  --bh-argia: #ccfbf1;
+}
+.site-header, .main-header-bar {
+  background-color: var(--bh-nagusia) !important;
+}
+.site-title a, .main-header-menu a {
+  color: #ffffff !important;
+}
+body {
+  background-color: var(--bh-argia);
+}
+h1, h2, .entry-title a {
+  color: var(--bh-nagusia);
+}
+a.button, button, .wp-block-button__link {
+  background-color: var(--bh-nagusia);
+  border-radius: 8px;
+}
