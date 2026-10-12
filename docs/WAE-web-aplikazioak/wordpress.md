@@ -126,6 +126,9 @@ Hiru txantiloi probatu dira, *Apariencia → Temas → Vista previa en vivo* era
 - **Mantentzea eta segurtasuna:** erabiliena da, maiz eguneratzen da eta komunitate handia du (akatsak azkar konpontzen dira).
 - **Erabilgarritasuna:** Personalizadorea erraza da; harrerako langileek (Editor) ez dute gune-editorerik ukitu behar.
 - **CSS:** *CSS adicional* atala zuzenean dago, BioHealth-en kolore korporatiboak aplikatzeko (hurrengo atala).
+![Astra aktiboa](../../irudiak/WAE/wp-astra-aktiboa.png)
+*Irudia: «Nuevo tema activado» → **Activo: Astra**. ✅*
+
 - Twenty Twenty-Five baztertuta: bloke-editorea indartsua da baina konplexuagoa; Neve baztertuta: Astraren antzekoa, aukera eta komunitate txikiagoarekin.
 
 ## Diseinua eta CSS aldaketak ⏳
