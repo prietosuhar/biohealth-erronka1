@@ -95,9 +95,38 @@ Sortzeko: *Usuarios → Añadir nuevo usuario* → izena `harrera1`, posta `harr
 ![Plugins ukatua](../../irudiak/WAE/wp-editor-plugins-ukatua.png)
 *Irudia: ukatze-proba: `harrera1`-ek `/wp-admin/plugins.php` helbidea zuzenean idatzita → «Lo siento, no tienes permisos para acceder a esta página». Menua ezkutatzeaz gain, WordPress-ek zerbitzarian egiaztatzen ditu baimenak. ❌ (espero zena)*
 
-## Txantiloiak ⏳
-- [ ] Hainbat txantiloi probatu (argazkiak)
-- [ ] Aukeratutakoaren justifikazioa
+## Txantiloiak ✅
+
+Hiru txantiloi probatu dira, *Apariencia → Temas → Vista previa en vivo* erabiliz (aktibatu gabe, webgunea aldatu gabe). Astra eta Neve *Añadir tema* bidez instalatu dira wordpress.org-etik: www-k Internetera irten daiteke pfSense-ko 6. arauari esker (eguneraketak, HTTP/HTTPS).
+
+![Themes karpeta](../../irudiak/WAE/wp-themes-karpeta.png)
+*Irudia: txantiloiak `/var/www/wordpress/wp-content/themes/` karpetan instalatzen dira, `www-data` jabearekin. ✅*
+
+| | Twenty Twenty-Five | Astra | Neve |
+|---|---|---|---|
+| Mota | Bloke-txantiloia (FSE) | Klasikoa + Personalizadorea | Klasikoa + Personalizadorea |
+| Egilea | WordPress (ofiziala) | Brainstorm Force | Themeisle |
+| Instalazio aktiboak | Lehenetsia | 1.000.000+ (erabiliena) | 300.000+ |
+| Pisua / abiadura | Oso arina | Oso arina (< 50 KB) | Oso arina |
+| Mugikorra (responsive) | Bai | Bai | Bai |
+| Pertsonalizazioa | *Editor del sitio* (blokeak) | Personalizadorea: koloreak, tipografia, goiburua, oina, **CSS adicional** | Personalizadorea, aukera gutxiago |
+| Langile ez-teknikoentzat | Zailagoa (gune-editorea) | Erraza | Erraza |
+
+![Twenty Twenty-Five](../../irudiak/WAE/wp-tema-tt5.png)
+*Irudia: Twenty Twenty-Five (aktiboa): minimalista, testua bakarrik; itxura «blog» bat da, ez osasun-zentro batena.*
+
+![Astra](../../irudiak/WAE/wp-tema-astra.png)
+*Irudia: Astra aurrebistan: Personalizadorearen menua (Global, Cabecera, Pie de página, Identidad del sitio...).*
+
+![Neve](../../irudiak/WAE/wp-tema-neve.png)
+*Irudia: Neve aurrebistan: Astraren antzekoa, baina aukera gutxiago.*
+
+**Erabakia: Astra.**
+- **Errendimendua:** txantiloi arinenetakoa, garrantzitsua IsardVDI-ko baliabide mugatuetan.
+- **Mantentzea eta segurtasuna:** erabiliena da, maiz eguneratzen da eta komunitate handia du (akatsak azkar konpontzen dira).
+- **Erabilgarritasuna:** Personalizadorea erraza da; harrerako langileek (Editor) ez dute gune-editorerik ukitu behar.
+- **CSS:** *CSS adicional* atala zuzenean dago, BioHealth-en kolore korporatiboak aplikatzeko (hurrengo atala).
+- Twenty Twenty-Five baztertuta: bloke-editorea indartsua da baina konplexuagoa; Neve baztertuta: Astraren antzekoa, aukera eta komunitate txikiagoarekin.
 
 ## Diseinua eta CSS aldaketak ⏳
 *(Gehigarrizko CSSa · aldatutako kodea · zergatik)*
