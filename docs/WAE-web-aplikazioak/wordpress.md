@@ -148,6 +148,8 @@ Kodea: [`scripts/biohealth.css`](https://github.com/prietosuhar/biohealth-erronk
 | `h1`, `h2`, `.entry-title a` | Izenburuak kolore nagusiarekin | Koherentzia |
 | Botoiak | Kolore nagusia + `border-radius: 8px` | Itxura modernoa eta koherentea |
 
+| `.entry-content h1` | `font-size: clamp(2rem, 4vw, 3.2rem)` | Portadako izenburua handiegia zen eta «lehentasun-a» hitza mozten zuen. `clamp()` → letra-tamaina pantailaren zabalerara egokitzen da (gutxienekoa, ideala, gehienekoa): **responsive** diseinua |
+
 `!important` goiburuan bakarrik erabiltzen da, Astrak bere estiloak inline gehitzen dituelako.
 
 ![CSS Personalizadorean](../../irudiak/WAE/wp-css-pertsonalizatzailea.png)
@@ -156,9 +158,28 @@ Kodea: [`scripts/biohealth.css`](https://github.com/prietosuhar/biohealth-erronk
 ![Ondoren](../../irudiak/WAE/wp-css-ondoren.png)
 *Irudia: argitaratu ondoren, `www.biohealth.local`: goiburua kolore korporatiboarekin (lehen morea). ✅*
 
+![Izenburua konponduta](../../irudiak/WAE/wp-css-izenburua.png)
+*Irudia: `clamp()` arauarekin, «Zure osasuna, gure lehentasuna» bi lerrotan, hitzak moztu gabe. Logoa eta testuak BioHealth-enak. ✅*
+
+### Logoa eta gunearen identitatea
+
+Logo propioa sortu da (PNG gardena), CSSko kolore berberekin: **gurutze medikoa** (osasuna) + **hostoa** («Bio»).
+
+| Fitxategia | Erabilera |
+|---|---|
+| [`biohealth-logo-zuria.png`](../../irudiak/logo/biohealth-logo-zuria.png) | Webeko goiburua (testu zuria, atzealde berdearen gainean) |
+| [`biohealth-logo.png`](../../irudiak/logo/biohealth-logo.png) | Atzealde argiak: dokumentazioa, aurkezpena |
+| [`biohealth-ikonoa.png`](../../irudiak/logo/biohealth-ikonoa.png) | Gunearen ikonoa / favicon (512×512) |
+
+Non: *Personalizar → Identidad del sitio → Ajustes del título y el logotipo*. Logoaren zabalera 200 px. «Título del sitio» = `BioHealth` mantentzen da (nabigatzailearen fitxa eta bilatzaileak), baina goiburuan ezkutatuta, logoak izena daramalako.
+
+![Logoa](../../irudiak/WAE/wp-logoa.png)
+*Irudia: logoa Astrako goiburuan. ✅*
+
 ### Arazoak
 
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|
+| Ikonoa (gurutzea bakarrik) logo gisa igo zen, oso handia eta testurik gabe | Fitxategi okerra aukeratuta | *Cambiar logotipo* → `biohealth-logo-zuria.png` |
 | Ezin da CSSa ordenagailutik BEZ-WIN01-era itsatsi | IsardVDI-ko makinak ez du ostalariaren arbela partekatzen | CSSa GitHub-era igo; BEZ-WIN01-eko Edge-n `raw.githubusercontent.com/...` ireki, Ctrl+A / Ctrl+C eta makinaren barruan itsatsi |
 | Argitaratzean Astraren adibide-edukia agertu zen (menua, «Your Idea Matters») | WordPress-en *starter content*: gune berri batean Personalizadorean lehen aldiz argitaratzean, txantiloiaren adibide-orriak sortzen dira | BioHealth-en edukiarekin ordezkatu |
