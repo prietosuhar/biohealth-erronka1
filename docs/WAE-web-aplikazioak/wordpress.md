@@ -73,12 +73,27 @@ BEZ-WIN01-eko Edge-tik (LAN → DMZ, 80 portua) `www.biohealth.local` helbidera 
 ![WordPress escritorio](../../irudiak/WAE/wp-escritorio.png)
 *Irudia: `bioadmin` erabiltzailearekin administrazio-panelean (Escritorio) sartuta, BEZ-WIN01-etik `www.biohealth.local/wp-admin` helbidean. WordPress 7.1.3. ✅*
 
-## Erabiltzaileak eta pribilegioak ⏳ (gutxienez bi)
+## Erabiltzaileak eta pribilegioak ✅
 
-| Erabiltzailea | Rola | Zer egin dezake |
-|---|---|---|
-| | Administrator | |
-| | Editor | |
+Pribilegio txikienaren printzipioa: administratzailea bakarra da (informatika-saila), eta harrerako langileek edukia bakarrik kudeatzen dute.
+
+| Erabiltzailea | Rola | Nork erabiltzen du | Zer egin dezake | Zer EZ |
+|---|---|---|---|---|
+| `bioadmin` | **Administrator** | Informatika-saila | Dena: pluginak, txantiloiak, ezarpenak, erabiltzaileak | — |
+| `harrera1` | **Editor** | Harrerako langileak | Sarrerak eta orriak sortu, editatu eta argitaratu (besteenak ere); multimedia; iruzkinak moderatu | Pluginak, txantiloiak, ezarpenak, erabiltzaileak kudeatu |
+
+Sortzeko: *Usuarios → Añadir nuevo usuario* → izena `harrera1`, posta `harrera1@biohealth.local`, *Perfil: Editor*, «Enviar aviso al usuario» desmarkatuta (ez dago posta-zerbitzaririk).
+
+![Erabiltzaileak](../../irudiak/WAE/wp-erabiltzaileak.png)
+*Irudia: bi erabiltzaile, rol desberdinekin: `bioadmin` (Administrador) eta `harrera1` (Editor). ✅*
+
+### Probak
+
+![Editor menua](../../irudiak/WAE/wp-editor-menua.png)
+*Irudia: `harrera1`-ekin sartuta, menua mugatuta dago: Entradas, Medios, Páginas, Comentarios, Perfil eta Herramientas bakarrik. Ez dira agertzen **Apariencia, Plugins, Usuarios eta Ajustes**. ✅*
+
+![Plugins ukatua](../../irudiak/WAE/wp-editor-plugins-ukatua.png)
+*Irudia: ukatze-proba: `harrera1`-ek `/wp-admin/plugins.php` helbidea zuzenean idatzita → «Lo siento, no tienes permisos para acceder a esta página». Menua ezkutatzeaz gain, WordPress-ek zerbitzarian egiaztatzen ditu baimenak. ❌ (espero zena)*
 
 ## Txantiloiak ⏳
 - [ ] Hainbat txantiloi probatu (argazkiak)
