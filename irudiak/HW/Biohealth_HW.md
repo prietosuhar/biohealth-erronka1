@@ -1,0 +1,152 @@
+# HW Aurrekontua
+
+## 1. Sarrera eta Helburua
+
+Dokumentu honek zentroko langileen ordenagailuak deskribatzen ditu: zer osagai dituzten, zer zehaztapen dituzten eta bakoitzak nola funtzionatzen duen ekipoaren barruan. Enpresaren bost sailak betetzen ditu, guztira 20 langile inguru.
+
+Helburua da zentroko edozein pertsonak (zuzendaritzak, teknikariek edo auditoreek) erabilgarri dagoen ekipamendua ezagutzea, pieza bakoitzak zertarako balio duen ulertzea eta haren mantentze-lanak eta berrikuntza planifikatzea.
+
+## 2. Departamentuak y ekipo banaketa
+
+| Departamentua | Lana | Langile zenbakia |
+| --- | --- | --- |
+| Harrera | Recepción / atención al paciente | 3 |
+| Medikuntza | Medicina (personal médico) | 5 |
+| Erizaintza | Enfermería | 6 |
+| Informatika | Informática / sistemas | 2 |
+| Administrariak | Administración y gestión | 4 |
+| **Total** |  | **20** |
+
+## 3. Osagaiak eta funtzionamendua
+
+| Osagaia | Funtzioa | Nola doan |
+| --- | --- | --- |
+| **Prozesadorea (PUZ)** | Ekipuaren burmuina | Programen jarraibideak exekutatzen ditu. Zenbat eta nukleo eta hari gehiago izan, orduan eta zeregin gehiago egin ditzake aldi berean. |
+| **RAM Memoria** | Memoria bolatila | Irekitako programen datuak gordetzen ditu, prozesadorea azkar sar dadin. Ekipoa itzaltzean hustu egiten da. |
+| **Almazenamendua** | Memoria osoa | Sistema eragilea, programak eta fitxategiak gordetzen ditu. Zati mugikorrik ez duenez, oso azkarra eta erresistentea da. |
+| **Plaka** | Osagaia denak batzen ditu | CPU, RAM, SSD eta atakak muntatzen diren plaka da, energia eta datuak haien artean banatzen dituena. |
+| **Elikatze iturria** | Elikatu ekipoa | Sareko korrontea (230 V) osagaiek behar dituzten tentsio baxu bihurtzen du. |
+| **Grafikoak** | Imagena emango du | Pantailan bistaratzen dena prozesatzen du. Ofimatikan eta kudeaketa klinikoan, nahikoa da prozesadorean txertatuta dagoena. |
+| **Sare txartela (Ethernet / Wi-Fi)** | Comunicación | Konektatu ekipoa zentroaren sarera, historia klinikoen zerbitzarira eta Internetera. |
+| **Pantaila** | Ikusteko | Informazioa erakusten du. HDMI edo DisplayPort bidez konektatzen da. |
+| **Teklatu eta arratoia** | Datuen sarrera | Ekipoa maneiatzeko aukera ematen diote erabiltzaileari (USB konexioa edo hari gabekoa). |
+| **Sistema operativo** | Software basea | Hardwarea kudeatzen du eta aplikazioak exekutatzen ditu (Windows 11 Pro). |
+
+## 4. Especificaciones por departamento
+
+### 4.1 Harrera – Perfil A
+
+Erabilera nagusia: pazienteen harrera, hitzorduen kudeaketa, datuen erregistroa, deiak eta arreta mostradorean.
+
+| Osagaia | Espezifikazio gomendioa | Prezioa |
+| --- | --- | --- |
+| PUZ | Intel Core i5 (12.ª/13.ª gen.) o AMD Ryzen 5 PRO | 190 € |
+| RAM | 16 GB DDR4/DDR5 | 207 € |
+| Almazenamendua | SSD NVMe 512 GB | 125-130 € |
+| Gráfica | Integratua | 0 € |
+| Monitor | 24" Full HD (1920×1080), IPS | 109 € |
+| Plaka | ASRock B760M-HDV/M.2 D4 | 85 € |
+| Periféricos | Teklatua eta sagua, entzungailuak mikrofonoarekin, NAN irakurgailua / osasun txartela, etiketen inprimagailua eta eskumuturrekoak | 90 € |
+| SE | Windows 11 Pro |  |
+
+### 4.2 Medikuntza (Medicina) – Perfil B
+
+Erabilera nagusia: historia kliniko elektronikoaren kontsulta, preskripzioa, txostenak, proba diagnostikoak eta telemedikuntza.
+
+| Osagaia | Espezifikazio gomendatua | Prezioa |
+| --- | --- | --- |
+| PUZ | Intel Core i5 / i7 o AMD Ryzen 5 / 7 PRO |  |
+| RAM | 16 GB (ampliable a 32 GB) |  |
+| Almazenamendua | SSD NVMe 512 GB |  |
+| Grafikoak | Integratua |  |
+| Pantaila | 24"–27" Full HD o QHD |  |
+| Plaka | MSI B550M PRO-VDH WIFI | 99 € |
+| Periferikoak | Webcam HD, entzungailu mikrofonodunak, txartel kriptografikoaren irakurgailua |  |
+| SE | Windows 11 Pro |  |
+
+### 4.3 Erizaintza – Perfil C
+
+Erabilera nagusia: konstanteen erregistroa, sendaketak eta txertaketa historia klinikoan, agendaren eta materialaren kudeaketa.
+
+| Osagaia | Espezifikazio gomendatua | Prezioa |
+| --- | --- | --- |
+| PUZ | Intel Core i5 o AMD Ryzen 5 PRO |  |
+| RAM | 16 GB |  |
+| Almazenamendua | SSD NVMe 512 GB |  |
+| Formatua | Mini PC |  |
+| Pantaila | 22"–24" Full HD |  |
+| Plaka | Mini pcna |  |
+| Periféricos | Teklatu eta xagua, barrakode irakurgailua irakurgailu web |  |
+| Sistema operativo | Windows 11 Pro |  |
+
+### 4.4 Informatika – Perfil D
+
+**Uso principal:** administración de servidores y red, soporte a usuarios, copias de seguridad, ciberseguridad y virtualización.
+
+| Osagaiak | Espezifikazio gomendatua | Prezioa |
+| --- | --- | --- |
+| PUZ | Intel Core i7 o AMD Ryzen 7 PRO (8 núcleos o más) |  |
+| RAM | 32 GB DDR5 |  |
+| Almazenamendua | SSD NVMe 1 TB (+ disco externo para herramientas y copias) |  |
+| Grafikoak | Integrada o dedicada básica |  |
+| Pantaila | Doble monitor 27" QHD |  |
+| Plaka | Gigabyte B760M AORUS ELITE |  |
+| Periféricos | Teklatu eta sagu ergonomikoak, sareko tresnen kita, SAI propioa |  |
+| SE | Windows 11 Pro edo Linux |  |
+
+### 4.5 Administrariak – Perfil E
+
+Erabilera nagusia: fakturazioa, kontabilitatea, aseguru eta mutualitateen kudeaketa, nominak, kalkulu orriak eta dokumentazioa.
+
+| Componente | Especificación recomendada | Prezioa |
+| --- | --- | --- |
+| PUZ | Intel Core i5 / i7 o AMD Ryzen 5 / 7 PRO |  |
+| RAM | 16 GB (32 GB para quien trabaje con hojas de cálculo muy grandes) |  |
+| Almazenamendua | SSD NVMe 512 GB |  |
+| Grafikoak | Integratua |  |
+| Monitor | Bi monitore 24" Full HD |  |
+| Plaka | Gigabyte B760M H |  |
+| Segurtasuna | TPM 2.0, disko zifratzea, sinadura elektronikoaren irakurgailua |  |
+| Periferikoak | Teclado con teclado numérico, ratón, escáner de documentos, impresora multifunción |  |
+| SE | Windows 11 Pro |  |
+
+## 5. Resumen comparativo
+
+| Departamento | PUZ | RAM | Almazenamendua | Pantaila | Prezioa |
+| --- | --- | --- | --- | --- | --- |
+| Harrera | Core i5 / Ryzen 5 | 16 GB | SSD 512 GB | 1 × 24" | 720-760 € |
+| Medikuntza | Core i5-i7 / Ryzen 5-7 | 16–32 GB | SSD 512 GB | 1 × 24"–27" | 735-775 € |
+| Erizaintza | Core i5 / Ryzen 5 | 16 GB | SSD 512 GB | 1 × 22"–24" | 1.287 € |
+| Informatika | Core i7 / Ryzen 7 | 32 GB | SSD 1 TB | 2 × 27" | 830-910 € |
+| Administrariak | Core i5-i7 / Ryzen 5-7 | 16–32 GB | SSD 512 GB | 2 × 24" | 2050 € |
+
+## 6. Software común en todos los equipos
+
+- SO Windows 11 Pro
+- **Aplikazioa:** Microsoft 365 edo Libreoffice
+- **Software de historia clínica electrónica** txandaren kudeaketarako
+- **Antivirus / EDR** Gestio zentralizatua
+- **PDF irakurgailua**
+
+| Acción | Frecuencia | Responsable |
+| --- | --- | --- |
+| Actualización del sistema y del antivirus | Automática, revisión mensual | Informatika |
+| Limpieza física de equipos y periféricos | Trimestral (diaria en superficies de uso clínico) | Cada departamento / Informatika |
+| Revisión de copias de seguridad | Mensual | Informatika |
+| Revisión de hardware y estado del SSD | Semestral | Informatika |
+| Renovación de equipos | Cada 4–5 años | Dirección / Informatika |
+
+## 9. Inventario de equipos
+
+Tabla para completar con los datos reales del centro:
+
+| Nº | Empleado | Departamento | Modelo | Nº de serie | Fecha de compra |
+| --- | --- | --- | --- | --- | --- |
+| 1 |  |  |  |  |  |
+| 2 |  |  |  |  |  |
+| … |  |  |  |  |  |
+| 20 |  |  |  |  |  |
+
+## 10. Conclusión
+
+Los cinco perfiles de equipo cubren las necesidades de cada departamento con un equilibrio entre rendimiento, seguridad y coste. Los puestos clínicos priorizan fiabilidad, higiene y protección de datos; administración y recepción, comodidad y productividad; y Informatika, la potencia necesaria para gestionar y proteger toda la infraestructura del centro.
