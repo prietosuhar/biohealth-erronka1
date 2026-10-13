@@ -34,43 +34,39 @@ Segurtasuna: web-a **TLS**, audio/bideoa **DTLS-SRTP**.
 
 ## Instalazioa ⏳
 1. Requisitos Previos y Preparación del Sistema
-
 Antes de iniciar la instalación, es necesario asegurarse de que el sistema esté actualizado e instalar los paquetes básicos necesarios.
-
 Actualizar el sistema:
 
 sudo apt update && sudo apt upgrade -y
-
 
 Instalar dependencias necesarias:
 
 sudo apt install -y gnupg2 curl apt-transport-https openjdk-11-jre-headless nginx
 
-
 2. Configuración del Repositorio Oficial de Jitsi
 
 Para obtener la última versión estable de Jitsi Meet, agregamos la clave GPG y el repositorio oficial a nuestro sistema.
-
 Añadir la clave GPG del repositorio:
 
 curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
-
 
 Añadir el repositorio a las fuentes de APT:
 
 echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list
 
-
 Actualizar la lista de paquetes:
-
 sudo apt update
 
-
 3. Instalación de Jitsi Meet y Configuración Interactiva
-
 Con los repositorios configurados, procedemos a la instalación del paquete principal de Jitsi.
 
 sudo apt install -y jitsi-meet
+
+Hurrengo pantalla agertuko zaigu: <img width="1207" height="872" alt="Captura de pantalla 2026-10-13 093755" src="https://github.com/user-attachments/assets/f5484e27-258b-429e-9255-78e45a99a1a1" />
+
+Windows-eko klientean ubuntu zerbitrariaren ip-a bilatu eta hurrengo lehioa zabalduko zaigu:<img width="1182" height="882" alt="Captura de pantalla 2026-10-13 094420" src="https://github.com/user-attachments/assets/35794f19-51fc-4554-8bf2-bb9f4d3c004f" />
+ Dana prestatu eta hasi erabiltzen: <img width="1183" height="877" alt="Captura de pantalla 2026-10-13 094732" src="https://github.com/user-attachments/assets/2c6bd09a-f293-4a3e-96f6-12f4a082c4f8" />
+
 
 ## Probak ⏳
 - [ ] 2+ ekipo deian (kamera, mikrofonoa, txata, pantaila partekatu)
