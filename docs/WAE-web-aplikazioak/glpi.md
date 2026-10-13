@@ -24,7 +24,7 @@ Dokumentu honek **BioHealth** enpresaren azpiegituran **Servidor 1** (`192.168.1
 ## 2. Mendekotasunak eta LAMP Stack Instalatzea
 
 GLPI-k PHP hedapen zehatzak eta MariaDB datu-basea behar ditu. Servidor 1-en agindu hauek exekutatu ziren ingurunea prestatzeko:
-
+```
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y apache2 mariadb-server php php-curl php-gd php-cli php-mysqli php-xml php-mbstring php-intl php-ldap php-xmlrpc php-zip php-bz2 php-imap php-apcu
 
@@ -32,6 +32,7 @@ sudo sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/8.x/apache2/ph
 sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/' /etc/php/8.x/apache2/php.ini
 sudo sed -i 's/post_max_size = 8M/post_max_size = 20M/' /etc/php/8.x/apache2/php.ini
 sudo systemctl restart apache2
+```
 
 ---
 
@@ -39,6 +40,7 @@ sudo systemctl restart apache2
 
 GLPI-rako datu-base espezifiko bat eta sarbide-erabiltzailea konfiguratu ziren MariaDB barruan:
 
+```
 sudo mariadb -u root -p
 
 SQL kontsolaren barruan:
@@ -50,20 +52,25 @@ FLUSH PRIVILEGES;
 EXIT;
 
 ---
+```
 
 ## 4. GLPI Deskargatzea, Instalatzea eta VirtualHost Konfigurazioa
 
 1. **Softwarea Deskargatu eta Erauzi:**
+```
    cd /tmp
    wget https://github.com/glpi-project/glpi/releases/download/10.0.10/glpi-10.0.10.tgz
    tar -xvf glpi-10.0.10.tgz
    sudo mv glpi /var/www/html/glpi
+```
 
-2. **Jabetzak eta Baimenak Doitu:**
+3. **Jabetzak eta Baimenak Doitu:**
+   ```
    sudo chown -R www-data:www-data /var/www/html/glpi
    sudo chmod -R 755 /var/www/html/glpi
+   ```
 
-3. **Apache VirtualHost Konfiguratu (`/etc/apache2/sites-available/glpi.conf`):**
+5. **Apache VirtualHost Konfiguratu (`/etc/apache2/sites-available/glpi.conf`):**
    <VirtualHost *:80>
        ServerName glpi.biohealth.local
        DocumentRoot /var/www/html/glpi/public
@@ -80,13 +87,17 @@ EXIT;
        CustomLog ${APACHE_LOG_DIR}/glpi_access.log combined
    </VirtualHost>
 
-4. **Gune Berria Gaitu eta Apache Berrabiarazi:**
+6. **Gune Berria Gaitu eta Apache Berrabiarazi:**
+   ```
    sudo a2enmod rewrite
    sudo a2ensite glpi.conf
    sudo systemctl restart apache2
+   ```
 
-5. **Instalazio fitxategia ezabatu segurtasuna bermatzeko:**
+8. **Instalazio fitxategia ezabatu segurtasuna bermatzeko:**
+   ```
    sudo rm /var/www/html/glpi/install/install.php
+   ```
 
 ---
 
