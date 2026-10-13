@@ -72,7 +72,7 @@ title: Inprimaketa
 |---|---|---|
 | 1 | Windows Server: inprimagailua instalatu eta bertatik proba | ✅ |
 | 2 | Windows Server: partekatu domeinuko talde batzuekin | ✅ |
-| 3 | Windows bezeroa (BEZ-WIN01) → Windows Server-eko inprimagailua | 🔄 |
+| 3 | Windows bezeroa (BEZ-WIN01, `infor1`) → Windows Server-eko inprimagailua | ✅ |
 | 4 | Baimenik gabeko erabiltzailea (`mediku1`) → ukatuta | ⏳ |
 | 5 | Linux: CUPS-ekin instalatu eta bertatik proba | ⏳ |
 | 6 | Linux: CUPS-ekin sarean partekatu | ⏳ |
@@ -83,16 +83,48 @@ title: Inprimaketa
 ![Bezeroa: partekatutakoak](../../irudiak/SEA/print-bezeroa-partekatuak.png)
 *Irudia: BEZ-WIN01-etik `\\zerbitzariprintzipala`: `INPR-HARRERA` inprimagailu partekatua ikusten da (SMB 445 ✅).*
 
+![Konektatuta](../../irudiak/SEA/print-bezeroa-konektatuta.png)
+*Irudia: *Agregar manualmente → impresora compartida por nombre* `\\zerbitzariprintzipala\INPR-HARRERA` → «INPR-HARRERA en ZERBITZARIPRINT» instalatuta `infor1`-en saioan. ✅*
+
+![Proba bezerotik](../../irudiak/SEA/print-bezeroa-proba-ok.png)
+*Irudia: BEZ-WIN01-eko Bloc de notas-etik inprimatutako testua («Proba - infor1 - bezwin01») zerbitzariko `C:\Imprimaketak\harrera.prn` fitxategian. ✅*
+
 ## Arazoak
 
 | Arazoa | Kausa | Konponbidea |
 |---|---|---|
 | Server Manager ez da ireki: «error en un archivo de configuración del usuario… 0x00, carácter no válido» | Erabiltzailearen `user.config` hondatuta, makina bat-batean itzaltzeagatik | *Aceptar* → konfigurazio lehenetsia berreskuratzen du (leihoaren hobespenak bakarrik). Prebentzioa: Windows *Inicio → Apagar* bidez itzali IsardVDI itxi aurretik |
 | *Local Port*: «El sistema no puede encontrar la ruta especificada» | Atakaren bidea karpetaren izenarekin bat ez zetorren (`l` / `I` nahastuta; karpeta `Imprimaketak` izenarekin sortuta) | Karpetaren izen zehatza erabili: `C:\Imprimaketak\harrera.prn`. Windows-ek ez du karpeta sortzen, lehenago egon behar du |
-| BEZ-WIN01-en inprimagailura konektatzean **0x00000709** | Windows 11 22H2-tik aurrera bezeroak *RPC over TCP* erabiltzen du inprimagailu partekatuetara konektatzeko; Windows Server 2019-ko spooler-ak *named pipes* espero ditu | Bezeroan: `reg add "HKLM\Software\Policies\Microsoft\Windows NT\Printers\RPC" /v RpcUseNamedPipeProtocol /t REG_DWORD /d 1 /f` + `net stop spooler && net start spooler`. Produkzioan GPO bidez: *Plantillas administrativas → Impresoras → Configurar opciones de conexión RPC → RPC sobre canalizaciones con nombre* |
+| BEZ-WIN01-en inprimagailura konektatzean **0x00000709** | Windows 11 22H2-tik aurrera bezeroak *RPC over TCP* erabiltzen du inprimagailu partekatuetara konektatzeko; Windows Server 2019-ko spooler-ak *named pipes* (SMB) espero ditu | Bezeroak `RpcUseNamedPipeProtocol = 1` behar du. Ezin izan zen bezeroan zuzenean egin: gure **`Panel_Blokeatu` GPOak CMDa blokeatzen du** (eta `Itzali_ez`-ek berrabiaraztea) → GPO bidez egin da (ikus behean) |
+| *«Configurar opciones de conexión RPC»* directiva ez da agertzen | Windows Server 2019-ko ADMX txantiloiak zaharragoak dira (directiva Windows 11 22H2-rekin iritsi zen) | **GPO lehentasunak (Preferencias) → Registro** elementua: GPOak erregistro-gakoa idazten du domeinuko ekipo guztietan |
+| GPO aplikatu ondoren ere 0x709 | Spooler-a GPOak gakoa idatzi **aurretik** abiarazi zen | Ekipoa itzali eta piztu berriro (IsardVDI-tik) → Spooler-ak gakoa irakurtzen du abiaraztean |
+| Bezerotik inprimatzean «Error al imprimir»; ilaran *Error* egoera | Urruneko lanetan spooler-ak **inprimatzen duen erabiltzailearen identitatearekin** idazten du tokiko atakan (`infor1`); erabiltzaile horrek ez zuen `C:\Imprimaketak`-en idazteko baimenik | Karpetari NTFS baimenak: `harrera`, `administrariak`, `informatika` → **Modificar** (inprimagailuaren baimen berdinak). Ilaran *Reiniciar* → ondo inprimatu da |
 
 ![0x709](../../irudiak/SEA/print-bezeroa-0x709.png)
 *Irudia: 0x00000709 errorea BEZ-WIN01-en.*
+
+### GPO-Inprimaketa-RPC (0x709-ren konponbidea)
+
+| Ezarpena | Balioa |
+|---|---|
+| GPO | `GPO-Imprimaketa-RPC`, `biohealth.local` domeinuari lotuta (BEZ-WIN01 *Computers* edukiontzian dago, ez OU batean) |
+| Non | *Configuración del equipo → Preferencias → Configuración de Windows → Registro* |
+| Elementua | Acción **Actualizar** · `HKEY_LOCAL_MACHINE` · `Software\Policies\Microsoft\Windows NT\Printers\RPC` · `RpcUseNamedPipeProtocol` · `REG_DWORD` = `1` |
+
+![CMD blokeatuta](../../irudiak/SEA/gpo-cmd-blokeatuta.png)
+*Irudia: BEZ-WIN01-en CMDa ireki nahian: «El administrador ha deshabilitado el símbolo del sistema» → `Panel_Blokeatu` GPOa funtzionatzen ari da. ✅*
+
+![GPO erregistroa](../../irudiak/SEA/gpo-rpc-erregistroa.png)
+*Irudia: GPOaren erregistro-elementua (Preferencias). Lehen saiakeran bidea gaizki idatzi zen (`WindowsNT`, `Printers` gabe) eta zuzendu egin zen.*
+
+![GPO bezeroan](../../irudiak/SEA/gpo-rpc-bezeroan.png)
+*Irudia: BEZ-WIN01-en PowerShell-ekin egiaztatuta (`Get-ItemProperty`): `RpcUseNamedPipeProtocol : 1` → GPOa bezeroan aplikatu da. ✅*
+
+![Ilara errorearekin](../../irudiak/SEA/print-ilara-errorea.png)
+*Irudia: zerbitzariko ilara: `infor1`-en lana «Error - Imprimiendo» egoeran (NTFS baimenak falta ziren).*
+
+![Bezeroko errorea](../../irudiak/SEA/print-bezeroa-errorea.png)
+*Irudia: bezeroko jakinarazpena: «La impresora no pudo imprimir».*
 
 ![Server Manager errorea](../../irudiak/SEA/servermanager-userconfig-errorea.png)
 *Irudia: Server Manager-en `user.config` errorea.*
