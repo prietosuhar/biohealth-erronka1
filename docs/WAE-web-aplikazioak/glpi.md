@@ -7,17 +7,17 @@ title: GLPI
 
 # GLPI Helpdesk - Instalazioa, Konfigurazioa, Active Directory Integrazioa eta Trazabilitatea
 
-Dokumentu honek **BioHealth** enpresaren azpiegituran **Servidor 1** (`192.168.10.4`) nodoan GLPI ticket-kudeaketa eta inbentario sistema instalatzeko, Apache/PHP ingurunea konfiguratzeko, Active Directory (`192.168.10.2` - `biohealth.local`) bidezko LDAP autentifikazioa ezartzeko eta "Erronka" ebaluaziorako beharrezkoak diren inbentario zein ticketen trazabilitatea frogatzeko urrats guztiak biltzen ditu[cite: 4, 5].
+Dokumentu honek **BioHealth** enpresaren azpiegituran **Servidor 1** (`192.168.10.4`) nodoan GLPI ticket-kudeaketa eta inbentario sistema instalatzeko, Apache/PHP ingurunea konfiguratzeko, Active Directory (`192.168.10.1` - `biohealth.local`) bidezko LDAP autentifikazioa ezartzeko eta "Erronka" ebaluaziorako beharrezkoak diren inbentario zein ticketen trazabilitatea frogatzeko urrats guztiak biltzen ditu.
 
 ---
 
 ## 1. Ingurunearen Ezaugarriak
 
-* **Zerbitzaria (Servidor 1):** Ubuntu Server (`192.168.10.4`)[cite: 5]
-* **Web Zerbitzaria:** Apache2 (`web.biohealth.local` / `glpi.biohealth.local`)[cite: 5]
+* **Zerbitzaria (Servidor 1):** Ubuntu Server (`192.168.10.4`)
+* **Web Zerbitzaria:** Apache2 (`web.biohealth.local` / `glpi.biohealth.local`)
 * **Datu-basea:** MariaDB / MySQL (`glpidb`)
-* **Active Directory (DC / CA):** Windows Server (`192.168.10.2` - `biohealth.local`)[cite: 4]
-* **Abonatu Zuzena (Base DN):** `DC=biohealth,DC=local`[cite: 4]
+* **Active Directory (DC / CA):** Windows Server (`192.168.10.1` - `biohealth.local`)
+* **Abonatu Zuzena (Base DN):** `DC=biohealth,DC=local`
 
 ---
 
@@ -106,14 +106,17 @@ EXIT;
 Domeinuko erabiltzaileak Active Directory bidez integratu ziren GLPI-n autentifikatu ahal izateko.
 
 ### 5.1. LDAP Zerbitzariaren Konfigurazioa
-* **Izena:** `Active Directory`[cite: 9]
-* **Zerbitzaria:** `192.168.10.2` (edo `192.168.10.1` interfazearen arabera)[cite: 4, 9]
+* **Izena:** `Active Directory`
+* **Zerbitzaria:** `192.168.10.2` (edo `192.168.10.1` interfazearen arabera)
 * **Ataka:** `389`
-* **Base DN:** `DC=biohealth,DC=local`[cite: 4]
+* **Base DN:** `DC=biohealth,DC=local`
 * **Saio Hasiera Eremua:** `samaccountname`
+<img width="1178" height="880" alt="image4" src="https://github.com/user-attachments/assets/6a6542b4-b01b-40b7-b183-6280a96b861c" />
+<img width="946" height="582" alt="image1" src="https://github.com/user-attachments/assets/fe5372f2-5e96-4397-af15-9e0051b12c2c" />
+
 
 ### 5.2. Erabiltzaileen Inportazioa eta Rol Gehikuntza (MariaDB Bidez)
-Active Directory-tik erabiltzaileak inportatu ziren (`Administrador`, `informatika1`, `mediku1`, `harrera1`, etab.)[cite: 7, 8]. Hasieran erabiltzaileek `Self-Service` rola soilik bazuten ere, MariaDB bidez `Administrador` erabiltzaileari (`id = 21`) eta teknikariei `Super-Admin` rola (`profiles_id = 4`) esleitu zitzaien[cite: 7]:
+Active Directory-tik erabiltzaileak inportatu ziren (`Administrador`, `informatika1`, `mediku1`, `harrera1`, etab.). Hasieran erabiltzaileek `Self-Service` rola soilik bazuten ere, MariaDB bidez `Administrador` erabiltzaileari (`id = 21`) eta teknikariei `Super-Admin` rola (`profiles_id = 4`) esleitu zitzaien:
 
 ```sql
 -- Erabiltzaileak eta beren IDak egiaztatu
@@ -121,7 +124,10 @@ SELECT id, name, realname, firstname FROM glpi_users;
 
 -- Super-Admin profila esleitu (users_id = 21, profiles_id = 4)
 INSERT INTO glpi_profiles_users (users_id, profiles_id, entities_id, is_recursive) VALUES (21, 4, 0, 1);
+
 ```
+<img width="946" height="582" alt="image1" src="https://github.com/user-attachments/assets/fe5372f2-5e96-4397-af15-9e0051b12c2c" />
+
 
 ## 6. Erronkaren Egiaztapena: Inbentarioa eta Ticketen Trazabilitatea
 
