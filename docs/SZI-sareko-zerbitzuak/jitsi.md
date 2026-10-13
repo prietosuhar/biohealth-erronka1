@@ -33,33 +33,27 @@ Segurtasuna: web-a **TLS**, audio/bideoa **DTLS-SRTP**.
 *(kodekak: Opus audioa, VP8/VP9/H.264 bideoa · kalitate-ezarpenak · banda-zabalera · audio-soileko gelak)*
 
 ## Instalazioa ⏳
-1. Requisitos Previos y Preparación del Sistema
-Antes de iniciar la instalación, es necesario asegurarse de que el sistema esté actualizado e instalar los paquetes básicos necesarios.
-Actualizar el sistema:
-
+Aurrebaldintzak eta Sistemaren Prestaketa
+Instalazioari ekin aurretik, ezinbestekoa da sistema eguneratuta dagoela ziurtatzea eta beharrezkoak diren oinarrizko paketeak instalatzea.
+Sistemaren eguneraketa:
 sudo apt update && sudo apt upgrade -y
 
-Instalar dependencias necesarias:
-
+Beharrezko dependientziak instalatzea:
 sudo apt install -y gnupg2 curl apt-transport-https openjdk-11-jre-headless nginx
 
-2. Configuración del Repositorio Oficial de Jitsi
-
-Para obtener la última versión estable de Jitsi Meet, agregamos la clave GPG y el repositorio oficial a nuestro sistema.
-Añadir la clave GPG del repositorio:
-
+Jitsi Repositorio Ofiziala Gehitzea
+Jitsi Meet-en azken bertsio egonkorra lortzeko, GPG gakoa eta biltegi ofiziala gure sistemara gehituko ditugu.
+Biltegiaren GPG gakoa gehitzea:
 curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
 
-Añadir el repositorio a las fuentes de APT:
-
+Repositorioa APT iturburuetan sartzea:
 echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list
 
-Actualizar la lista de paquetes:
+Paketeen zerrenda berriztatzea:
 sudo apt update
 
-3. Instalación de Jitsi Meet y Configuración Interactiva
-Con los repositorios configurados, procedemos a la instalación del paquete principal de Jitsi.
-
+Jitsi Meet-en Instalazio eta Konfigurazio Interaktiboa
+Repositorioak konfiguratuta daudela, Jitsi-ren pakete nagusia instalatzeari ekingo diogu.
 sudo apt install -y jitsi-meet
 
 Hurrengo pantalla agertuko zaigu: <img width="1207" height="872" alt="Captura de pantalla 2026-10-13 093755" src="https://github.com/user-attachments/assets/f5484e27-258b-429e-9255-78e45a99a1a1" />
