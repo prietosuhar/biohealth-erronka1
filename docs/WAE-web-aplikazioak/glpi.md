@@ -112,7 +112,7 @@ Domeinuko erabiltzaileak Active Directory bidez integratu ziren GLPI-n autentifi
 * **Base DN:** `DC=biohealth,DC=local`
 * **Saio Hasiera Eremua:** `samaccountname`
 <img width="1178" height="880" alt="image4" src="https://github.com/user-attachments/assets/6a6542b4-b01b-40b7-b183-6280a96b861c" />
-<img width="946" height="582" alt="image1" src="https://github.com/user-attachments/assets/fe5372f2-5e96-4397-af15-9e0051b12c2c" />
+
 
 
 ### 5.2. Erabiltzaileen Inportazioa eta Rol Gehikuntza (MariaDB Bidez)
@@ -128,30 +128,36 @@ INSERT INTO glpi_profiles_users (users_id, profiles_id, entities_id, is_recursiv
 ```
 <img width="946" height="582" alt="image1" src="https://github.com/user-attachments/assets/fe5372f2-5e96-4397-af15-9e0051b12c2c" />
 
+<img width="1176" height="881" alt="image9" src="https://github.com/user-attachments/assets/34bdaad9-ab52-46b3-82c5-ac05abf6c5f7" />
+
+
 
 ## 6. Erronkaren Egiaztapena: Inbentarioa eta Ticketen Trazabilitatea
 
 ### 6.1. Enpresako Ekipoen Erregistroa (Activos / Inbentarioa)
-Enpresako 3 nodo nagusiak erregistratu ziren GLPI inbentarioan[cite: 10]:
+Enpresako 3 nodo nagusiak erregistratu ziren GLPI inbentarioan:
 
 | Ekipoaren Izena | Mota / Sistema Eragilea | Ezaugarriak / Deskribapena |
 | :--- | :--- | :--- |
-| **Servidor_Web_GLPI** | Servidor (Ubuntu Server 22.04 LTS) | IP: 192.168.10.4 - Web zerbitzaria eta GLPI[cite: 5, 10] |
-| **Servidor_Jitsi** | Servidor (Ubuntu Server 22.04 LTS) | IP: 192.168.10.5 - Jitsi Meet Bideodeialak[cite: 6, 10] |
-| **WindowsBezero** | Ordenador (Windows 11) | Domeinuko bezero ekipoa (`PC-Mediku`)[cite: 10] |
+| **Servidor_Web_GLPI** | Servidor (Ubuntu Server 22.04 LTS) | IP: 192.168.10.4 - Web zerbitzaria eta GLPI 
+| **Servidor_Jitsi** | Servidor (Ubuntu Server 22.04 LTS) | IP: 192.168.10.5 - Jitsi Meet Bideodeialak 
+| **WindowsBezero** | Ordenador (Windows 11) | Domeinuko bezero ekipoa (`PC-Mediku`)
 
----
+<img width="1180" height="872" alt="image8" src="https://github.com/user-attachments/assets/4342dfdb-d037-4b9d-80e4-3fd52311551a" />
+
 
 ### 6.2. Ticketen Kudeaketa eta Trazabilitatea (Soporte / Peticiones)
-Sistema egoki dabilela kudeatzeko, 2 ticket ezberdin erregistratu ziren, bakoitza bere rol, erabiltzaile, ekipo eta egoera desberdinarekin[cite: 11]:
+Sistema egoki dabilela kudeatzeko, 2 ticket ezberdin erregistratu ziren, bakoitza bere rol, erabiltzaile, ekipo eta egoera desberdinarekin:
 
-1. **1. Ticket-a:** `Ezin da sareko inprimagailua aurkitzen`[cite: 11]
-   * **Eskatzailea:** `harrera1` (Self-Service)[cite: 11]
-   * **Esleitutako Teknikaria:** `Administrador` (Super-Admin)[cite: 11]
-   * **Egoera:** **Resuelto** (Ebatzita)[cite: 11]
-   * **Ebazpena:** IP erreserba DHCP-n berreginda eta zerbitzua berrabiarazita.
+1. **1. Ticket-a:** `Ezin da sareko inprimagailua aurkitzen`
+   * **Eskatzailea:** `harrera1` (Self-Service)
+   * **Esleitutako Teknikaria:** `Administrador` (Super-Admin)
+   * **Egoera:** **Resuelto** (Ebatzita)
 
-2. **2. Ticket-a:** `Jitsi bideodeialak ez du mikrofonoa detektatzen`[cite: 11]
-   * **Eskatzailea:** `informatika1`[cite: 11]
-   * **Esleitutako Teknikaria:** `Administrador`[cite: 11]
-   * **Egoera:** **En curso (asignada)** (Bidean)[cite: 11]
+2. **2. Ticket-a:** `Jitsi bideodeialak ez du mikrofonoa detektatzen`
+   * **Eskatzailea:** `informatika1`
+   * **Esleitutako Teknikaria:** `Administrador`
+   * **Egoera:** **En curso (asignada)** (Bidean)
+
+     <img width="962" height="737" alt="image2" src="https://github.com/user-attachments/assets/f092feeb-2f07-4488-b7a6-ef1d41ffd9b0" />
+
