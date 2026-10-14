@@ -9,6 +9,17 @@ nav_order: 4
 - **Zertifikazio Agintaritza (CA):** Enpresa Erroko CA (`biohealth-ZERBITZARIPRINT-CA`)
 - **Helburua:** Barneko web zerbitzuak (WordPress/GLPI eta Jitsi) babestea AD CS bidez jaorritako gako pribatudun SAN ziurtagiri esportagarriekin, eta domeinuko bezero guztietan ikono berdea (konexio segurua) lortzea.
 
+> **Oharra – izenak eta IPak.** Orri hau lehen probetako laborategian egin zen (Alex). Bertan erabilitako izenak eta azken arkitekturakoak:
+>
+> | Laborategi honetan | Azken arkitekturan ([Sarearen diseinua](sarea.md)) |
+> |---|---|
+> | Servidor 1 · `192.168.10.4` · `web.biohealth.local` | **www** · `192.168.20.10` (DMZ) · `www.biohealth.local` / `glpi.biohealth.local` |
+> | Servidor 2 · `192.168.10.5` · `jitsi.biohealth.eus` | **meet** · `192.168.20.11` (DMZ) · `meet.biohealth.local` |
+>
+> Prozedura berdina da; SAN zerrendan azken izenak jarri behar dira (`www`, `glpi`, `meet` `.biohealth.local`). `.eus` domeinua erregistratutako domeinu publiko bat izango litzateke (produkzioan), laborategian ez da erabiltzen.
+>
+> ⚠️ DMZtik LANera trafikoa ukatuta dago ([pfSense 3. araua](pfsense.md#arauak)); beraz `.pfx` fitxategia ez da `scp` bidez DCtik zuzenean DMZra pasatzen: administratzaileak BEZ-WIN01-etik (LAN) `scp` egiten du DMZko zerbitzarira (SSH 22, LAN→DMZ baimenduta), edo IsardVDIko kontsolatik.
+
 ---
 
 ## 1. Zertifikazio Agintaritzaren (AD CS) Konfigurazioa Windows Server-en
@@ -106,8 +117,8 @@ Berez, `Servidor web` txantiloiak ez du uzten gako pribatua esportatzen ezta era
    ```
 3. Editatu `/var/www/html/wp-config.php` nabigazioa eta irudiak HTTPS bidez kargatzera behartzeko eta IP helbiderako birbideratze-begiztak ekiditeko:
    ```php
-   define('WP_HOME', '[https://web.biohealth.local](https://web.biohealth.local)');
-   define('WP_SITEURL', '[https://web.biohealth.local](https://web.biohealth.local)');
+   define('WP_HOME', 'https://web.biohealth.local');
+   define('WP_SITEURL', 'https://web.biohealth.local');
    ```
 4. Berrabiarazi Apache:
    ```bash

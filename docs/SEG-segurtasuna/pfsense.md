@@ -91,16 +91,127 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 | 443/TCP | www 192.168.20.10 | Web korporatiboa |
 | 443/TCP (beste IP/portu bat) | meet 192.168.20.11 | Telekontsulta |
 | 10000/UDP | meet 192.168.20.11 | Jitsi audio/bideoa (SRTP) |
+| 1194/UDP | pfSense bera (OpenVPN) | Langileen urruneko sarbidea ([VPN](#vpn--urruneko-sarbidea)) — NATik gabe, WAN araua |
 
 > IsardVDIn ezin da Internetetik benetako proba egin; NATa konfiguratu eta argazkia ateratzen da, muga hori azalduz.
 
-## IDS – Suricata ⏳
+## IDS – Suricata
 
-*(aukerak · erabakia · instalazioa · proba: `nmap` eskaneatze bat detektatzen du)*
+### Aukerak
 
-## VPN – urruneko sarbidea ⏳
+| Aukera | Alde onak | Alde txarrak |
+|---|---|---|
+| **Suricata (pfSense paketea)** | Pakete ofiziala, GUI-tik kudeatzen da; multihari; ET Open arauak doan; IDS eta IPS moduak | RAM gehiago behar du (~1–2 GB) |
+| Snort (pfSense paketea) | Klasikoa, dokumentazio asko | Hari bakarra; arau onenak (Talos) ordainpekoak edo 30 egun beranduago |
+| Zeek (Security Onion) | Analisi sakona | Makina berezi bat eta 16 GB+ RAM; gehiegizkoa |
+| Host IDS bakarrik (fail2ban) | Arina | Zerbitzari bakoitza bakarrik; sarearen trafikoa ez du ikusten |
 
-*(aukerak: OpenVPN / WireGuard / IPsec · erabakia · konfigurazioa · proba)*
+**Erabakia: Suricata pfSense-n, IDS moduan** (detektatu eta logetan erregistratu, ez blokeatu).
+- pfSense-k sareko trafiko guztia ikusten du (ertza) → leku bakarrean IDS bakarra.
+- **IDS eta ez IPS:** positibo faltsu batek telekontsulta (10000/UDP) edo web-a blokeatuko luke; lehenik alertak ikasi eta doitu, gero IPS (*Inline*) moduan jarri daiteke.
+- Interfazeak: **WAN** (kanpoko erasoak) eta **DMZ** (Internetera irekitako zerbitzariak; www edo meet erasotuta badaude, hemen ikusten da). LAN-a ez, lehenengo fasean RAMa aurrezteko.
+- Arauak: **ET Open** (Emerging Threats, doakoak, egunero eguneratuak).
+
+### Konfigurazioa
+
+| Urratsa | Non | Balioa |
+|---|---|---|
+| 0 | IsardVDI → pfSense makina | RAM **2 GB** (Suricata-k 1 GB-rekin huts egin dezake) |
+| 1 | *System → Package Manager → Available Packages* | `suricata` → **Install** |
+| 2 | *Services → Suricata → Global Settings* | ☑ *Install ETOpen Emerging Threats rules* · *Update Interval*: 12 h · **Save** |
+| 3 | *Services → Suricata → Updates* | **Update** → ET Open arauak deskargatuta (data eta MD5) |
+| 4 | *Interfaces → Add* | Interface **WAN** · ☑ Enable · ☐ *Block Offenders* (IDS modua) · ☑ *Send Alerts to System Log* · **Save** |
+| 5 | *WAN Categories* | `emerging-scan`, `emerging-exploit`, `emerging-attack_response`, `emerging-web_server`, `emerging-sql`, `emerging-dos`, `emerging-malware` · **Save** |
+| 6 | *Interfaces → Add* | Interface **DMZ**, 4.–5. urratsen berdina |
+| 7 | *Interfaces* | Interfaze bakoitzaren ▶ (Start) → egoera berdea |
+
+### Probak ⏳
+
+| # | Nondik | Komandoa | Espero den alerta (*Services → Suricata → Alerts*) |
+|---|---|---|---|
+| 1 | www (DMZ) | `curl http://testmynids.org/uid/index.html` | `GPL ATTACK_RESPONSE id check returned root` (DMZ interfazea) |
+| 2 | db01 edo bez-lnx01 (LAN → DMZ, pfSense zeharkatzen du) | `sudo apt install -y nmap` → `sudo nmap -sV -p 80,443 192.168.20.10` | `ET SCAN Possible Nmap User-Agent Observed` (DMZ interfazea) |
+| 3 | db01 edo bez-lnx01 (LAN) | `curl -A "sqlmap/1.7" "http://192.168.20.10/?id=1%27%20OR%20%271%27=%271"` | `ET SCAN` (sqlmap User-Agent) edo `ET WEB_SERVER` SQL injekzio alerta |
+
+1\. probak ez du ezer arriskutsurik egiten: web-orriak `uid=0(root)` testua itzultzen du, eta arau batek testu hori «root baimenak lortu dituen erasotzaile baten erantzuna» bezala detektatzen du.
+
+**Ebidentziak:** paketea instalatuta · Global Settings · Updates (arauen data) · bi interfazeak martxan · Alerts fitxa 3 proben alertekin · *Status → System Logs* (Suricata alertak sistemaren logean).
+
+## VPN – urruneko sarbidea
+
+### Aukerak
+
+| Aukera | Alde onak | Alde txarrak |
+|---|---|---|
+| **OpenVPN (pfSense)** | pfSense-n integratua; **wizard**-a eta *Client Export* (`.ovpn` edo Windows instalatzailea); ziurtagiriak + pasahitza; TCP/UDP | WireGuard baino motelagoa |
+| WireGuard | Oso azkarra, konfigurazio laburra | pfSense-n pakete gehigarria, wizard-ik eta ziurtagiri-kudeaketarik gabe; erabiltzaile-autentifikaziorik ez (gakoak bakarrik) |
+| IPsec (IKEv2) | Estandarra, Windows-ek jatorriz du | Konfigurazio konplexua; NAT-arekin arazoak |
+| Urruneko mahaigaina zuzenean (RDP portua ireki) | Erraza | **Arriskutsua**: RDP Internetera irekita, ransomwarearen sarbide nagusia |
+
+**Erabakia: OpenVPN**, *Remote Access (SSL/TLS + User Auth)*: erabiltzaileak **ziurtagiria** (zerbait duena) **eta pasahitza** (zerbait dakiena) behar ditu → bi faktore. Medikuek etxetik telekontsulta edo historia klinikoak kontsultatu behar dituztenean erabiltzen da; BioHealth-eko barne-zerbitzuak ez dira inoiz zuzenean Internetera irekitzen.
+
+**Autentifikazioa:** laborategian *Local User Access* (pfSense-ko erabiltzaileak). Hobekuntza: *System → User Manager → Authentication Servers* → LDAP (`192.168.10.1`, `DC=biohealth,DC=local`) eta wizard-ean *LDAP* aukeratu, langileak ADko kontuarekin sartzeko.
+
+### Ingurunea
+
+| Parametroa | Balioa |
+|---|---|
+| Zerbitzaria | pfSense, **WAN** interfazea |
+| Protokoloa / portua | UDP **1194** |
+| Tunel-sarea | `10.0.8.0/24` |
+| Sare lokala (bezeroari ematen zaiona) | `192.168.10.0/24` (LAN) |
+| DNS bezeroarentzat | `192.168.10.1` (DC) |
+| Zifraketa | AES-256-GCM · TLS gakoa · SHA256 |
+| CA / zerbitzariaren ziurtagiria | `BioHealth-CA` · `BioHealth-VPN-Server` (2048 bit) |
+
+### Konfigurazioa (OpenVPN Wizard)
+
+1. *VPN → OpenVPN → Wizards*. **Type of Server:** `Local User Access` → Next.
+
+<img width="921" height="627" alt="image3" src="https://github.com/user-attachments/assets/b2eeecbf-4d8d-4fc9-ba89-7dfd3181cc26" />
+<img width="917" height="627" alt="image6" src="https://github.com/user-attachments/assets/b2915c9c-74a7-4136-b389-343217d9c1cb" />
+
+2. **CA sortu:** `BioHealth-CA`, 2048 bit, sha256.
+3. **Zerbitzariaren ziurtagiria:** `BioHealth-VPN-Server`, 2048 bit.
+
+<img width="922" height="646" alt="image4" src="https://github.com/user-attachments/assets/1033d0db-ca15-40c8-8d63-8e190c5aaed3" />
+
+4. **Zerbitzariaren parametroak:** Interface `WAN` · `UDP on IPv4 only` · port `1194` · ☑ *Use a TLS Key* · `AES-256-GCM` · tunel-sarea `10.0.8.0/24` · sare lokala `192.168.10.0/24` · DNS `192.168.10.1` · konexio aldiberekoak 10.
+
+<img width="936" height="686" alt="image2" src="https://github.com/user-attachments/assets/d5fa3997-1b49-4923-98c3-e7e44ab9922a" />
+
+5. **Suebaki-arauak** (wizard-ak sortzen ditu):
+   - *Firewall Rule*: WAN-en UDP 1194 sarrera baimendu.
+   - *OpenVPN rule*: tuneletik LANera trafikoa baimendu.
+
+<img width="922" height="648" alt="image1" src="https://github.com/user-attachments/assets/f8fa7b29-d822-4a12-b41d-990043ef3d89" />
+
+> **Hobekuntza (pribilegio minimoa):** wizard-ak OpenVPN fitxan «any → any» araua sortzen du. Produkzioan behar dena bakarrik utziko litzateke: DNS (53) eta RDP (3389) DCra, HTTPS (443) www/glpi-ra.
+
+### Erabiltzaileak eta ziurtagiriak
+
+1. *System → User Manager → Add*: `mediku1`, pasahitz sendoa.
+2. ☑ *Click to create a user certificate* → izena `mediku1-VPN-Cert`, CA `BioHealth-CA` → **Save**.
+
+### Bezeroaren profila esportatu (Client Export)
+
+1. *System → Package Manager → Available Packages* → `openvpn-client-export` → Install.
+2. *VPN → OpenVPN → Client Export* → *Remote Access Server*: `BioHealth-VPN-Server UDP4:1194`.
+3. `mediku1` erabiltzailearen lerroan: *Windows Installer* edo *Most Clients* (`.ovpn`).
+
+### Probak ⏳
+
+Bezeroak **WAN aldean** egon behar du (etxetik sartzen den langilea simulatzeko): IsardVDIn **Default** sarean bakarrik dagoen mahaigain bat (Windows edo Ubuntu).
+
+| # | Proba | Espero dena |
+|---|---|---|
+| 0 | pfSense → *Interfaces → WAN* → ☐ **Block private networks** (IsardVDIko Default sarea helbide pribatuak dira) | Bestela pfSense-k bezeroaren paketeak WAN-en botatzen ditu |
+| 1 | Bezeroan OpenVPN GUI / OpenVPN Connect + `.ovpn` → `mediku1` + pasahitza | *Connected* |
+| 2 | `ipconfig` / `ip a` | Tunel-interfazea `10.0.8.x` |
+| 3 | `ping 192.168.10.1` · `nslookup db01.biohealth.local 192.168.10.1` | ✅ LANera iristen da tuneletik |
+| 4 | VPN deskonektatuta: `ping 192.168.10.1` | ❌ ez da iristen (LANa ez dago Internetera irekita) |
+| 5 | pfSense: *Status → OpenVPN* eta *Status → System Logs → OpenVPN* | `mediku1` konektatuta, IP birtuala eta jatorrizko IPa |
+| 6 | Pasahitz okerra | ❌ `AUTH_FAILED` logean |
 
 ## Probak (www-tik, 192.168.20.10)
 
@@ -148,97 +259,3 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 
 ![Invert match errorea](../../irudiak/SEG/pfsense-arau2-invert-errorea.png)
 *Irudia: 2. araua zuzendu aurretik: `! DMZ subnets` (alderantzizkatuta).*
-
-
-# OpenVPN Zerbitzariaren Konfigurazioa eta Ezarpena pfSense-n
-
-## 1. Ingurunearen Ezaugarriak
-
-* **Suhorma / Gateway:** pfSense Community Edition (`192.168.10.254`)
-* **Barne Sarea (LAN):** `192.168.10.0/24`
-* **VPN Tunel Sarea:** `10.0.8.0/24`
-* **Protokoloa / Portua:** UDP / `1194`
-* **Autentifikazio Mota:** Tokiko Erabiltzaileak (Local User Access) eta Ziurtagiri Digitalak (X.509)
-
----
-
-## 2. Urratsak: OpenVPN Config Wizard Bidez
-
-### 1. Urratsa: Wizard Hasieratzea
-1. pfSense web interfazean sartu (`https://192.168.10.254`).
-2. Goiko menuan: **VPN** > **OpenVPN** hautatu.
-3. **Wizards** fitxatxa ireki.
-
-### 2. Urratsa: Autentifikazio Mota Aukeratzea
-* **Type of Server:** `Local User Access` hautatu.
-* Jarraitzeko: **Next** sakatu.
-* 
-<img width="921" height="627" alt="image3" src="https://github.com/user-attachments/assets/b2eeecbf-4d8d-4fc9-ba89-7dfd3181cc26" />
-<img width="917" height="627" alt="image6" src="https://github.com/user-attachments/assets/b2915c9c-74a7-4136-b389-343217d9c1cb" />
-
-### 3. Urratsa: Zietagiri Agintaritza (CA - Certificate Authority) Sortzea
-* **Descriptive name:** `BioHealth-CA`
-* **Key length:** `2048 bit`
-* **Digest algorithm:** `sha256`
-* Jarraitzeko: **Next** sakatu.
-
-### 4. Urratsa: Zerbitzariaren Ziurtagiria (Server Certificate) Sortzea
-* **Descriptive name:** `BioHealth-VPN-Server`
-* **Key length:** `2048 bit`
-* Jarraitzeko: **Next** sakatu.
-
-<img width="922" height="646" alt="image4" src="https://github.com/user-attachments/assets/1033d0db-ca15-40c8-8d63-8e190c5aaed3" />
-
-
-### 5. Urratsa: OpenVPN Zerbitzariaren Parametroak Definitzea
-* **Interface:** `WAN`
-* **Protocol:** `UDP on IPv4 only`
-* **Local Port:** `1194`
-* **Cryptographic Settings:**
-  * **TLS Configuration:** Comprobar *Use a TLS Key*
-  * **Encryption Algorithm:** `AES-256-GCM`
-* **Tunnel Settings:**
-  * **IPv4 Tunnel Network:** `10.0.8.0/24`
-  * **IPv4 Local Network:** `192.168.10.0/24` (BioHealth-eko barne sarea)
-  * **Concurrent connections:** *Hutsa edo 10 (beharren arabera)*
-  * **DNS Server 1:** `192.168.10.1` (Windows Server DNS)
-
-<img width="936" height="686" alt="image2" src="https://github.com/user-attachments/assets/d5fa3997-1b49-4923-98c3-e7e44ab9922a" />
-
-
-### 6. Urratsa: Babes Hesi Arauak (Firewall Rules) Sortzea
-Ziurtatu bi aukera hauek markatuta daudela:
-* **Firewall Rule:** Permite el tráfico entrante al puerto OpenVPN en la WAN. (OpenVPN portua WAN-en zabaltzen du).
-* **OpenVPN rule:** Permite el tráfico a través del túnel VPN hacia la LAN. (Tunel bidez barne sarerako sarbidea baimentzen du).
-* **Finish** sakatu konfigurazioa amaitzeko.
-
-<img width="922" height="648" alt="image1" src="https://github.com/user-attachments/assets/f8fa7b29-d822-4a12-b41d-990043ef3d89" />
-
-
----
-
-## 3. Erabiltzaileak eta Ziurtagiriak Kudeatzea
-
-### Erabiltzaile Berria Ksortzea:
-1. Navigar a **System** > **User Manager**.
-2. **Add** botoia sakatu.
-3. Parametroak bete:
-   * **Username:** `mediku1` (edo kasuan kasuko erabiltzailea)
-   * **Password:** Passphrasa segurua jarri.
-4. Markatu aukera hau: **Click to create a user certificate**.
-5. **Descriptive name:** `mediku1-VPN-Cert`
-6. **Certificate authority:** `BioHealth-CA` hautatu.
-7. **Save** sakatu gorde eta ziurtagiria sortzeko.
-
----
-
-## 4. Bezero Profileak Exportatzea (Client Export)
-
-1. Navigar a **System** > **Package Manager** > **Available Packages**.
-2. Bilatu `openvpn-client-export` eta instalatu (**Install**).
-3. Behin instalatuta, joan hona: **VPN** > **OpenVPN** > **Client Export Utility**.
-4. **OpenVPN Server:** `BioHealth-VPN-Server` aukeratu.
-5. Beheko zerrendan, aurkitu sortutako erabiltzailea (`mediku1`) eta deskargatu profilea:
-   * **Most Clients / Standard Android / iOS / Windows:** Deskargatu `.ovpn` fitxategia edo auto-instalatzailea.
-
-

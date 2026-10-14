@@ -11,6 +11,16 @@ nav_order: 2
 
 Dokumentu honek **BioHealth** enpresaren azpiegituran **Servidor 1** (`192.168.10.4`) nodoan GLPI ticket-kudeaketa eta inbentario sistema instalatzeko, Apache/PHP ingurunea konfiguratzeko, Active Directory (`192.168.10.1` - `biohealth.local`) bidezko LDAP autentifikazioa ezartzeko eta "Erronka" ebaluaziorako beharrezkoak diren inbentario zein ticketen trazabilitatea frogatzeko urrats guztiak biltzen ditu.
 
+> **Oharra – bi bertsio eta IPak.** Orri honetako 1.–6. atalak GLPIren **lehen instalazioa** dira (instalazio natiboa, Alexen laborategian, `192.168.10.4`, DB lokala `glpidb`). Azken arkitekturan zerbitzariak DMZra eraman ziren eta GLPI **kontenedore batera** migratu da (errubrikako SB irizpidea):
+>
+> | Lehen instalazioan | Azken arkitekturan |
+> |---|---|
+> | Servidor 1 · `192.168.10.4` (LAN) | **www** · `192.168.20.10` (DMZ) |
+> | Servidor 2 (Jitsi) · `192.168.10.5` | **meet** · `192.168.20.11` (DMZ) |
+> | GLPI natiboa Apache-n, `glpidb` lokala | **GLPI 10 Docker kontenedorean**, `glpi` DB **db01**-en (`192.168.10.3`) → ikus [7. atala](#7-kontenedorera-migrazioa-azken-arkitektura) eta [SB](../SB-sistema-banatuak/birtualizazioa.md) |
+>
+> LDAP integrazioa, rolak, inbentarioa eta tiketak bi bertsioetan berdin konfiguratzen dira (GLPIren web-interfazetik).
+
 ---
 
 ## 1. Ingurunearen Ezaugarriak
@@ -48,7 +58,7 @@ sudo mariadb -u root -p
 SQL kontsolaren barruan:
 
 CREATE DATABASE glpidb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'glpi_user'@'localhost' IDENTIFIED BY 'BioHealth2026!';
+CREATE USER 'glpi_user'@'localhost' IDENTIFIED BY '********';   -- pasahitza ez da biltegian gordetzen
 GRANT ALL PRIVILEGES ON glpidb.* TO 'glpi_user'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
@@ -163,3 +173,40 @@ Sistema egoki dabilela kudeatzeko, 2 ticket ezberdin erregistratu ziren, bakoitz
 
      <img width="962" height="737" alt="image2" src="https://github.com/user-attachments/assets/f092feeb-2f07-4488-b7a6-ef1d41ffd9b0" />
 
+
+### 6.3. Rolak (errubrika: ≥ 2 rol)
+
+| Rola (GLPI profila) | Erabiltzaileak | Zer egin dezake | Zergatik |
+|---|---|---|---|
+| **Self-Service** | `harrera1`, `mediku1`… (AD-tik inportatuak) | Tiketak sortu eta bere tiketen egoera ikusi | Langile gehienek intzidentziak jakinarazi besterik ez dute behar (pribilegio minimoa) |
+| **Technician** *(hirugarren rola, gehitzeko)* | `informatika1`, `informatika2` | Esleitutako tiketak kudeatu, inbentarioa ikusi | Informatika saileko teknikariek ez dute Super-Admin izan behar |
+| **Super-Admin** | `Administrador` | Dena (konfigurazioa, LDAP, profilak) | Administrazio-kontu bakarra |
+
+> Hobekuntza: profila MariaDB-n `INSERT` bidez esleitu beharrean, *Administración → Usuarios → (erabiltzailea) → Autorizaciones* fitxatik egin daiteke; GLPIk egiten duena berdina da, baina interfazetik egiteak ez du DBaren egitura jakitea eskatzen eta erregistroan geratzen da.
+
+## 7. Kontenedorera migrazioa (azken arkitektura)
+
+| Datua | Balioa |
+|---|---|
+| Ostalaria | **www** · `192.168.20.10` (DMZ) · Ubuntu Server 20.04 |
+| Kontenedorea | `glpi/glpi:10.0.x` (Docker), izena `glpi`, `--restart unless-stopped` |
+| Portua | `127.0.0.1:8080` → kontenedoreko 80 (kanpotik **ez** da irekitzen) |
+| Argitalpena | Apache alderantzizko proxya, `https://glpi.biohealth.local` (443, ziurtagiri bera) |
+| Datu-basea | `glpi` @ **db01** `192.168.10.3:3306`, erabiltzailea `glpi_user`@`192.168.20.10` (pfSense 1. araua) |
+| Datu iraunkorrak | `glpi_data` bolumena (`/var/glpi`) — kontenedorea ezabatuta ere fitxategiak geratzen dira |
+| Scripta | [`scripts/www-glpi-docker.sh`](../../scripts/www-glpi-docker.sh) |
+
+**Zergatik GLPI 10 eta ez 11:** GLPI 11-k MariaDB ≥ 10.6 eskatzen du eta db01-ek 10.3 du (Ubuntu 20.04-ko biltegia).
+**Zergatik 127.0.0.1:8080:** Docker-ek `-p 8080:80` jarrita iptables arauak zuzenean idazten ditu eta **ufw saihesten du**; localhost-era lotuta, sarrera bakarra Apache (443) da.
+
+```bash
+bash scripts/www-glpi-docker.sh 10.0.20
+sudo docker ps                       # glpi  Up …  127.0.0.1:8080->80/tcp
+sudo docker logs --tail 20 glpi
+curl -skI https://glpi.biohealth.local --resolve glpi.biohealth.local:443:127.0.0.1
+```
+
+### Ebidentziak ⏳
+- [ ] `docker ps` eta `docker volume ls` (www)
+- [ ] `https://glpi.biohealth.local` BEZ-WIN01-etik (giltzarrapoa)
+- [ ] Inbentarioa eguneratuta azken IPekin: pfsense, zerbitzariprintzipala (.10.1), db01 (.10.3), www (.20.10), meet (.20.11), BEZ-WIN01, bez-lnx01 — makina **fisikoak** (HW txostena) eta **birtualak** (IsardVDI) bereizita
