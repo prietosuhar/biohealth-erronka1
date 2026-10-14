@@ -179,4 +179,5 @@ SCP bidez root ez den `biohealth` erabiltzailearekin `/tmp/` direktorioan zuzene
    - `https://web.biohealth.local`
    - `https://jitsi.biohealth.eus`
 
-Bi zerbitzuek konexio seguruaren **ikono berdea** erakusten dute, amaieratik amaierako konfiantza-kate balioduna adieraziz eta pribatutasun abisurik gabe.
+<img width="1190" height="897" alt="image" src="https://github.com/user-attachments/assets/a33210bf-c4c3-4930-8595-52ea4fc3b898" />
+
