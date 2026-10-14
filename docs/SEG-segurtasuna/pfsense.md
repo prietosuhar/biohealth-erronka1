@@ -251,6 +251,9 @@ alert http any any -> $HOME_NET any (msg:"BIOHEALTH proba - sqlmap erasoa www-re
 
 > **Hobekuntza (pribilegio minimoa):** wizard-ak OpenVPN fitxan «any → any» araua sortzen du. Produkzioan behar dena bakarrik utziko litzateke: DNS (53) eta RDP (3389) DCra, HTTPS (443) www/glpi-ra.
 
+![OpenVPN zerbitzaria](../../irudiak/SEG/vpn-openvpn-zerbitzaria.png)
+*Irudia: OpenVPN zerbitzaria (kantonsh-en laborategia): WAN, UDP 1194, tunela 10.0.8.0/24, **Remote Access (SSL/TLS + User Auth)**, AES-256-GCM, SHA256, DH 2048. ✅*
+
 ### Erabiltzaileak eta ziurtagiriak
 
 1. *System → User Manager → Add*: `mediku1`, pasahitz sendoa.
