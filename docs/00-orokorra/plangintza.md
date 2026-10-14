@@ -40,6 +40,7 @@ Plangintza GitHub-eko **Issues / Projects** taulan egiten da (zeregin bat pauso 
 | 2026-10-14 | kantonsh | GitHub Pages: Cayman → Just the Docs (alboko menua ikasgaika, bilatzailea, «Editatu GitHub-en»); hiru orriri goiburua jarri; `[cite]` hondarrak kendu | CUPS probak, edukiontzia/HA |
 | 2026-10-14 | Alex | CUPS proba gurutzatuak (argazkiak), OpenVPN wizard-a, DHCP erreserba, Jitsi 2 ekipo, MongoDB argazkiak, txostenak WordPress-en, ziurtagiriak | IDS, VPN proba |
 | 2026-10-14 | kantonsh | Berrikuspena errubrikaren aurka; GLPI-ko pasahitz argia kendu; IDS Suricata eta VPN atalak; SB (VM + kontenedorea + HA diseinua); Jitsi IE7/IE8; MariaDB ustiapena + MongoDB; MAGERIT; LAP plana; IGG/GRI; IP koherentzia | Laborategiko argazkiak (IDS, VPN, docker, mediku1) |
+| 2026-10-14 (gaua) | kantonsh | **IDS Suricata** instalatu eta probatuta (WAN + DMZ, offloading, HOME_NET, arau propioa → DMZ alerta ✅); **OpenVPN** zerbitzaria, CA, `mediku1` + ziurtagiria; VPN probak eta diagnostikoa (Default isolatuta, packet capture) | VPN konexioa Linux bezerotik; GLPI Docker; mediku1 inprimaketa |
 
 ## Aldaketak plangintzan
 
