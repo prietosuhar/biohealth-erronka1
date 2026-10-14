@@ -196,7 +196,9 @@ alert http any any -> $HOME_NET any (msg:"BIOHEALTH proba - sqlmap erasoa www-re
 | `testmynids.org` ez da ebazten (ezta pfSense-tik ere, `google.com` bai) | Webgunea ez dago eskuragarri / IsardVDIko DNSak iragazten du | Proba barne-sarean egin: db01-etik www-ren aurka |
 | DMZ instantzian alertarik ez | LAN eta DMZ biak HOME_NET → LAN→DMZ erasoa ez da «kanpokoa» | `DMZ_HOME` Pass List-a Home Net gisa (goian) |
 | `suricata.log`: **379 arau** bakarrik kargatuta | Kategoria ET-ak ez dira aplikatzen (Suricata-ren `*-events` arauak + custom bakarrik) | ⏳ *DMZ Categories*-en «Use IPS Policy» egiaztatu; bitartean arau propioak detekzioa frogatzen du |
-| ![DMZ hutsik](../../irudiak/SEG/suricata-dmz-alertarik-ez.png) | *Irudia: HOME_NET aldatu aurretik DMZ instantziak ez zuen alertarik.* | |
+
+![DMZ hutsik](../../irudiak/SEG/suricata-dmz-alertarik-ez.png)
+*Irudia: HOME_NET aldatu aurretik DMZ instantziak ez zuen alertarik.*
 
 ## VPN – urruneko sarbidea
 
