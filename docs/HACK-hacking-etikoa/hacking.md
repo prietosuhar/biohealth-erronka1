@@ -95,90 +95,90 @@ sudo nmap -sV 192.168.1.20
 ```
 [cite: 14]
 
-- **`-sV`:** Escanea los puertos abiertos y detecta la versión exacta de cada servicio (HTTP, FTP, SSH, SMB, etc.)[cite: 15].
-- **`192.168.1.20`:** La dirección IP de tu máquina Metasploitable[cite: 15].
+- **`-sV`:** Ataka irekiak eskaneatzen ditu eta zerbitzu bakoitzaren bertsio zehatza detektatzen du (HTTP, FTP, SSH, SMB, etab.)[cite: 15].
+- **`192.168.1.20`:** Zure Metasploitable makinaren IP helbidea[cite: 15].
 
-#### Emaitza (Resultado)
-En unos segundos verás una tabla con columnas como `PORT`, `STATE`, `SERVICE` y `VERSION`[cite: 15].
-- **Egiaztapena:** Deberías ver multitud de servicios vulnerables abiertos (como `21/tcp ftp vsftpd 2.3.4`, `22/tcp ssh OpenSSH`, `80/tcp http Apache`, etc.)[cite: 15].
+#### Emaitza
+Segundo batzuen buruan, `PORT`, `STATE`, `SERVICE` eta `VERSION` zutabeak dituen taula bat ikusiko duzu[cite: 15].
+- **Egiaztapena:** Zerbitzu ahulen multzo bat ireki ikusi beharko zenuke (adibidez, `21/tcp ftp vsftpd 2.3.4`, `22/tcp ssh OpenSSH`, `80/tcp http Apache`, etab.)[cite: 15].
 
 #### Alternatiba (Metasploitable Kontsoletik Zuzenean):
 ```bash
 sudo netstat -tlpn
 ```
 [cite: 15]
-Muestra todos los puertos en escucha (`LISTEN`) y el nombre del proceso/servicio asignado a cada uno[cite: 15].
+Entzuten ari diren ataka guztiak (`LISTEN`) eta bakoitzari esleitutako prozesu/zerbitzuaren izena erakusten ditu[cite: 15].
 
 ---
 
 ### 4.2. Prozesuen Zerrenda Ikustea (Process Listing)
 
-Para ver la lista de procesos en ejecución (*procesuen zerrenda*), depende de en cuál de las dos máquinas quieras consultarlos[cite: 16]:
+Exekuzioan dauden prozesuen zerrenda ikusteko, bi makinetako zeinetan kontsultatu nahi dituzun araberakoa da[cite: 16]:
 
-#### 1. Ver los procesos en Metasploitable 2 (Recomendado)
-- **Muestra detallada y estática:**
+#### 1. Metasploitable 2-ko prozesuak ikustea (Gomendatua)
+- **Erakuste xehatua eta estatikoa:**
   ```bash
   ps aux
   ```[cite: 16]
-  *(Muestra todos los procesos, el usuario que los ejecuta, el consumo de CPU/RAM y la ruta del comando)*[cite: 16].
+  *(Prozesu guztiak, exekutatzen dituen erabiltzailea, CPU/RAM kontsumoa eta komandoaren bidea erakusten ditu)*[cite: 16].
 
-- **Monitor dinámico en tiempo real:**
+- **Denbora errealeko monitore dinamikoa:**
   ```bash
   top
   ```
   [cite: 17]
-  *(Muestra los procesos actualizándose al momento. Presiona la tecla `q` para salir)*[cite: 17].
+  *(Prozesuak unean bertan eguneratzen erakusten ditu. Sakatu `q` tekla irteteko)*[cite: 17].
 
-- **Filtrar un proceso específico (ejemplo: buscar Apache):**
+- **Prozesu zehatz bat iragaztea (adibidea: Apache bilatzea):**
   ```bash
   ps aux | grep apache
   ```[cite: 17]
 
-#### 2. Ver los procesos remotos de Metasploitable desde Kali Linux
+#### 2. Metasploitable-ko urruneko prozesuak Kali Linux-etik ikustea
 ```bash
 sudo nmap -sS -sV --script=banner 192.168.1.20
 ```
 [cite: 17]
 
-> **Oharra:** Para ver la lista exacta de procesos en tiempo real con comandos como `ps aux`, necesitarías primero ganar acceso a la máquina mediante un exploit o una sesión de SSH/Telnet[cite: 17].
+> **Oharra:** Denbora errealean prozesuen zerrenda zehatza `ps aux` bezalako komandoekin ikusteko, lehenik makinan sarbidea lortu beharko zenuke exploit baten edo SSH/Telnet saio baten bidez[cite: 17].
 
 ---
 
 ### 4.3. Zerbitzuen Ahulezi Nagusiak eta Bertsioen Analisia
 
-Sí, la gran mayoría de esas versiones son célebres por ser extremadamente vulnerables. Metasploitable 2 está diseñado a propósito con estas versiones para practicar ataques[cite: 18].
+Bai, bertsio horietako gehienak oso ahulak izateagatik dira ezagunak. Metasploitable 2 nahita diseinatu da bertsio horiekin erasoak praktikatzeko[cite: 18].
 
-Análisis de las vulnerabilidades más críticas según el escaneo[cite: 18]:
+Eskaneoaren arabera ahultasun kritikoenen analisia[cite: 18]:
 
-1. **21/tcp - vsftpd 2.3.4 (Backdoor / Puerta Trasera)**[cite: 18]
-   - **Vulnerabilidad:** CVE-2011-2523. Esta versión específica contiene un backdoor famoso. Si envías un nombre de usuario que termine con una carita feliz `:)` (ejemplo: `user:)`), la aplicación abre un shell de root directamente en el puerto 6200[cite: 18].
-   - **Riesgo:** Crítico. Concesión inmediata de acceso root[cite: 18].
+1. **21/tcp - vsftpd 2.3.4 (Backdoor / Atze-atea)**[cite: 18]
+   - **Ahultasuna:** CVE-2011-2523. Bertsio zehatz honek backdoor ospetsu bat du. Aurpegi alai `:)` batez amaitzen den erabiltzaile-izen bat bidaltzen baduzu (adibidez: `user:)`), aplikazioak root shell bat irekitzen du zuzenean 6200 atakan[cite: 18].
+   - **Arriskua:** Kritikoa. Root sarbidea berehala ematea[cite: 18].
 
-2. **139/tcp y 445/tcp - Samba smbd 3.X - 4.X**[cite: 18]
-   - **Vulnerabilidad:** CVE-2007-2447 (`usermap_script`). Permite la ejecución remota de comandos mandando nombres de usuario maliciosos que contengan caracteres de la consola (*Shell Metacharacters*)[cite: 18].
-   - **Riesgo:** Crítico. Permite obtener acceso de administrador (`root`) directamente sobre la máquina objetivo[cite: 18, 19].
+2. **139/tcp eta 445/tcp - Samba smbd 3.X - 4.X**[cite: 18]
+   - **Ahultasuna:** CVE-2007-2447 (`usermap_script`). Urruneko komando-exekuzioa ahalbidetzen du, kontsolako karaktereak (*Shell Metacharacters*) dituzten erabiltzaile-izen gaiztoak bidaliz[cite: 18].
+   - **Arriskua:** Kritikoa. Helburuko makinan administratzaile (`root`) sarbidea zuzenean lortzea ahalbidetzen du[cite: 18, 19].
 
 3. **1524/tcp - Metasploitable root shell (Bindshell)**[cite: 19]
-   - **Vulnerabilidad:** No es una vulnerabilidad de software como tal, sino un puerto dejado abierto de fábrica con un shell sin autenticación[cite: 19].
-   - **Riesgo:** Crítico. Conectándote con `nc 192.168.1.20 1524` obtienes acceso directo como root sin ingresar ninguna contraseña[cite: 19].
+   - **Ahultasuna:** Ez da software-ahultasun bat berez, baizik eta fabrikatik irekita utzitako ataka bat, autentifikaziorik gabeko shell batekin[cite: 19].
+   - **Arriskua:** Kritikoa. `nc 192.168.1.20 1524` bidez konektatuz, root gisa sarbide zuzena lortzen duzu pasahitzik sartu gabe[cite: 19].
 
 4. **512/tcp, 513/tcp, 514/tcp - rservices (exec, login, shell)**[cite: 19]
-   - **Vulnerabilidad:** Servicios rlogin/rsh obsoletos y configurados con autenticación basada en confianza mediante el archivo `.rhosts`[cite: 19].
-   - **Riesgo:** Alto. Permiten ejecutar comandos remotos directamente usando herramientas como `rlogin` o `rsh-client` sin solicitar contraseña[cite: 19].
+   - **Ahultasuna:** rlogin/rsh zerbitzu zaharkituak, `.rhosts` fitxategiaren bidezko konfiantzan oinarritutako autentifikazioarekin konfiguratuta[cite: 19].
+   - **Arriskua:** Altua. Urruneko komandoak zuzenean exekutatzea ahalbidetzen dute, `rlogin` edo `rsh-client` bezalako tresnekin, pasahitzik eskatu gabe[cite: 19].
 
 5. **80/tcp - Apache httpd 2.2.8**[cite: 19]
-   - **Vulnerabilidad:** Múltiples vulnerabilidades asociadas a WebDAV, Cross-Site Scripting (XSS) e inclusión de archivos remotamente (LFI/RFI). Además hospeda aplicaciones web vulnerables integradas (como DVWA, Mutillidae, phpMyAdmin)[cite: 19].
-   - **Riesgo:** Alto[cite: 19].
+   - **Ahultasuna:** WebDAV, Cross-Site Scripting (XSS) eta urruneko fitxategi-inklusioarekin (LFI/RFI) lotutako ahultasun ugari. Gainera, web-aplikazio ahul integratuak ostatatzen ditu (DVWA, Mutillidae, phpMyAdmin bezalakoak)[cite: 19].
+   - **Arriskua:** Altua[cite: 19].
 
 6. **23/tcp - Linux telnetd**[cite: 19]
-   - **Vulnerabilidad:** Transmisión de credenciales en texto claro sin cifrar[cite: 19].
-   - **Riesgo:** Medio/Alto. Permite obtener contraseñas interceptando el tráfico (*sniffing*) o mediante ataques de fuerza bruta usando credenciales predeterminadas (`msfadmin:msfadmin`)[cite: 19].
+   - **Ahultasuna:** Kredentzialak testu argian, zifratu gabe, transmititzea[cite: 19].
+   - **Arriskua:** Ertaina/Altua. Pasahitzak lortzea ahalbidetzen du trafikoa interzeptatuz (*sniffing*) edo indar gordinezko erasoen bidez, lehenetsitako kredentzialak erabiliz (`msfadmin:msfadmin`)[cite: 19].
 
 ---
 
 ### 4.4. Kali Linux-en Exploits Bilatzeko Tresna
 
-Puedes usar `searchsploit` en tu consola de Kali para encontrar los módulos de exploit exactos para cada versión[cite: 19]. Por ejemplo[cite: 19]:
+`searchsploit` erabil dezakezu zure Kali kontsolan bertsio bakoitzerako exploit modulu zehatzak aurkitzeko[cite: 19]. Adibidez[cite: 19]:
 
 ```bash
 searchsploit vsftpd 2.3.4
