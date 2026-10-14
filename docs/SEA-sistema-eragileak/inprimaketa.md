@@ -161,15 +161,9 @@ Komando bidez testu-proba bat bidaltzeko:
 ```bash
 echo "Proba testua: Tokiko Linux inprimagailua zuzenean lan eginez." | lp -d Inprimagailu_Izena
 ```
+<img width="838" height="40" alt="image2" src="https://github.com/user-attachments/assets/d0ee0aa3-8a3b-4847-a094-8c2b74a98543" />
+<img width="623" height="92" alt="image8" src="https://github.com/user-attachments/assets/39489019-9112-4468-a667-fa5859fcb7a9" />
 
-Edo proba-orri ofiziala bidaltzeko:
-```bash
-lp -d Inprimagailu_Izena /usr/share/cups/data/testprint
-```
-
-> 📸 **ARGAZKI GOMENDAGARRIA (1. atala):** 
-> - CUPS web interfazea (`http://localhost:631/printers`) inprimagailua "Idle" / "Ready" egoeran erakusten.
-> - Terminalean `lpstat -p` edo `lp` komandoa exekutatzen eta irteera egokia erakusten.
 
 ---
 
@@ -212,9 +206,8 @@ Gorde eta berrabiarazi zerbitzua:
 sudo systemctl restart cups
 ```
 
-> 📸 **ARGAZKI GOMENDAGARRIA (2. atala):**
-> - `/etc/cups/cupsd.conf` fitxategiaren `Allow @LOCAL` zatia edo `cupsctl` exekuzioaren ondorioa.
-> - Sareko beste gailu batetik `http://[LINUX_ZERBITZARI_IP]:631` helbidera sartzen dela erakusten duen pantailazoa.
+<img width="952" height="757" alt="image5" src="https://github.com/user-attachments/assets/36b13277-a2d7-4b39-90e6-1785b2497437" />
+<img width="957" height="847" alt="image3" src="https://github.com/user-attachments/assets/4e305fdd-9401-4c24-99f8-71ef2efac7e6" />
 
 ---
 
@@ -234,15 +227,19 @@ sudo lpadmin -p Inprimagailu_Sarekoa -E -v ipp://[ZERBITZARIAREN_IP]:631/printer
 echo "Proba testua: Linux Bezeroa -> Linux Zerbitzaria (CUPS)" | lp -d Inprimagailu_Sarekoa
 ```
 
-> 📸 **ARGAZKI GOMENDAGARRIA (3. atala):**
-> - Linux bezeroaren ezarpen panela inprimagailu urrunekoa erakusten.
-> - Terminalean proba komandoa bidali ondoren `lpstat -o` bidez inprimatze-lanaren egoera ikustea (edo jasotako testu-orria/PDFa).
+<img width="960" height="918" alt="image4" src="https://github.com/user-attachments/assets/5f669c00-4ac3-4a8c-93fb-f9be9709d59f" />
+
+<img width="871" height="246" alt="image12" src="https://github.com/user-attachments/assets/c0379022-2d72-4f8b-82b1-2b74d5706fc4" />
 
 ---
 
 ## 4. Windows Bezeroa → Linux Zerbitzariko Inprimagailua
 
 Windows-ek CUPS inprimagailuak jatorriz onartzen ditu IPP protokoloaren bidez.
+
+<img width="962" height="733" alt="image1" src="https://github.com/user-attachments/assets/ee2c6375-a5be-4cef-8f39-2865dce4eaa9" />
+
+
 
 ### 4.1. Gehitzeko Urrratsak Windows-en
 
@@ -255,16 +252,19 @@ Windows-ek CUPS inprimagailuak jatorriz onartzen ditu IPP protokoloaren bidez.
    ```
 5. Aukeratu kontrolatzailea (*Generic / MS Publisher Imagesetter* edo dagokiona).
 
+<img width="953" height="742" alt="image9" src="https://github.com/user-attachments/assets/31e4ed58-1878-498e-b785-a2caaa6c0749" />
+
+
 ### 4.2. Proba Testua Bidaltzea
 - Ireki **Bloc de notas (Notepad)**.
 - Idatzi testu hau: `Proba testua: Windows Bezeroa -> Linux CUPS Zerbitzaria`.
 - Sakatu `Ctrl + P`, hautatu gehitutako inprimagailua eta sakatu **Imprimir**.
 
-> 📸 **ARGAZKI GOMENDAGARRIA (4. atala):**
-> - Windows-eko "Agregar impresora por nombre" leihoa IPP URLarekin idatzita.
-> - Notepad edo inprimagailuaren propietateetako "Imprimir página de prueba" botoia sakatzean agertzen den baieztapena.
+<img width="963" height="767" alt="image11" src="https://github.com/user-attachments/assets/122dec5b-53d8-4fe4-813f-9ae2a06e514b" />
+<img width="955" height="192" alt="image7" src="https://github.com/user-attachments/assets/c235a690-7961-42d4-b565-cf26c8c60c2d" />
 
----
+
+
 
 ## 5. Linux Bezeroa → Windows Server-eko Inprimagailua
 
@@ -282,17 +282,13 @@ sudo apt install smbclient cups-backend-smb -y
 sudo lpadmin -p Windows_Server_Printer -E -v smb://[ERABILTZAILEA]:[PASAHITZA]@[WINDOWS_SERVER_IP]/[INPRIMAGAILU_IZENA] -m everywhere
 ```
 
-Edo CUPS Web interfazean (`http://localhost:631`):
-1. **Administration** > **Add Printer**.
-2. Hautatu **Windows Printer via SAMBA**.
-3. Connection URL: `smb://[WINDOWS_SERVER_IP]/[INPRIMAGAILU_IZENA]` (edo domeinu/kredentzialekin `smb://domain\user:password@ip/printer`).
-
 ### 5.3. Proba Testua Bidaltzea
 ```bash
 echo "Proba testua: Linux Bezeroa -> Windows Server Inprimagailua (SMB)" | lp -d Windows_Server_Printer
 ```
 
-> 📸 **ARGAZKI GOMENDAGARRIA (5. atala):**
-> - Windows Server-en inprimagailua "Compartida" gisa agertzen den leihoa.
-> - Linux-en CUPS interfazea Samba URI-a (`smb://...`) erakusten.
-> - Testua bidali ondoren Windows Server-eko "Cola de impresión" (Print Queue) atalean lana sarreran ikusten den unea.
+<img width="961" height="917" alt="image6" src="https://github.com/user-attachments/assets/74b853da-bbf8-46d2-9db1-e3aad5bafce9" />
+<img width="875" height="405" alt="image10" src="https://github.com/user-attachments/assets/35dd7a58-b408-47b0-a680-841227368283" />
+
+
+
