@@ -152,10 +152,6 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 
 # OpenVPN Zerbitzariaren Konfigurazioa eta Ezarpena pfSense-n
 
-Dokumentu honek BioHealth ingurunean pfSense bidez OpenVPN zerbitzaria urratsez urrats nola konfiguratu den azaltzen du, urruneko konexio seguruak ahalbidetzeko.
-
----
-
 ## 1. Ingurunearen Ezaugarriak
 
 * **Suhorma / Gateway:** pfSense Community Edition (`192.168.10.254`)
@@ -176,6 +172,9 @@ Dokumentu honek BioHealth ingurunean pfSense bidez OpenVPN zerbitzaria urratsez 
 ### 2. Urratsa: Autentifikazio Mota Aukeratzea
 * **Type of Server:** `Local User Access` hautatu.
 * Jarraitzeko: **Next** sakatu.
+* 
+<img width="921" height="627" alt="image3" src="https://github.com/user-attachments/assets/b2eeecbf-4d8d-4fc9-ba89-7dfd3181cc26" />
+<img width="917" height="627" alt="image6" src="https://github.com/user-attachments/assets/b2915c9c-74a7-4136-b389-343217d9c1cb" />
 
 ### 3. Urratsa: Zietagiri Agintaritza (CA - Certificate Authority) Sortzea
 * **Descriptive name:** `BioHealth-CA`
@@ -187,6 +186,9 @@ Dokumentu honek BioHealth ingurunean pfSense bidez OpenVPN zerbitzaria urratsez 
 * **Descriptive name:** `BioHealth-VPN-Server`
 * **Key length:** `2048 bit`
 * Jarraitzeko: **Next** sakatu.
+
+<img width="922" height="646" alt="image4" src="https://github.com/user-attachments/assets/1033d0db-ca15-40c8-8d63-8e190c5aaed3" />
+
 
 ### 5. Urratsa: OpenVPN Zerbitzariaren Parametroak Definitzea
 * **Interface:** `WAN`
@@ -201,11 +203,17 @@ Dokumentu honek BioHealth ingurunean pfSense bidez OpenVPN zerbitzaria urratsez 
   * **Concurrent connections:** *Hutsa edo 10 (beharren arabera)*
   * **DNS Server 1:** `192.168.10.1` (Windows Server DNS)
 
+<img width="936" height="686" alt="image2" src="https://github.com/user-attachments/assets/d5fa3997-1b49-4923-98c3-e7e44ab9922a" />
+
+
 ### 6. Urratsa: Babes Hesi Arauak (Firewall Rules) Sortzea
 Ziurtatu bi aukera hauek markatuta daudela:
 * **Firewall Rule:** Permite el tráfico entrante al puerto OpenVPN en la WAN. (OpenVPN portua WAN-en zabaltzen du).
 * **OpenVPN rule:** Permite el tráfico a través del túnel VPN hacia la LAN. (Tunel bidez barne sarerako sarbidea baimentzen du).
 * **Finish** sakatu konfigurazioa amaitzeko.
+
+<img width="922" height="648" alt="image1" src="https://github.com/user-attachments/assets/f8fa7b29-d822-4a12-b41d-990043ef3d89" />
+
 
 ---
 
