@@ -52,10 +52,50 @@ Gure jarduera NBEren (Nazio Batuen Erakundea) **2030 Agendarekin** lerrokatuta d
 
 ### 🔒 Segurtasun eta Etika Digitalarekiko Konpromisoa
 * **Datuen Pribatutasuna:** Bezeroen eta pazienteen kontsulta-datuak enkripzio sendoen bidez (HTTPS, TLS, VPN) eta segurtasun-araudiei jarraituz (GDPR/LOPD) babestea.
-* **Azpiegitura Seguru eta Efizientea:** PfSense, Snort (IDS/IPS) eta Active Directory bezalako sistemak erabiliz, eraso elektronikoen aurkako babes proaktiboa ematea eta zerbitzuen doitasuna zein jarraitutasuna bermatzea.
+* **Azpiegitura Seguru eta Efizientea:** pfSense, Suricata (IDS) eta Active Directory bezalako sistemak erabiliz, eraso elektronikoen aurkako babes proaktiboa ematea eta zerbitzuen doitasuna zein jarraitutasuna bermatzea.
 
 ---
 
-## 5. Ondorioa
+## 5. Interes-taldeak (stakeholders)
+
+| Interes-taldea | Zer espero du BioHealth-engandik | Nola erantzuten diogu |
+|---|---|---|
+| **Pazienteak** | Arreta ona, datuen pribatutasuna, telekontsulta | Datuak LANean eta zifratuta (HTTPS, SRTP, VPN), DBEO; Jitsi etxetik joan-etorririk gabe |
+| **Langileak** | Lan-baldintza onak, prestakuntza, segurtasuna | [LAP plana](../HW-hardwarea/lap-plana.md), ekipo ergonomikoak, telelana VPN bidez |
+| **Hornitzaileak** (HW, software, energia) | Ordainketa eta harreman egonkorra | Energy Star / EPEAT ekipoak eskatu; RAEE bilketa baimendua |
+| **Aseguru-etxeak eta Osakidetza** | Zerbitzuaren jarraitutasuna, datu fidagarriak | [Kontingentzia-plana](../SEG-segurtasuna/segurtasun-plana.md), RTO/RPO |
+| **Administrazioa (AEPD, Osasun Saila)** | Legea betetzea | DBEO, urraketak 72 h-tan jakinarazi (33. art.) |
+| **Gizartea eta ingurumena** | Kutsadura gutxiago | Birtualizazioa, paperik gabeko bulegoa, ekipoen bizitza luzatu |
+
+## 6. IGG gaiak (Ingurumena · Gizartea · Gobernantza) eta ekintza zehatzak
+
+Ekintza bakoitza **gure azpiegiturarekin lotuta** dago (ez da asmo hutsa):
+
+| Arloa | Gaia | Ekintza BioHealth-en | Non dago inplementatuta |
+|---|---|---|---|
+| **I** Ingurumena | Energia | Zerbitzari fisiko bakarra + birtualizazioa (7 makina → 1 ostalari) | [SB](../SB-sistema-banatuak/birtualizazioa.md), [HW](../HW-hardwarea/hardwarea.md) |
+| I | Energia | Pantaila 5 min-ra blokeatu / itzali GPO bidez | [AD – GPOak](../SEA-sistema-eragileak/active-directory.md) |
+| I | Papera | Inprimaketa baimenak taldeka (Todos kenduta); produkzioan duplex lehenetsia; txostenak web-ean (ez paperean) | [Inprimaketa](../SEA-sistema-eragileak/inprimaketa.md), [WordPress](../WAE-web-aplikazioak/wordpress.md) |
+| I | RAEE | Ekipoen inbentarioa GLPIn (bizi-zikloa); baja ematean gune garbira | [GLPI](../WAE-web-aplikazioak/glpi.md) |
+| **G** Gizartea | Osasuna eta irisgarritasuna | Telekontsulta (joan-etorririk ez, landa-eremuko pazienteak) | [Jitsi](../SZI-sareko-zerbitzuak/jitsi.md) |
+| G | Langileen osasuna | LAP plana, PVD ergonomia | [LAP](../HW-hardwarea/lap-plana.md) |
+| **G** Gobernantza | Pribatutasuna | Pribilegio minimoa (AD taldeak, DB rolak), MAGERIT arrisku-analisia | [Segurtasun-plana](../SEG-segurtasuna/segurtasun-plana.md) |
+| G | Gardentasuna | Planak web korporatiboan argitaratuta; urteko jasangarritasun-txostena | [WordPress](../WAE-web-aplikazioak/wordpress.md) |
+
+## 7. Adierazleak (GRI estandarrak)
+
+| GRI | Adierazlea | Nola neurtzen da | 2027ko helburua |
+|---|---|---|---|
+| **302-1** | Energia-kontsumoa (kWh/urte) | SAIaren eta kontagailuaren irakurketa hilero | −% 15 (birtualizazioa + GPO energia) |
+| **301-1** | Papera (orri/langile/hilabete) | Inprimaketa-zerbitzariaren erregistroa (lan kopurua erabiltzaileka) | −% 30 |
+| **306-3** | RAEE (kg/urte, gune garbira bidalitakoa) | GLPI-ko bajak + hondakin-ziurtagiria | % 100 kudeatzaile baimendua |
+| **305-2** | CO₂ isurketak (energia) | kWh × elektrizitate-konpainiaren isurpen-faktorea | −% 15 |
+| **418-1** | Pribatutasun-urraketak / kexak | GLPI-ko segurtasun-intzidentziak, AEPD jakinarazpenak | 0 |
+| **403-9** | Laneko istripuak | LAP erregistroa | 0 |
+| **404-1** | Prestakuntza-orduak langileko | Prestakuntza-erregistroa | ≥ 8 h/urte (zibersegurtasuna + LAP) |
+
+Txostena urtero egiten da eta web korporatiboan argitaratzen da.
+
+## 8. Ondorioa
 
 Nahiz eta teknologiaren eta azpiegitura digitalen sektorean jasangarritasun osoa lortzea erronka konplexua izan, BioHealth-en uste dugu **aldaketa eguneroko erabaki txiki nahiz estrategikoetatik hasten dela**. Gutxien kutsatzen duen azpiegitura ondo kudeatutakoa eta efizientea da. Gure konpromisoa da egunetik egunera hobetzen jarraitzea, teknologia aurreratua eta ingurumen zein gizarte-erantzukizuna eskuz esku joan daitezen.

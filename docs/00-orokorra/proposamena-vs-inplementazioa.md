@@ -22,7 +22,13 @@ Proposamena 2026/09/30ean aurkeztu genuen. Inplementatzean aldaketa batzuk egin 
 | DNS birbidaltzaileak | 9.9.9.9 + 1.1.1.1 | **pfSense (192.168.10.254)** | Kanpoko DNS trafiko guztia suebakitik pasatzeko eta han kontrolatzeko; pfSense-k Quad9-ra birbidal dezake |
 | www | DMZ · 192.168.20.10 | **DMZ · 192.168.20.10** | Taldearen dokumentuan LAN-ean zegoen (.10.4); errubrikak LAN/WAN/DMZ diseinua eskatzen du eta Internetera irekitako zerbitzariak DMZn egon behar dute |
 | meet (Jitsi) | DMZ · 192.168.20.11 | **DMZ · 192.168.20.11** | Proposamenarekin bat |
-| Proxmox / Nextcloud (LXC) | Bai | *(erabakitzeko)* | Errubrikak (SB IE3) zerbitzu bat kontenedore batean eskatzen du |
+| Proxmox / Nextcloud (LXC) | Bai | **IsardVDI** + **GLPI Docker kontenedorean** (www) | Proxmox IsardVDI barruan habiaratuta astunegia; errubrikako «zerbitzu bat kontenedorean» Docker-ekin betetzen da. Proxmox produkzioko diseinuan mantentzen da ([SB](../SB-sistema-banatuak/birtualizazioa.md)) |
+| GLPI | 11 · LXC | **10.0** · Docker · DB db01-en | GLPI 11-k MariaDB ≥ 10.6 behar du; db01-ek 10.3 (Ubuntu 20.04) |
+| MongoDB | db01 (Windows 11) | **db01 (Ubuntu)**, 7.0 edo 4.4 Docker | CPU birtualak AVX ez badu MongoDB 5+ ez dabil |
+| HA | 3 nodoko cluster-a | **2 nodo + QDevice** (diseinua) | Quorum bera, zerbitzari bat gutxiago |
+| VPN | — | **OpenVPN** (pfSense) | Wizard eta Client Export; ziurtagiria + pasahitza |
+| IDS | Suricata | **Suricata**, IDS modua, WAN + DMZ | Positibo faltsuek telekontsulta ez blokeatzeko |
+| Jitsi izena | meet.biohealth.local | **meet.biohealth.local** (lehen proban `jitsi.biohealth.eus`) | Barne-domeinuarekin koherentzia |
 | Bezeroa | pc-* | **BEZ-WIN01** (Windows 11, DHCP) | — |
 
 > Taula hau eguneratzen joango gara aldaketa berri bat dagoen bakoitzean.

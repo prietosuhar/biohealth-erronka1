@@ -17,15 +17,15 @@ Pazienteen osasun-datuak kudeatzen ditugu (DBEO 9. art., kategoria berezia), ber
 | Ikasgaia | Edukia | Egoera |
 |---|---|---|
 | [**Orokorra**](docs/00-orokorra/index.md) | Proposamena vs. inplementazioa · Plangintza | 🔄 |
-| [**SEG** – Segurtasuna](docs/SEG-segurtasuna/index.md) | Sarearen diseinua (WAN/LAN/DMZ) · pfSense (arauak, IDS, VPN) · Segurtasun-plana | 🔄 |
-| [**SEA** – Sistema eragileak](docs/SEA-sistema-eragileak/index.md) | Active Directory (OU, erabiltzaileak, GPO, prozesuak) · Inprimaketa | 🔄 |
-| [**SZI** – Sareko zerbitzuak](docs/SZI-sareko-zerbitzuak/index.md) | DNS · DHCP · Jitsi Meet (audioa eta bideoa) | ⏳ |
-| [**DBKSA** – Datu-baseak](docs/DBKSA-datu-baseak/index.md) | MariaDB + MongoDB | ⏳ |
-| [**WAE** – Web aplikazioak](docs/WAE-web-aplikazioak/index.md) | WordPress · GLPI | ⏳ |
-| [**SB** – Sistema banatuak](docs/SB-sistema-banatuak/index.md) | Birtualizazioa eta HA | ⏳ |
-| [**HACK** – Hacking etikoa](docs/HACK-hacking-etikoa/index.md) | Pentestinga | ⏳ |
-| [**IRAU** – Iraunkortasuna](docs/IRAU-iraunkortasuna/index.md) | Jasangarritasun-plana | ⏳ |
-| [**HW** – Hardwarea](docs/HW-hardwarea/index.md) | Hardwarea eta lizentziak | ⏳ |
+| [**SEG** – Segurtasuna](docs/SEG-segurtasuna/index.md) | Sarearen diseinua (WAN/LAN/DMZ) · pfSense (arauak, IDS, VPN) · Segurtasun-plana (MAGERIT) · Ziurtagiriak | 🔄 |
+| [**SEA** – Sistema eragileak](docs/SEA-sistema-eragileak/index.md) | Active Directory (OU, erabiltzaileak, GPO, prozesuak) ✅ · Inprimaketa (Windows ↔ CUPS) | 🔄 |
+| [**SZI** – Sareko zerbitzuak](docs/SZI-sareko-zerbitzuak/index.md) | DNS ✅ · DHCP · Jitsi Meet (audioa eta bideoa) | 🔄 |
+| [**DBKSA** – Datu-baseak](docs/DBKSA-datu-baseak/index.md) | MariaDB + MongoDB (instalazioa, ustiapena, erabiltzaileak) | 🔄 |
+| [**WAE** – Web aplikazioak](docs/WAE-web-aplikazioak/index.md) | WordPress ✅ · GLPI (kontenedorean) | 🔄 |
+| [**SB** – Sistema banatuak](docs/SB-sistema-banatuak/index.md) | Birtualizazioa, kontenedorea eta HA diseinua | 🔄 |
+| [**HACK** – Hacking etikoa](docs/HACK-hacking-etikoa/index.md) | Pentestinga (faseak, ahuleziak, Metasploitable) | ✅ |
+| [**IRAU** – Iraunkortasuna](docs/IRAU-iraunkortasuna/index.md) | Jasangarritasun-plana (GJH, interes-taldeak, IGG, GRI) | ✅ |
+| [**HW** – Hardwarea](docs/HW-hardwarea/index.md) | Hardwarea eta lizentziak · LAP plana | ✅ |
 
 ✅ eginda · 🔄 martxan · ⏳ egiteko
 

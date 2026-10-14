@@ -10,4 +10,4 @@ has_children: true
 
 | Orria | Errubrikako irizpideak | Egoera |
 |---|---|---|
-| [Birtualizazioa eta HA](birtualizazioa.md) | IE1: sistema banatuaren beharra · IE3: birtualizazioa, VM bat eta kontenedore bat | ⏳ |
+| [Birtualizazioa eta HA](birtualizazioa.md) | IE1: sistema banatuaren beharra · IE3: birtualizazioa, VM bat eta kontenedore bat · HA diseinua | 🔄 (diseinua eginda; kontenedorearen argazkiak falta) |

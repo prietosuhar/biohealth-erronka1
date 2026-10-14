@@ -10,4 +10,4 @@ has_children: true
 
 | Orria | Errubrikako irizpideak | Egoera |
 |---|---|---|
-| [Jasangarritasun-plana](jasangarritasuna.md) | IE1: kontzeptua, nazioarteko esparruak, IGG gaiak · IE2: erronkak eta inpaktuak | ⏳ |
+| [Jasangarritasun-plana](jasangarritasuna.md) | IE1: kontzeptua, nazioarteko esparruak, IGG gaiak · IE2: erronkak eta inpaktuak · interes-taldeak · GRI adierazleak | ✅ |

@@ -10,4 +10,4 @@ has_children: true
 
 | Orria | Errubrikako irizpideak | Egoera |
 |---|---|---|
-| [Hacking etikoa](hacking.md) | IE1: pentesting-faseak · IE2: ahuleziak, eraso-motak, proba-ingurunea | ⏳ |
+| [Hacking etikoa](hacking.md) | IE1: pentesting-faseak · IE2: ahuleziak, eraso-motak, proba-ingurunea | ✅ |

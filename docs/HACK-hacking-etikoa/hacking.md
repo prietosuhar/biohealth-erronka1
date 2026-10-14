@@ -16,7 +16,7 @@ Fase hauek BioHealth enpresaren azpiegitura mediko eta hodeiko ingurunea oinarri
 ### 1. Plangintza eta Informazio-Bilaketa (Reconnaissance / OSINT)
 - **Deskribapena:** BioHealth-en aurkako eraso erreal bat simulatu aurretik, informazioa modu pasibo eta aktiboan biltzen da, osasun-sistemak edo zerbitzuak kaltetuko dituzten alertak piztu gabe.
 - **BioHealth-eko Adibidea:**
-  - **OSINT:** Azterketa publikoen bidez, ikerketa-taldeko kideen kredentzialak eta osasun-datuak kudeatzeko erabiltzen diren APIen dokumentazioa lortu da.
+  - **OSINT:** Azterketa publikoen bidez, langileen (medikuak, harrera) izen eta posta-helbideak eta osasun-datuak kudeatzeko erabiltzen diren APIen dokumentazioa lortu da.
   - **Domeinuak/Azpidomeinuak:** `biohealth.eus`, `pacientes.biohealth.eus`, `telemedicina.biohealth.eus` eta `lab-portal.biohealth.eus` bezalako azpidomeinuak kokatzea.
 - **Egiaztapena:** Publikoki azaldutako atarien eta langileen posta-helbideen mapa osatzean lortzen da.
 
@@ -37,7 +37,7 @@ Fase hauek BioHealth enpresaren azpiegitura mediko eta hodeiko ingurunea oinarri
 ### 4. Ustiapen Osteko Fasea eta Mugimendu Laterala (Post-Exploitation & Lateral Movement)
 - **Deskribapena:** Lortutako sarbideari eustea eta barne-sarean zehar laborategiko zein gailu medikoen sarera mugitzea.
 - **BioHealth-eko Adibidea:**
-  - Web zerbitzaritik abiatuta, ikerketa-datu babestuak gordetzen dituen barne-zerbitzarira jauzi egitea (*pivoting*).
+  - Web zerbitzaritik abiatuta, pazienteen datuak gordetzen dituen barne-zerbitzarira (db01) jauzi egitea (*pivoting*).
   - Active Directory bidez kudeatzen diren laborategiko ordenagailuen kontrola aztertzea.
 - **Egiaztapena:** Barne-sareko administratzaile-pribilegioak lortzea edo datu medikoen biltegi nagusira iristea.
 
@@ -53,9 +53,9 @@ Fase hauek BioHealth enpresaren azpiegitura mediko eta hodeiko ingurunea oinarri
 | Ahulezia Arloa | Ahulezia Zehatza BioHealth-en | Jaso Dezakeen Erasoa / Inpaktua | CVSS Zorrotasuna |
 | :--- | :--- | :--- | :--- |
 | **1. API eta Web Atariak** | Pazienteen atarian Baimen Kudeaketa Okerra (BPOA/IDOR). | **Baimenik gabeko datu-atzipena:** Beste bezero edo paziente batzuen analitika eta historia klinikoak ikustea edo deskargatzea. | **KRITIKOA (9.1)** |
-| **2. Datu-Baseak** | Sarrerako datuen sanizazio falta analitiken bilatzailean. | **SQL Injection (SQLi):** Erasotzaile batek ikerketa medikoen datu-base osoa erauzteko edo ezabatzeko arriskua. | **ALTUA (8.8)** |
-| **3. Telemedikuntza eta Komunikazioak** | Telemedikuntza eta IoT gailuen arteko kanalen enkripzio ahula. | **Man-in-the-Middle (MitM):** Bideodeietako datuak edo gailu medikoen neurketak bidean interzeptatzea edo manipulatzea. | **TARTEKOA (7.4)** |
-| **4. Giza Faktorea** | Laborategiko eta ikerketako langileen phishing prebentzio baxua. | **Spear Phishing:** Ikerlari baten kredentzialak lortuz barne-sareko jabego intelektuala eta patenteak lapurtzea. | **ALTUA (8.1)** |
+| **2. Datu-Baseak** | Sarrerako datuen sanizazio falta analitiken bilatzailean. | **SQL Injection (SQLi):** Erasotzaile batek pazienteen datu-base osoa erauzteko edo ezabatzeko arriskua. | **ALTUA (8.8)** |
+| **3. Telemedikuntza eta Komunikazioak** | Telekontsultaren (Jitsi) eta gailu medikoen arteko kanalen enkripzio ahula. | **Man-in-the-Middle (MitM):** Bideodeietako datuak edo gailu medikoen neurketak bidean interzeptatzea edo manipulatzea. | **TARTEKOA (7.4)** |
+| **4. Giza Faktorea** | Harrerako eta kontsultetako langileen phishing-prebentzio baxua (posta asko jasotzen dute pazienteengandik). | **Spear Phishing:** mediku edo harrerako langile baten domeinuko kredentzialak lortuz, VPN edo GLPI bidez barne-sarera sartu eta pazienteen historia klinikoak lapurtzea (DBEO urraketa). | **ALTUA (8.1)** |
 
 ---
 
