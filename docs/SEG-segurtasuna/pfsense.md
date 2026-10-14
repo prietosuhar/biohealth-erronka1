@@ -148,3 +148,89 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 
 ![Invert match errorea](../../irudiak/SEG/pfsense-arau2-invert-errorea.png)
 *Irudia: 2. araua zuzendu aurretik: `! DMZ subnets` (alderantzizkatuta).*
+
+
+# OpenVPN Zerbitzariaren Konfigurazioa eta Ezarpena pfSense-n
+
+Dokumentu honek BioHealth ingurunean pfSense bidez OpenVPN zerbitzaria urratsez urrats nola konfiguratu den azaltzen du, urruneko konexio seguruak ahalbidetzeko.
+
+---
+
+## 1. Ingurunearen Ezaugarriak
+
+* **Suhorma / Gateway:** pfSense Community Edition (`192.168.10.254`)
+* **Barne Sarea (LAN):** `192.168.10.0/24`
+* **VPN Tunel Sarea:** `10.0.8.0/24`
+* **Protokoloa / Portua:** UDP / `1194`
+* **Autentifikazio Mota:** Tokiko Erabiltzaileak (Local User Access) eta Ziurtagiri Digitalak (X.509)
+
+---
+
+## 2. Urratsak: OpenVPN Config Wizard Bidez
+
+### 1. Urratsa: Wizard Hasieratzea
+1. pfSense web interfazean sartu (`https://192.168.10.254`).
+2. Goiko menuan: **VPN** > **OpenVPN** hautatu.
+3. **Wizards** fitxatxa ireki.
+
+### 2. Urratsa: Autentifikazio Mota Aukeratzea
+* **Type of Server:** `Local User Access` hautatu.
+* Jarraitzeko: **Next** sakatu.
+
+### 3. Urratsa: Zietagiri Agintaritza (CA - Certificate Authority) Sortzea
+* **Descriptive name:** `BioHealth-CA`
+* **Key length:** `2048 bit`
+* **Digest algorithm:** `sha256`
+* Jarraitzeko: **Next** sakatu.
+
+### 4. Urratsa: Zerbitzariaren Ziurtagiria (Server Certificate) Sortzea
+* **Descriptive name:** `BioHealth-VPN-Server`
+* **Key length:** `2048 bit`
+* Jarraitzeko: **Next** sakatu.
+
+### 5. Urratsa: OpenVPN Zerbitzariaren Parametroak Definitzea
+* **Interface:** `WAN`
+* **Protocol:** `UDP on IPv4 only`
+* **Local Port:** `1194`
+* **Cryptographic Settings:**
+  * **TLS Configuration:** Comprobar *Use a TLS Key*
+  * **Encryption Algorithm:** `AES-256-GCM`
+* **Tunnel Settings:**
+  * **IPv4 Tunnel Network:** `10.0.8.0/24`
+  * **IPv4 Local Network:** `192.168.10.0/24` (BioHealth-eko barne sarea)
+  * **Concurrent connections:** *Hutsa edo 10 (beharren arabera)*
+  * **DNS Server 1:** `192.168.10.1` (Windows Server DNS)
+
+### 6. Urratsa: Babes Hesi Arauak (Firewall Rules) Sortzea
+Ziurtatu bi aukera hauek markatuta daudela:
+* **Firewall Rule:** Permite el tráfico entrante al puerto OpenVPN en la WAN. (OpenVPN portua WAN-en zabaltzen du).
+* **OpenVPN rule:** Permite el tráfico a través del túnel VPN hacia la LAN. (Tunel bidez barne sarerako sarbidea baimentzen du).
+* **Finish** sakatu konfigurazioa amaitzeko.
+
+---
+
+## 3. Erabiltzaileak eta Ziurtagiriak Kudeatzea
+
+### Erabiltzaile Berria Ksortzea:
+1. Navigar a **System** > **User Manager**.
+2. **Add** botoia sakatu.
+3. Parametroak bete:
+   * **Username:** `mediku1` (edo kasuan kasuko erabiltzailea)
+   * **Password:** Passphrasa segurua jarri.
+4. Markatu aukera hau: **Click to create a user certificate**.
+5. **Descriptive name:** `mediku1-VPN-Cert`
+6. **Certificate authority:** `BioHealth-CA` hautatu.
+7. **Save** sakatu gorde eta ziurtagiria sortzeko.
+
+---
+
+## 4. Bezero Profileak Exportatzea (Client Export)
+
+1. Navigar a **System** > **Package Manager** > **Available Packages**.
+2. Bilatu `openvpn-client-export` eta instalatu (**Install**).
+3. Behin instalatuta, joan hona: **VPN** > **OpenVPN** > **Client Export Utility**.
+4. **OpenVPN Server:** `BioHealth-VPN-Server` aukeratu.
+5. Beheko zerrendan, aurkitu sortutako erabiltzailea (`mediku1`) eta deskargatu profilea:
+   * **Most Clients / Standard Android / iOS / Windows:** Deskargatu `.ovpn` fitxategia edo auto-instalatzailea.
+
+
