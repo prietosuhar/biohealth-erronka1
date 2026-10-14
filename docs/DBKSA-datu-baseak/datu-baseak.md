@@ -201,3 +201,20 @@ FLUSH PRIVILEGES;
 
 ![1064 errorea](../../irudiak/DBKSA/mariadb-errorea-1064.png)
 *Irudia: `SELECT VERSION()` ondo exekutatu da (10.3.39-MariaDB-0ubuntu0.20.04.2), baina bigarren aginduak 1064 errorea eman du sintaxi-akats batengatik. Mezuak errore-kodea, SQLSTATE (42000) eta kokapena (`near ':'`) ematen ditu.*
+
+# Datu-baseak (MongoDB)
+
+## Instalazioa
+
+<img width="1599" height="303" alt="image1" src="https://github.com/user-attachments/assets/e155ab43-278a-4fcc-beca-e70392374abe" />
+
+<img width="1598" height="302" alt="image3" src="https://github.com/user-attachments/assets/2b94d0b8-9055-436d-9c31-ad1187f669b7" />
+
+<img width="1170" height="143" alt="image2" src="https://github.com/user-attachments/assets/be692bb9-e327-4fe0-ac6e-f9738e4060a2" />
+
+
+
+
+
+
+
