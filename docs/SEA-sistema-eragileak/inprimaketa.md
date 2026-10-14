@@ -128,3 +128,169 @@ title: Inprimaketa
 
 ![Server Manager errorea](../../irudiak/SEA/servermanager-userconfig-errorea.png)
 *Irudia: Server Manager-en `user.config` errorea.*
+# CUPS Inprimatze-Zerbitzuaren Konfigurazioa eta Saretegia (Dokumentazio Teknikoa)
+
+Dokumentu honek Linux zein Windows inguruneen artean inprimagailuak CUPS (Common Unix Printing System) bidez kudeatzeko eta partekatzeko urrats guztiak biltzen ditu.
+
+---
+
+## 1. Linux: CUPS Instalazioa eta Tokiko Inprimagailuaren Probak
+
+### 1.1. Instalazioa
+CUPS zerbitzua eta oinarrizko kontrolatzaileak instalatzeko:
+
+```bash
+sudo apt update
+sudo apt install cups printer-driver-gutenprint -y
+sudo systemctl enable --now cups
+```
+
+### 1.2. Erabiltzaile Administratzailea Gehitzea
+Inprimagailuak kudeatu ahal izateko, uneko erabiltzailea `lpadmin` taldera gehituko da:
+
+```bash
+sudo usermod -aG lpadmin $USER
+```
+
+### 1.3. Tokiko Inprimagailua Konfiguratzea eta Proba-Orria Bidaltzea
+Web interfazearen bidez (`https://localhost:631`) edo komando-lerrotik inprimagailu birtual/PDF bat konfigura daiteke.
+
+Komando bidez testu-proba bat bidaltzeko:
+```bash
+echo "Proba testua: Tokiko Linux inprimagailua zuzenean lan eginez." | lp -d Inprimagailu_Izena
+```
+
+Edo proba-orri ofiziala bidaltzeko:
+```bash
+lp -d Inprimagailu_Izena /usr/share/cups/data/testprint
+```
+
+> 📸 **ARGAZKI GOMENDAGARRIA (1. atala):** 
+> - CUPS web interfazea (`http://localhost:631/printers`) inprimagailua "Idle" / "Ready" egoeran erakusten.
+> - Terminalean `lpstat -p` edo `lp` komandoa exekutatzen eta irteera egokia erakusten.
+
+---
+
+## 2. Linux: CUPS Inprimagailua Sarean Partekatzea
+
+Beste gailuek (Linux/Windows) inprimagailua ikusi eta erabili ahal izateko, CUPS-en konfigurazioa aldatu behar da.
+
+### 2.1. `/etc/cups/cupsd.conf` Editatzea
+
+Run komando hau sareko sarbidea baimentzeko:
+```bash
+sudo cupsctl --share-printers --remote-admin --remote-any
+```
+
+Edo eskuz aldatu `/etc/cups/cupsd.conf` fitxategiko atal hauek:
+
+```apache
+# Entzun sareko interfaze guztietan (edo IP zehatzean)
+Port 631
+
+# Baimendu atzipena barne-saretik
+<Location/>
+  Order allow,deny
+  Allow @LOCAL
+</Location>
+
+<Location /admin>
+  Order allow,deny
+  Allow @LOCAL
+</Location>
+
+<Location /printers>
+  Order allow,deny
+  Allow @LOCAL
+</Location>
+```
+
+Gorde eta berrabiarazi zerbitzua:
+```bash
+sudo systemctl restart cups
+```
+
+> 📸 **ARGAZKI GOMENDAGARRIA (2. atala):**
+> - `/etc/cups/cupsd.conf` fitxategiaren `Allow @LOCAL` zatia edo `cupsctl` exekuzioaren ondorioa.
+> - Sareko beste gailu batetik `http://[LINUX_ZERBITZARI_IP]:631` helbidera sartzen dela erakusten duen pantailazoa.
+
+---
+
+## 3. Linux Bezeroa → Linux Zerbitzariko Inprimagailua
+
+Linux bezero batetik zerbitzariko (CUPS) inprimagailua gehitzeko IPP (Internet Printing Protocol) erabiliko dugu.
+
+### 3.1. Inprimagailu Urrunekoa Gehitzeko Urrratsak (GUI edo Komandoa)
+
+**Komando bidez (Bezeroan):**
+```bash
+sudo lpadmin -p Inprimagailu_Sarekoa -E -v ipp://[ZERBITZARIAREN_IP]:631/printers/Inprimagailu_Izena -m everywhere
+```
+
+### 3.2. Proba Testua Bidaltzea
+```bash
+echo "Proba testua: Linux Bezeroa -> Linux Zerbitzaria (CUPS)" | lp -d Inprimagailu_Sarekoa
+```
+
+> 📸 **ARGAZKI GOMENDAGARRIA (3. atala):**
+> - Linux bezeroaren ezarpen panela inprimagailu urrunekoa erakusten.
+> - Terminalean proba komandoa bidali ondoren `lpstat -o` bidez inprimatze-lanaren egoera ikustea (edo jasotako testu-orria/PDFa).
+
+---
+
+## 4. Windows Bezeroa → Linux Zerbitzariko Inprimagailua
+
+Windows-ek CUPS inprimagailuak jatorriz onartzen ditu IPP protokoloaren bidez.
+
+### 4.1. Gehitzeko Urrratsak Windows-en
+
+1. Ireki **Configuración** > **Bluetooth y dispositivos** > **Impresoras y escáneres**.
+2. Egin klik **Agregar dispositivo** botoian eta ondoren **Agregar manualmente**.
+3. Hautatu **Seleccionar una impresora compartida por nombre**.
+4. Sartu CUPS URL zuzena:
+   ```text
+   http://[LINUX_ZERBITZARIAREN_IP]:631/printers/Inprimagailu_Izena
+   ```
+5. Aukeratu kontrolatzailea (*Generic / MS Publisher Imagesetter* edo dagokiona).
+
+### 4.2. Proba Testua Bidaltzea
+- Ireki **Bloc de notas (Notepad)**.
+- Idatzi testu hau: `Proba testua: Windows Bezeroa -> Linux CUPS Zerbitzaria`.
+- Sakatu `Ctrl + P`, hautatu gehitutako inprimagailua eta sakatu **Imprimir**.
+
+> 📸 **ARGAZKI GOMENDAGARRIA (4. atala):**
+> - Windows-eko "Agregar impresora por nombre" leihoa IPP URLarekin idatzita.
+> - Notepad edo inprimagailuaren propietateetako "Imprimir página de prueba" botoia sakatzean agertzen den baieztapena.
+
+---
+
+## 5. Linux Bezeroa → Windows Server-eko Inprimagailua
+
+Windows Server-en partekatutako inprimagailu batera konektatzeko Linux bidez, SMB (Samba) protokoloa erabiltzen da.
+
+### 5.1. Beharrezko Paketeak Instalatu
+```bash
+sudo apt install smbclient cups-backend-smb -y
+```
+
+### 5.2. Inprimagailua Gehitzeko Urrratsak CUPS-en
+
+**Komando bidez:**
+```bash
+sudo lpadmin -p Windows_Server_Printer -E -v smb://[ERABILTZAILEA]:[PASAHITZA]@[WINDOWS_SERVER_IP]/[INPRIMAGAILU_IZENA] -m everywhere
+```
+
+Edo CUPS Web interfazean (`http://localhost:631`):
+1. **Administration** > **Add Printer**.
+2. Hautatu **Windows Printer via SAMBA**.
+3. Connection URL: `smb://[WINDOWS_SERVER_IP]/[INPRIMAGAILU_IZENA]` (edo domeinu/kredentzialekin `smb://domain\user:password@ip/printer`).
+
+### 5.3. Proba Testua Bidaltzea
+```bash
+echo "Proba testua: Linux Bezeroa -> Windows Server Inprimagailua (SMB)" | lp -d Windows_Server_Printer
+```
+
+> 📸 **ARGAZKI GOMENDAGARRIA (5. atala):**
+> - Windows Server-en inprimagailua "Compartida" gisa agertzen den leihoa.
+> - Linux-en CUPS interfazea Samba URI-a (`smb://...`) erakusten.
+> - Testua bidali ondoren Windows Server-eko "Cola de impresión" (Print Queue) atalean lana sarreran ikusten den unea.
