@@ -65,4 +65,8 @@ Windows-eko klientean ubuntu zerbitrariaren ip-a bilatu eta hurrengo lehioa zaba
 
 
 ## Probak ⏳
-- [ ] 2+ ekipo deian (kamera, mikrofonoa, txata, pantaila partekatu)
+- [ ] 2+ ekipo deian
+
+<img width="1238" height="729" alt="image9" src="https://github.com/user-attachments/assets/e6c72594-b1ad-4413-b57b-32cffeae602a" />
+
+
