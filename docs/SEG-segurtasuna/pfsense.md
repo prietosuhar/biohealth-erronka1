@@ -265,19 +265,57 @@ alert http any any -> $HOME_NET any (msg:"BIOHEALTH proba - sqlmap erasoa www-re
 2. *VPN → OpenVPN → Client Export* → *Remote Access Server*: `BioHealth-VPN-Server UDP4:1194`.
 3. `mediku1` erabiltzailearen lerroan: *Windows Installer* edo *Most Clients* (`.ovpn`).
 
-### Probak ⏳
+### Probak
 
-Bezeroak **WAN aldean** egon behar du (etxetik sartzen den langilea simulatzeko): IsardVDIn **Default** sarean bakarrik dagoen mahaigain bat (Windows edo Ubuntu).
+**Proba-ingurunea:** BEZ-WIN01 «etxean dagoen medikua» bezala: lehenik IsardVDIko **Default** sarean (WAN aldea, `192.168.120.46`) eta gero **DMZn** (`192.168.20.50`, IP finkoa). Bezeroa: *Client Export*-eko Windows instalatzailea (OpenVPN 2.6.7), `mediku1` erabiltzailea.
 
-| # | Proba | Espero dena |
-|---|---|---|
-| 0 | pfSense → *Interfaces → WAN* → ☐ **Block private networks** (IsardVDIko Default sarea helbide pribatuak dira) | Bestela pfSense-k bezeroaren paketeak WAN-en botatzen ditu |
-| 1 | Bezeroan OpenVPN GUI / OpenVPN Connect + `.ovpn` → `mediku1` + pasahitza | *Connected* |
-| 2 | `ipconfig` / `ip a` | Tunel-interfazea `10.0.8.x` |
-| 3 | `ping 192.168.10.1` · `nslookup db01.biohealth.local 192.168.10.1` | ✅ LANera iristen da tuneletik |
-| 4 | VPN deskonektatuta: `ping 192.168.10.1` | ❌ ez da iristen (LANa ez dago Internetera irekita) |
-| 5 | pfSense: *Status → OpenVPN* eta *Status → System Logs → OpenVPN* | `mediku1` konektatuta, IP birtuala eta jatorrizko IPa |
-| 6 | Pasahitz okerra | ❌ `AUTH_FAILED` logean |
+| # | Proba | Espero dena | Emaitza |
+|---|---|---|---|
+| 1 | WAN: *Reserved Networks* desgaituta | Default sareko helbide pribatuak ez blokeatu | ✅ |
+| 2 | Kanpotik (Default), VPNrik gabe: `ping 192.168.10.1` | ❌ LANera ezin | ✅ % 100 galduta |
+| 3 | DMZtik, VPNrik gabe: `ping 192.168.10.1` | ❌ (3. araua: DMZ → LAN ukatuta) | ✅ % 100 galduta |
+| 4 | VPN konexioa (`mediku1`) | *Connected*, IP 10.0.8.x | ⏳ *TLS handshake failed* (ikus diagnostikoa) |
+| 5 | VPNarekin: `ping 192.168.10.1`, `nslookup db01.biohealth.local` | ✅ | ⏳ |
+| 6 | *Status → OpenVPN* | `mediku1` konektatuta | ⏳ |
+
+![Zerbitzuak](../../irudiak/SEG/pfsense-zerbitzuak-openvpn.png)
+*Irudia: OpenVPN zerbitzaria (eta Suricata) martxan.*
+
+![WAN IPa](../../irudiak/SEG/pfsense-wan-ip.png)
+*Irudia: pfSense-ren WAN IPa `192.168.123.217/22` (IsardVDI Default sarea) — bezeroak hona konektatzen da.*
+
+![Reserved networks](../../irudiak/SEG/pfsense-wan-reserved-networks.png)
+*Irudia: WAN-en «Block private networks» eta «Block bogon networks» desgaituta (laborategiko «Internet» sare pribatu bat da).*
+
+![VPNrik gabe kanpotik](../../irudiak/SEG/vpn-proba-vpn-gabe.png)
+*Irudia: BEZ-WIN01 Default sarean (192.168.120.46): OpenVPN adaptadoreak instalatuta baina deskonektatuta; DCra ping-a ❌. ✅*
+
+![VPNrik gabe DMZtik](../../irudiak/SEG/vpn-dmz-vpn-gabe.png)
+*Irudia: BEZ-WIN01 DMZn (192.168.20.50): DCra ping-a ❌ — suebakiaren 3. araua. ✅*
+
+### Diagnostikoa (konexioak huts egin du)
+
+| Pausoa | Tresna | Emaitza | Ondorioa |
+|---|---|---|---|
+| 1 | OpenVPN GUI loga | `TLS key negotiation failed to occur within 60 seconds` · *Bytes in: 0* | Bezeroak bidaltzen du, ez du erantzunik jasotzen |
+| 2 | *Diagnostics → Packet Capture*, WAN, 1194 portua | **Hutsik** | Paketeak ez dira pfSense-ren WAN-era iristen → IsardVDIko **Default sareak mahaigainak isolatzen ditu** |
+| 3 | Bezeroa DMZra eraman (Pertsonala2) + DMZ araua `UDP 1194 → This Firewall` + zerbitzaria *Interface: any* + bezeroaren `remote 192.168.20.254` | `ping 192.168.20.10` ✅ (DMZn dago) baina VPNa ez | Sarea ondo |
+| 4 | *Packet Capture*, DMZ, 1194 | **Hutsik** | Paketeak ez dira BEZ-WIN01-etik ateratzen |
+| 5 | `disable-dco` bezeroaren konfigurazioan (OpenVPN 2.6-ren DCO kontrolatzailea) | Berdin | ⏳ Hurrengo proba: Linux bezero batetik (www, DMZ) `openvpn --config` |
+
+![TLS errorea](../../irudiak/SEG/vpn-tls-errorea-default.png)
+*Irudia: bezeroaren loga: TLS negoziazioak huts egin du (0 byte jasota).*
+
+![Packet capture hutsik](../../irudiak/SEG/vpn-packet-capture-hutsik.png)
+*Irudia: `tcpdump` WAN-en 1194 portuan: paketerik ez → ez dira iristen.*
+
+![DMZ araua](../../irudiak/SEG/pfsense-dmz-araua-openvpn.png)
+*Irudia: DMZko arau berria (lehena): DMZ → This Firewall UDP 1194, VPN proba DMZtik egiteko.*
+
+![remote aldatuta](../../irudiak/SEG/vpn-bezeroa-remote-dmz.png)
+*Irudia: bezeroaren `.ovpn`-n `remote 192.168.20.254 1194 udp4` (scripta: [`scripts/bez-win01-vpn-dmz.ps1`](../../scripts/bez-win01-vpn-dmz.ps1)).*
+
+> **Laborategiaren muga:** produkzioan medikua Internetetik konektatuko litzateke pfSense-ren IP publikora; IsardVDIn Default sareak ez du mahaigainen arteko trafikorik uzten, eta horregatik proba DMZtik egiten da. Diseinua eta konfigurazioa berdinak dira.
 
 ## Probak (www-tik, 192.168.20.10)
 
