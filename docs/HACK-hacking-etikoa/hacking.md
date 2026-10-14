@@ -1,3 +1,8 @@
+---
+title: "Pentestinga"
+parent: "HACK – Hacking etikoa"
+nav_order: 1
+---
 # BioHealth Pentesting eta Segurtasun Analisiaren Dokumentazio Osoa
 
 Dokumentu honek BioHealth enpresako azpiegituraren pentesting faseak, identifikatutako ahuleziak eta proba-laborategiko (**Metasploitable 2** eta **Kali Linux**) zerbitzu zein prozesuen azterketa tekniko eta praktikoa biltzen ditu.

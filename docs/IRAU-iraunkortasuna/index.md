@@ -1,5 +1,7 @@
 ---
 title: IRAU – Iraunkortasuna
+nav_order: 10
+has_children: true
 ---
 
 [← Hasiera](../../index.md)

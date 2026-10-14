@@ -1,5 +1,7 @@
 ---
 title: Inprimaketa
+parent: "SEA – Sistema eragileak"
+nav_order: 2
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

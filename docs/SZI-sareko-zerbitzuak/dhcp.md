@@ -1,5 +1,7 @@
 ---
 title: DHCP
+parent: "SZI – Sareko zerbitzuak"
+nav_order: 2
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

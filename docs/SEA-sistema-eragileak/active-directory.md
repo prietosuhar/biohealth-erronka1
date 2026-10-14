@@ -1,5 +1,7 @@
 ---
 title: Active Directory
+parent: "SEA – Sistema eragileak"
+nav_order: 1
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

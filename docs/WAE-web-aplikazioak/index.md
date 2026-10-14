@@ -1,5 +1,7 @@
 ---
 title: WAE – Web aplikazioak
+nav_order: 7
+has_children: true
 ---
 
 [← Hasiera](../../index.md)

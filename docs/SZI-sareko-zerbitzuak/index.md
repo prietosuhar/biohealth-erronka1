@@ -1,5 +1,7 @@
 ---
 title: SZI – Sareko zerbitzuak
+nav_order: 5
+has_children: true
 ---
 
 [← Hasiera](../../index.md)

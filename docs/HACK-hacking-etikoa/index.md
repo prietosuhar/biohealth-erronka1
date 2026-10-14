@@ -1,5 +1,7 @@
 ---
 title: HACK – Hacking etikoa
+nav_order: 9
+has_children: true
 ---
 
 [← Hasiera](../../index.md)

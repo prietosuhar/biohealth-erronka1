@@ -1,5 +1,7 @@
 ---
 title: Argazkiak nola igo
+parent: "Orokorra"
+nav_order: 3
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

@@ -1,5 +1,7 @@
 ---
 title: Hardwarea eta lizentziak
+parent: "HW – Hardwarea"
+nav_order: 1
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

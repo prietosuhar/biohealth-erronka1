@@ -1,5 +1,7 @@
 ---
 title: Segurtasun-plana
+parent: "SEG – Segurtasuna"
+nav_order: 3
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)
@@ -15,7 +17,7 @@ title: Segurtasun-plana
 
 ## 1. Enpresaren Deskribapena eta AmScope-a
 
-BioHealth osasun-sektoreko enpresa teknologikoa da[cite: 24]. Dokumentu honen helburu nagusia negozioaren jarraitutasuna bermatzea da zibereraso, hardware matxura edo bestelako ezbehar baten aurrean, datu klinikoen babesa (DBEO / LOPD) eta zerbitzuen erabilgarritasuna ziurtatuz.
+BioHealth osasun-sektoreko enpresa teknologikoa da. Dokumentu honen helburu nagusia negozioaren jarraitutasuna bermatzea da zibereraso, hardware matxura edo bestelako ezbehar baten aurrean, datu klinikoen babesa (DBEO / LOPD) eta zerbitzuen erabilgarritasuna ziurtatuz.
 
 Plan honek BioHealth enpresako nodo eta zerbitzu kritiko guztiak estaltzen ditu:
 
@@ -31,7 +33,7 @@ Plan honek BioHealth enpresako nodo eta zerbitzu kritiko guztiak estaltzen ditu:
 
 ### 2.1. Pasahitzen eta Sarbideen Politika
 * **Konplexutasuna:** Gutxienez 10 karaktere, hizki larriak, xeheak, zenbakiak eta karaktere bereziak (`!@#$%^&*`).
-* **Irajungipena eta Blokeoa:** Pasahitzak 6 hilabetean behin aldatuko dira[cite: 25]. 6 saiakera oker eginez gero kontua automatikoki blokeatuko da.
+* **Irajungipena eta Blokeoa:** Pasahitzak 6 hilabetean behin aldatuko dira. 6 saiakera oker eginez gero kontua automatikoki blokeatuko da.
 * **Debekuak:** Erabat debekatua dago pasahitzak paperean idaztea edo beste pertsona batzuei jakinaraztea.
 * **Zerbitzarien Kudeaketa:** Zerbitzari bakoitzak pasahitz propio eta berezitua du, eta administratzaileek sarbide eta irteera log guztiak erregistratzen dituzte.
 

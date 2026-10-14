@@ -1,5 +1,7 @@
 ---
 title: Proposamena vs. inplementazioa
+parent: "Orokorra"
+nav_order: 1
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

@@ -1,5 +1,7 @@
 ---
 title: SB – Sistema banatuak
+nav_order: 8
+has_children: true
 ---
 
 [← Hasiera](../../index.md)

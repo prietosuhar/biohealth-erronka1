@@ -1,5 +1,7 @@
 ---
 title: Sarearen diseinua
+parent: "SEG – Segurtasuna"
+nav_order: 1
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

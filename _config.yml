@@ -1,4 +1,50 @@
 title: BioHealth – Erronka 1
 description: Uni Center · SISA2 2026/27 · Azpiegituraren dokumentazioa
-theme: jekyll-theme-cayman
 lang: eu
+
+# Gaia: Just the Docs (GitHub Pages-en remote_theme bidez)
+remote_theme: just-the-docs/just-the-docs@v0.10.1
+plugins:
+  - jekyll-remote-theme
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-titles-from-headings
+
+logo: "/irudiak/logo/biohealth-logo.png"
+favicon_ico: "/irudiak/logo/biohealth-ikonoa.png"
+color_scheme: light
+
+# Bilatzailea (goiko barra)
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+  button: true
+
+# Goiko estekak
+aux_links:
+  "GitHub biltegia":
+    - "https://github.com/prietosuhar/biohealth-erronka1"
+aux_links_new_tab: true
+
+# Orri bakoitzaren behealdean "Editatu GitHub-en"
+gh_edit_link: true
+gh_edit_link_text: "Editatu orri hau GitHub-en"
+gh_edit_repository: "https://github.com/prietosuhar/biohealth-erronka1"
+gh_edit_branch: "main"
+gh_edit_view_mode: "edit"
+
+back_to_top: true
+back_to_top_text: "Gora ↑"
+heading_anchors: true
+
+footer_content: "BioHealth – Erronka 1 · Uni Center · SISA2 2026/27 · Gaizka · Alex · Garazi · Suhar"
+
+# Ez argitaratu
+exclude:
+  - README.md
+  - irudiak/HW/Biohealth_HW.md
+  - docs/HW-hardwarea/HW-txostena
+  - Gemfile
+  - Gemfile.lock
+  - vendor

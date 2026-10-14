@@ -1,5 +1,7 @@
 ---
 title: Suebakia – pfSense
+parent: "SEG – Segurtasuna"
+nav_order: 2
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

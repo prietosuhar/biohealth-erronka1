@@ -1,5 +1,7 @@
 ---
 title: WordPress
+parent: "WAE – Web aplikazioak"
+nav_order: 1
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

@@ -1,5 +1,7 @@
 ---
 title: Birtualizazioa eta HA
+parent: "SB – Sistema banatuak"
+nav_order: 1
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

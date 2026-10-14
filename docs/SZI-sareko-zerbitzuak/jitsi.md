@@ -1,5 +1,7 @@
 ---
 title: Jitsi Meet
+parent: "SZI – Sareko zerbitzuak"
+nav_order: 3
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

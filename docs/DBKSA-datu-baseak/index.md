@@ -1,5 +1,7 @@
 ---
 title: DBKSA – Datu-baseak
+nav_order: 6
+has_children: true
 ---
 
 [← Hasiera](../../index.md)

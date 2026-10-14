@@ -1,5 +1,7 @@
 ---
 title: GLPI
+parent: "WAE – Web aplikazioak"
+nav_order: 2
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

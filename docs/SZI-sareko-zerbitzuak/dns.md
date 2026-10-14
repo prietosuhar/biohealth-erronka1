@@ -1,5 +1,7 @@
 ---
 title: DNS
+parent: "SZI – Sareko zerbitzuak"
+nav_order: 1
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

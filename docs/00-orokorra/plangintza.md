@@ -1,5 +1,7 @@
 ---
 title: Plangintza eta jarraipena
+parent: "Orokorra"
+nav_order: 2
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)
@@ -31,6 +33,7 @@ Plangintza GitHub-eko **Issues / Projects** taulan egiten da (zeregin bat pauso 
 | 2026-10-10 | kantonsh | db01 (LAN): netplan, MariaDB 10.3 instalatu eta segurtatu, bind-address, wordpress/glpi datu-baseak eta erabiltzaileak, ufw 3306, www-tiko probak; 3 errore interpretatuta (1064, 2002, 1044) | MariaDB ustiapena, WordPress |
 | 2026-10-11 | kantonsh | www: Apache 2.4 + PHP 7.4 + WordPress (scripta GitHub-etik), ufw 80/443, web-instalatzailea (bioadmin) | WordPress erabiltzaileak, txantiloiak, CSS, HTTPS; GLPI |
 | 2026-10-12 | kantonsh | WordPress: `harrera1` (Editor) + probak; 3 txantiloi konparatuta → Astra; CSS korporatiboa + logoa eta ikonoa; HTTPS (ziurtagiri autosinatua, 80→443); `DISALLOW_FILE_EDIT` | GLPI (Docker); MariaDB ustiapena; DHCP aurreratua |
+| 2026-10-14 | kantonsh | GitHub Pages: Cayman → Just the Docs (alboko menua ikasgaika, bilatzailea, «Editatu GitHub-en»); hiru orriri goiburua jarri; `[cite]` hondarrak kendu | CUPS probak, edukiontzia/HA |
 
 ## Aldaketak plangintzan
 
@@ -38,3 +41,4 @@ Plangintza GitHub-eko **Issues / Projects** taulan egiten da (zeregin bat pauso 
 |---|---|---|
 | 2026-10-09 | DMZ gehitu (pfSense OPT1); www eta meet DMZra | Errubrikak LAN/WAN/DMZ diseinua eskatzen du |
 | 2026-10-09 | IDS (Suricata) eta VPN gehitu | Errubrikan ageri dira (SEG RA2–RA3) |
+| 2026-10-14 | Dokumentazio-webgunea Just the Docs gaira aldatu | Nabigazioa eta bilaketa aurkezpenerako; ikus [GitHub Pages](github-pages.md) |

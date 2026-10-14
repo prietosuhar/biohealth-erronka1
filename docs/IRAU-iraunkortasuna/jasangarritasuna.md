@@ -1,3 +1,8 @@
+---
+title: "Jasangarritasun-plana"
+parent: "IRAU – Iraunkortasuna"
+nav_order: 1
+---
 # BioHealth - Jasangarritasun eta Etika Inpaktuaren Plana
 
 ---

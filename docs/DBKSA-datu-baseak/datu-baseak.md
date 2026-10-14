@@ -1,5 +1,7 @@
 ---
 title: Datu-baseak
+parent: "DBKSA – Datu-baseak"
+nav_order: 1
 ---
 
 [← Hasiera](../../index.md) · [Modulua](index.md)

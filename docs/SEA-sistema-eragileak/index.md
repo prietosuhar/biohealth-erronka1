@@ -1,5 +1,7 @@
 ---
 title: SEA – Sistema eragileak
+nav_order: 4
+has_children: true
 ---
 
 [← Hasiera](../../index.md)
