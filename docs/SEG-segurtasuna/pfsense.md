@@ -118,24 +118,85 @@ Arauak irakurterrazagoak izateko eta IP bat aldatzen bada leku bakarrean aldatze
 |---|---|---|
 | 0 | IsardVDI → pfSense makina | RAM **2 GB** (Suricata-k 1 GB-rekin huts egin dezake) |
 | 1 | *System → Package Manager → Available Packages* | `suricata` → **Install** |
-| 2 | *Services → Suricata → Global Settings* | ☑ *Install ETOpen Emerging Threats rules* · *Update Interval*: 12 h · **Save** |
-| 3 | *Services → Suricata → Updates* | **Update** → ET Open arauak deskargatuta (data eta MD5) |
-| 4 | *Interfaces → Add* | Interface **WAN** · ☑ Enable · ☐ *Block Offenders* (IDS modua) · ☑ *Send Alerts to System Log* · **Save** |
-| 5 | *WAN Categories* | `emerging-scan`, `emerging-exploit`, `emerging-attack_response`, `emerging-web_server`, `emerging-sql`, `emerging-dos`, `emerging-malware` · **Save** |
-| 6 | *Interfaces → Add* | Interface **DMZ**, 4.–5. urratsen berdina |
-| 7 | *Interfaces* | Interfaze bakoitzaren ▶ (Start) → egoera berdea |
+| 2 | *System → Advanced → Networking* | ☑ Disable hardware checksum / TCP segmentation / large receive offload → Save → **Reboot** (Suricata-ren abisua, ikus «Arazoak») |
+| 3 | *Services → Suricata → Global Settings* | ☑ *Install ETOpen Emerging Threats rules* · *Update Interval*: 12 h · **Save** |
+| 4 | *Services → Suricata → Updates* | **Update** → ET Open arauak deskargatuta |
+| 5 | *Interfaces → Add* | **WAN** eta **DMZ** · ☑ Enable · ☐ *Block Offenders* (IDS modua) |
+| 6 | *WAN/DMZ Categories* | `emerging-attack_response`, `-dos`, `-exploit`, `-malware`, `-scan`, `-sql`, `-web_server` · **Save** |
+| 7 | *Firewall → Aliases* + *Suricata → Pass Lists* | `DMZ_SAREA` = 192.168.20.0/24 → Pass List `DMZ_HOME` → DMZ instantziaren **Home Net** |
+| 8 | *DMZ Rules → custom.rules* | BioHealth-en arau propioa ([`scripts/suricata-custom.rules`](../../scripts/suricata-custom.rules)) |
+| 9 | *Interfaces* | ▶ / ⟳ → bi instantziak berde |
 
-### Probak ⏳
+![Suricata instalatuta](../../irudiak/SEG/suricata-instalatuta.png)
+*Irudia: `pfSense-pkg-suricata` paketea instalatuta. ✅*
 
-| # | Nondik | Komandoa | Espero den alerta (*Services → Suricata → Alerts*) |
+![Offloading desgaituta](../../irudiak/SEG/pfsense-offloading-desgaituta.png)
+*Irudia: System → Advanced → Networking: hiru offloading aukerak desgaituta (Suricata-k paketeak osorik ikusteko).*
+
+![ET Open eguneratuta](../../irudiak/SEG/suricata-updates-etopen.png)
+*Irudia: Emerging Threats Open arauak deskargatuta (2026-10-14 17:24 UTC, *success*). ✅*
+
+![WAN kategoriak](../../irudiak/SEG/suricata-wan-kategoriak.png)
+*Irudia: aukeratutako 7 ET Open kategoriak (ezkerrean Suricata-ren `*-events.rules` lehenetsiak).*
+
+![Interfazeak martxan](../../irudiak/SEG/suricata-interfazeak-martxan.png)
+*Irudia: WAN (vtnet0) eta DMZ (vtnet2) instantziak martxan; **Blocking Mode: DISABLED** → IDS modua. ✅*
+
+### Zergatik HOME_NET aldatu DMZ instantzian
+
+Arau gehienak `$EXTERNAL_NET → $HOME_NET` norabidean idatzita daude (kanpotik datorren erasoa). pfSense-k lehenetsita **sare lokal guztiak** (LAN + DMZ) jartzen ditu HOME_NET-en, beraz LANetik DMZra doan eraso bat «etxe barrukotzat» hartzen zuen eta ez zuen alertarik ematen. DMZ instantzian **HOME_NET = 192.168.20.0/24 bakarrik** jarri da: web zerbitzariaren ikuspegitik, DMZtik kanpoko edozer (LANeko PC kutsatu bat barne) mehatxu izan daiteke.
+
+![DMZ_SAREA aliasa](../../irudiak/SEG/pfsense-alias-dmz-sarea.png)
+*Irudia: `DMZ_SAREA` aliasa (192.168.20.0/24).*
+
+![DMZ_HOME pass list](../../irudiak/SEG/suricata-passlist-dmz-home.png)
+*Irudia: `DMZ_HOME` Pass List-a: aukera automatiko guztiak desmarkatuta, `DMZ_SAREA` bakarrik → DMZ instantziaren Home Net.*
+
+### Arau propioa (custom.rules)
+
+```
+alert http any any -> $HOME_NET any (msg:"BIOHEALTH proba - sqlmap erasoa www-ren aurka"; flow:to_server,established; http.user_agent; content:"sqlmap"; nocase; classtype:web-application-attack; sid:1000001; rev:1;)
+```
+
+| Zatia | Esanahia |
+|---|---|
+| `alert http any any -> $HOME_NET any` | Alerta sortu (ez blokeatu), DMZra doan edozein HTTP trafikotan |
+| `flow:to_server,established` | Bezerotik zerbitzarira, TCP konexioa ezarrita dagoenean |
+| `http.user_agent; content:"sqlmap"; nocase` | Nabigatzaile-identifikazioan «sqlmap» (SQL injekzio tresna ezaguna) |
+| `classtype:web-application-attack` | Lehentasun 1 (altua) |
+| `sid:1000001` | 1.000.000tik gorako SIDak tokiko arauentzat erreserbatuta daude |
+
+### Probak
+
+| # | Nondik → nora | Komandoa | Emaitza |
 |---|---|---|---|
-| 1 | www (DMZ) | `curl http://testmynids.org/uid/index.html` | `GPL ATTACK_RESPONSE id check returned root` (DMZ interfazea) |
-| 2 | db01 edo bez-lnx01 (LAN → DMZ, pfSense zeharkatzen du) | `sudo apt install -y nmap` → `sudo nmap -sV -p 80,443 192.168.20.10` | `ET SCAN Possible Nmap User-Agent Observed` (DMZ interfazea) |
-| 3 | db01 edo bez-lnx01 (LAN) | `curl -A "sqlmap/1.7" "http://192.168.20.10/?id=1%27%20OR%20%271%27=%271"` | `ET SCAN` (sqlmap User-Agent) edo `ET WEB_SERVER` SQL injekzio alerta |
+| 1 | db01 (LAN) → www (DMZ) | `curl -A "sqlmap/1.7" http://192.168.20.10/` | ✅ **1:1000001 «BIOHEALTH proba - sqlmap erasoa www-ren aurka»**, Pri 1, *Web Application Attack*, 192.168.10.3 → 192.168.20.10:80 |
+| 2 | db01 → www | `curl -A "Mozilla/5.0 (compatible; Nmap Scripting Engine)" http://192.168.20.10/` | ⏳ ET SCAN (ikus «Arazoak»: ET arauen kopurua) |
+| 3 | db01 → www | `curl "http://192.168.20.10/?id=1%20UNION%20SELECT%201,2,3--"` | ⏳ ET SQL |
+| 4 | LAN bezeroak → Internet (WAN) | Nabigazio arrunta | ✅ WAN instantziak `SURICATA QUIC failed decrypt` alertak (Pri 3) erregistratzen ditu → WAN-eko trafikoa aztertzen ari da |
 
-1\. probak ez du ezer arriskutsurik egiten: web-orriak `uid=0(root)` testua itzultzen du, eta arau batek testu hori «root baimenak lortu dituen erasotzaile baten erantzuna» bezala detektatzen du.
+![Erasoak db01-etik](../../irudiak/SEG/suricata-proba-db01-curl.png)
+*Irudia: db01-etik www-ren aurkako hiru eraso simulatu (nmap, sqlmap eta SQL injekzioa). Apache-k 301 itzultzen du (HTTPSra birbideratzea), baina eskaera pfSense-tik pasa da eta Suricata-k aztertu du.*
 
-**Ebidentziak:** paketea instalatuta · Global Settings · Updates (arauen data) · bi interfazeak martxan · Alerts fitxa 3 proben alertekin · *Status → System Logs* (Suricata alertak sistemaren logean).
+![DMZ alerta](../../irudiak/SEG/suricata-alerta-dmz-sqlmap.png)
+*Irudia: **DMZ instantziaren alerta**: db01 (192.168.10.3) → www (192.168.20.10:80), SID 1:1000001, lehentasuna 1, *Web Application Attack*. IDSak erasoa detektatu du. ✅*
+
+![WAN alertak](../../irudiak/SEG/suricata-alertak-wan-quic.png)
+*Irudia: WAN instantziaren alertak: QUIC trafikoa (UDP 443) Internetera.*
+
+![DMZ loga](../../irudiak/SEG/suricata-log-dmz.png)
+*Irudia: `suricata.log` (DMZ): Suricata 7.0.8, **IDS modua**, `vtnet2` interfazean pcap bidez, motorra abiarazita.*
+
+### Arazoak
+
+| Arazoa | Kausa | Konponbidea |
+|---|---|---|
+| Abisua: «Suricata requires that Hardware Checksum/TSO/LRO Offloading … be disabled» | Txartel birtualak paketeak elkartzen eta checksum-ak kalkulatzen ditu; Suricata-k paketeak «erdi eginda» ikusten ditu | *System → Advanced → Networking* → hiru aukerak desgaitu → berrabiarazi |
+| `curl: (6) Could not resolve host` www-tik | **Domeinu-kontrolatzailea itzalita** zegoen → DMZko DNSa (192.168.10.1) erantzunik gabe | DCa piztu. Ondorioa: DCa **SPOF** bat da (ikus [SB](../SB-sistema-banatuak/birtualizazioa.md), dc02 proposamena) |
+| `testmynids.org` ez da ebazten (ezta pfSense-tik ere, `google.com` bai) | Webgunea ez dago eskuragarri / IsardVDIko DNSak iragazten du | Proba barne-sarean egin: db01-etik www-ren aurka |
+| DMZ instantzian alertarik ez | LAN eta DMZ biak HOME_NET → LAN→DMZ erasoa ez da «kanpokoa» | `DMZ_HOME` Pass List-a Home Net gisa (goian) |
+| `suricata.log`: **379 arau** bakarrik kargatuta | Kategoria ET-ak ez dira aplikatzen (Suricata-ren `*-events` arauak + custom bakarrik) | ⏳ *DMZ Categories*-en «Use IPS Policy» egiaztatu; bitartean arau propioak detekzioa frogatzen du |
+| ![DMZ hutsik](../../irudiak/SEG/suricata-dmz-alertarik-ez.png) | *Irudia: HOME_NET aldatu aurretik DMZ instantziak ez zuen alertarik.* | |
 
 ## VPN – urruneko sarbidea
 
