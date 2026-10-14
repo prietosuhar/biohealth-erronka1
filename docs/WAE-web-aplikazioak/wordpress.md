@@ -254,13 +254,12 @@ sudo sed -i "/require_once ABSPATH/i define('DISALLOW_FILE_EDIT', true);" /var/w
 ```
 Lerroa `require_once ABSPATH` **aurretik** joan behar da: WordPress-ek konstanteak irakurtzen ditu sistema kargatu aurretik.
 
-##Txostenak ezarri gure web-an
-
-<img width="766" height="123" alt="image" src="https://github.com/user-attachments/assets/be968b55-c683-4ab2-9e0d-c195c6fb15eb" />
-
-
 ![DISALLOW_FILE_EDIT](../../irudiak/WAE/wp-disallow-file-edit.png)
 *Irudia: `wp-config.php`-n 102. lerroan konstantea, 103.aren (`require_once ABSPATH`) aurretik. ✅*
 
 ![Editorea desgaituta](../../irudiak/WAE/wp-editor-desgaituta.png)
 *Irudia: Apariencia menuan ez da agertzen «Editor de archivos de temas» (lehen bai, ikus [Astra aktiboa](../../irudiak/WAE/wp-astra-aktiboa.png)). ✅*
+
+## Txostenak ezarri gure Web-an
+
+<img width="766" height="123" alt="image" src="https://github.com/user-attachments/assets/be968b55-c683-4ab2-9e0d-c195c6fb15eb" />
