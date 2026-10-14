@@ -53,6 +53,10 @@ Zerbitzarian: *DHCP → Esparrua → Helbideen alokairuak* → bezeroa ageri da.
 ![BEZ-WIN01 bezeroak DHCP bidez jasotako konfigurazioa](../../irudiak/SZI/dhcp-bezeroa-ip.png)
 *1. irudia: BEZ-WIN01 bezeroak Windows Server-eko DHCPtik jaso du konfigurazioa: IPa **192.168.10.102** (esparruaren lehena), DNS zerbitzaria **192.168.10.1** (domeinu-kontrolatzailea) eta DNS sufixua **biohealth.local** (015 aukera). ✅*
 
+## Erreserba
+
+<img width="586" height="213" alt="image15" src="https://github.com/user-attachments/assets/31190bb6-8079-4427-981c-09c194713c85" />
+
 ## Arazoak eta logak
 
 | Arazoa | Kausa | Konponbidea |
