@@ -4,3 +4,8 @@
 $f = (Get-ChildItem "C:\Program Files\OpenVPN\config\*.ovpn").FullName
 (Get-Content $f) -replace "123.217","20.254" | Set-Content $f
 Select-String remote $f
+
+# 2. urratsa: OpenVPN 2.6-ren DCO kontrolatzailea desgaitu (IsardVDIko VMetan paketeak ez ziren ateratzen)
+$f = (Get-ChildItem "C:\Program Files\OpenVPN\config\*.ovpn").FullName
+Add-Content $f "disable-dco"
+Select-String "remote|dco" $f
