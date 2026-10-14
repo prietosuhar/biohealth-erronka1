@@ -109,9 +109,13 @@ sudo docker volume inspect glpi_data
 | Docker instalatu (`docker.io`) eta `systemctl enable --now docker` | ✅ |
 | Kontenedorea martxan, portua localhost-en bakarrik | ✅ |
 | www → db01:3306 (`nc -zv`) eta kontenedoretik (`/dev/tcp/192.168.10.3/3306`) | ✅ portua irekita |
-| GLPI ↔ MariaDB | ⏳ `Access denied for user 'glpi_user'@'www.biohealth.local'` → pasahitza db01-en berrezarri (`ALTER USER`) eta kontenedorea berriro sortu; *entrypoint*-ak «Still waiting for database» |
+| GLPI ↔ MariaDB (db01) | ✅ Lehenik `Access denied for user 'glpi_user'@'www.biohealth.local'` (*entrypoint*-a «Still waiting for database») → db01-en `ALTER USER` pasahitz berriarekin eta kontenedorea berriro sortuta (`docker rm -f` + `docker run`, datuak `glpi_data` bolumenean) |
+| Zerbitzua kontenedorean | ✅ `apache2` eta `glpi-cron` **RUNNING** · `curl http://127.0.0.1:8080` → **HTTP/1.1 200 OK** |
 
-**Arazoak:** (1) `sudo`-k pasahitza eskatzean itsatsitako hurrengo lerroa pasahitz gisa hartu zuen → komandoak banan-banan itsatsi. (2) db01-eko `/etc/ssh/ssh_config`-ek **zerbitzariaren** direktibak ditu (`Match Group`, `ChrootDirectory`…, 53–57 lerroak) → SSH bezeroak huts egiten du; behin-behinean `ssh -F /dev/null`, konpondu: lerro horiek `sshd_config`-era eraman edo ezabatu.
+![GLPI martxan](../../irudiak/SB/glpi-docker-logs-curl-200.png)
+*Irudia: kontenedorearen logak: GLPI cron-a eta Apache RUNNING; `curl` → **200 OK**. Zerbitzua kontenedore batean martxan. ✅*
+
+**Arazoak:** (0) `bash`-ek `!` duten pasahitzak komatxo bikoitzen artean «event not found» ematen du → pasahitza `sudo mysql` barruan aldatu. (1) `sudo`-k pasahitza eskatzean itsatsitako hurrengo lerroa pasahitz gisa hartu zuen → komandoak banan-banan itsatsi. (2) db01-eko `/etc/ssh/ssh_config`-ek **zerbitzariaren** direktibak ditu (`Match Group`, `ChrootDirectory`…, 53–57 lerroak) → SSH bezeroak huts egiten du; behin-behinean `ssh -F /dev/null`, konpondu: lerro horiek `sshd_config`-era eraman edo ezabatu.
 
 - [x] `docker ps` (glpi *Up*, `127.0.0.1:8080->80/tcp`)
 - [ ] `docker stop` / `start` eta `docker stats` (kontenedoreak ~100–200 MB RAM vs VM batek 2 GB)

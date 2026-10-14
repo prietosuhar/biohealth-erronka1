@@ -22,7 +22,7 @@ Pazienteen osasun-datuak kudeatzen ditugu (DBEO 9. art., kategoria berezia), ber
 | [**SZI** – Sareko zerbitzuak](docs/SZI-sareko-zerbitzuak/index.md) | DNS ✅ · DHCP · Jitsi Meet (audioa eta bideoa) | 🔄 |
 | [**DBKSA** – Datu-baseak](docs/DBKSA-datu-baseak/index.md) | MariaDB + MongoDB (instalazioa, ustiapena, erabiltzaileak) | 🔄 |
 | [**WAE** – Web aplikazioak](docs/WAE-web-aplikazioak/index.md) | WordPress ✅ · GLPI (kontenedorean) | 🔄 |
-| [**SB** – Sistema banatuak](docs/SB-sistema-banatuak/index.md) | Birtualizazioa, kontenedorea eta HA diseinua | 🔄 |
+| [**SB** – Sistema banatuak](docs/SB-sistema-banatuak/index.md) | Birtualizazioa, kontenedorea (GLPI Docker) eta HA diseinua | ✅ |
 | [**HACK** – Hacking etikoa](docs/HACK-hacking-etikoa/index.md) | Pentestinga (faseak, ahuleziak, Metasploitable) | ✅ |
 | [**IRAU** – Iraunkortasuna](docs/IRAU-iraunkortasuna/index.md) | Jasangarritasun-plana (GJH, interes-taldeak, IGG, GRI) | ✅ |
 | [**HW** – Hardwarea](docs/HW-hardwarea/index.md) | Hardwarea eta lizentziak · LAP plana | ✅ |
