@@ -50,4 +50,4 @@ Plangintza GitHub-eko **Issues / Projects** taulan egiten da (zeregin bat pauso 
 | 2026-10-14 | Dokumentazio-webgunea Just the Docs gaira aldatu | Nabigazioa eta bilaketa aurkezpenerako; ikus [GitHub Pages](github-pages.md) |
 | 2026-10-14 | GLPI kontenedorera (Docker, www) eta MariaDB db01-era | Errubrikak (SB) zerbitzu bat kontenedorean eskatzen du; DB bakarra LANean |
 | 2026-10-14 | HA: 3 nodo → 2 nodo + QDevice | Quorum bera kostu txikiagoarekin (ikus [SB](../SB-sistema-banatuak/birtualizazioa.md)) |
-| 2026-10-14 | `BioHealth2026!` pasahitza laborategi guztietan aldatu | Biltegi publikoan argitaratuta egon zen (`glpi.md`, Git historia) |
+| 2026-10-14 | Laborategiko pasahitz partekatua aldatu (domeinua, pfSense, MariaDB, GLPI) | Biltegi publikoan argitaratuta egon zen (`glpi.md`, Git historia) |
